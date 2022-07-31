@@ -1,12 +1,12 @@
-package pl.university.converters.impl;
+package pl.university.project.converters.impl;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import pl.university.converters.Converter;
-import pl.university.models.User;
-import pl.university.odata.UserData;
-import pl.university.populators.ObjectPopulator;
+import pl.university.project.converters.Converter;
+import pl.university.project.models.User;
+import pl.university.project.odata.UserData;
+import pl.university.project.populators.ObjectPopulator;
+import pl.university.project.populators.impl.DefaultUserPopulator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +15,11 @@ import java.util.stream.Collectors;
 @Component
 public class UserConverter implements Converter<User, UserData> {
 
+    //    @Resource
+    private DefaultUserPopulator defaultUserPopulator = new DefaultUserPopulator();
 
-    @Qualifier("userPopulators")
-    private List<ObjectPopulator> userPopulators;
+    //    @Qualifier("userPopulators")
+    private List<ObjectPopulator> userPopulators = List.of(defaultUserPopulator);
 
 
     @Override
@@ -33,8 +35,7 @@ public class UserConverter implements Converter<User, UserData> {
     public List<UserData> convertAll(List<User> sourceList) {
         List<UserData> userDataList = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(sourceList)) {
-            userDataList.addAll(
-                    sourceList.stream().map(this::convert).collect(Collectors.toList()));
+            userDataList.addAll(sourceList.stream().map(this::convert).collect(Collectors.toList()));
         }
         return userDataList;
     }

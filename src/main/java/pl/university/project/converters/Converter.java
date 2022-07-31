@@ -1,4 +1,4 @@
-package pl.university.converters;
+package pl.university.project.converters;
 
 import java.util.List;
 

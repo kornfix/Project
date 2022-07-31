@@ -1,4 +1,4 @@
-package pl.university.utils;
+package pl.university.project.utils;
 
 import java.util.List;
 

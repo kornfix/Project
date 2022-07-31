@@ -1,4 +1,4 @@
-package pl.university.application;
+package pl.university.project;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
