@@ -1,10 +1,10 @@
-package pl.university.odata;
+package pl.university.project.odata;
 
 import lombok.Data;
-import pl.university.models.User;
 
 @Data
 public class UserData {
+    private String id;
     private String firstName;
     private String lastName;
 }
