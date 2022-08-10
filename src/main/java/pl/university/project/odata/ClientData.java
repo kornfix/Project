@@ -1,17 +1,13 @@
-package pl.university.project.models;
+package pl.university.project.odata;
 
 import lombok.Data;
+import pl.university.project.models.ClientCampaign;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import java.util.HashSet;
+import java.util.Set;
 
-@Entity(name = "users")
 @Data
-public class User {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class ClientData {
     private String firstName;
     private String lastName;
     private String phoneNumber;
@@ -24,4 +20,5 @@ public class User {
     private Boolean hasConsumerCredit;
     private Double balance;
 
+    private Set<ClientCampaign> campaigns = new HashSet<>();
 }
