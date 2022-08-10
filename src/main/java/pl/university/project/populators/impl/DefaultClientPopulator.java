@@ -1,9 +1,11 @@
 package pl.university.project.populators.impl;
 
+import org.springframework.stereotype.Component;
 import pl.university.project.models.Client;
 import pl.university.project.odata.ClientData;
 import pl.university.project.populators.Populator;
 
+@Component
 public class DefaultClientPopulator implements Populator<Client, ClientData> {
     @Override
     public void populate(Client source, ClientData target) {

@@ -1,5 +1,6 @@
 package pl.university.project.services.impl;
 
+import org.springframework.stereotype.Service;
 import pl.university.project.converters.impl.ClientConverter;
 import pl.university.project.models.Client;
 import pl.university.project.odata.ClientData;
@@ -8,6 +9,7 @@ import pl.university.project.repositories.ClientRepository;
 import javax.annotation.Resource;
 import java.util.List;
 
+@Service("clientService")
 public class DefaultClientService {
 
     @Resource

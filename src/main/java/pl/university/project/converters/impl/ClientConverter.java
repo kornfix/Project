@@ -1,6 +1,7 @@
 package pl.university.project.converters.impl;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.stereotype.Component;
 import pl.university.project.converters.Converter;
 import pl.university.project.models.Client;
 import pl.university.project.odata.ClientData;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class ClientConverter implements Converter<Client, ClientData> {
 
     //    @Resource
