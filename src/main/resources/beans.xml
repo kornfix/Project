@@ -33,4 +33,30 @@
         </property>
     </bean>
 
+    <alias name="defaultClientPopulator" alias="clientPopulator"/>
+    <bean id="defaultClientPopulator" class="pl.university.project.populators.impl.DefaultClientPopulator"/>
+
+    <alias name="defaultClientConverter" alias="clientConverter"/>
+    <bean id="defaultClientConverter"
+          class="pl.university.project.converters.impl.ClientConverter">
+        <property name="populators">
+            <list value-type="pl.university.project.populators.Populator">
+                <ref bean="clientPopulator"/>
+            </list>
+        </property>
+    </bean>
+
+    <alias name="defaultClientReversPopulator" alias="clientReversPopulator"/>
+    <bean id="defaultClientReversPopulator" class="pl.university.project.populators.impl.DefaultClientReversPopulator"/>
+
+    <alias name="defaultClientReversConverter" alias="clientReversConverter"/>
+    <bean id="defaultClientReversConverter"
+          class="pl.university.project.converters.impl.ClientReversConverter">
+        <property name="populators">
+            <list value-type="pl.university.project.populators.Populator">
+                <ref bean="clientReversPopulator"/>
+            </list>
+        </property>
+    </bean>
+
 </beans>

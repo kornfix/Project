@@ -45,7 +45,7 @@ class DefaultClientServiceTest {
 
     @Test
     void testGetAllClients() {
-        List<ClientData> result =  defaultClientService.getAllClients();
+        List<ClientData> result =  defaultClientService.getAllObjects();
 
         assertNotNull(result);
         assertEquals(1,result.size());
@@ -54,7 +54,7 @@ class DefaultClientServiceTest {
 
     @Test
     void testGetClientById() {
-        ClientData result = defaultClientService.getClientById("1");
+        ClientData result = defaultClientService.getObjectById(1L);
 
         assertNotNull(result);
         assertEquals(clientData,result);
@@ -62,7 +62,7 @@ class DefaultClientServiceTest {
 
     @Test
     void testSave() {
-        ClientData result = defaultClientService.save(client);
+        ClientData result = defaultClientService.saveObject(clientData);
 
         assertNotNull(result);
         assertEquals(clientData,result);

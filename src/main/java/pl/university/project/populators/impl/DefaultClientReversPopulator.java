@@ -4,9 +4,9 @@ import pl.university.project.models.Client;
 import pl.university.project.odata.ClientData;
 import pl.university.project.populators.Populator;
 
-public class DefaultClientPopulator implements Populator<Client, ClientData> {
+public class DefaultClientReversPopulator implements Populator<ClientData, Client> {
     @Override
-    public void populate(Client source, ClientData target) {
+    public void populate(ClientData source, Client target) {
         target.setId(source.getId());
         target.setFirstName(source.getFirstName());
         target.setLastName(source.getLastName());
