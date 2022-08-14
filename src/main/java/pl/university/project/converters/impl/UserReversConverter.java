@@ -1,7 +1,6 @@
 package pl.university.project.converters.impl;
 
 import org.apache.commons.collections4.CollectionUtils;
-import pl.university.project.converters.Converter;
 import pl.university.project.models.User;
 import pl.university.project.odata.UserData;
 import pl.university.project.populators.Populator;
@@ -10,12 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UserReversConverter implements Converter<UserData, User> {
+public class UserReversConverter  {
 
     private List<Populator> userPopulators;
 
 
-    @Override
     public User convert(UserData source) {
         User target = new User();
         if (source != null) {
@@ -24,7 +22,6 @@ public class UserReversConverter implements Converter<UserData, User> {
         return target;
     }
 
-    @Override
     public List<User> convertAll(List<UserData> sourceList) {
         List<User> targetList = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(sourceList)) {

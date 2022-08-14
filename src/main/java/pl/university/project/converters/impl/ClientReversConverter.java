@@ -10,13 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ClientConverter implements Converter<Client, ClientData> {
+public class ClientReversConverter implements Converter<ClientData, Client> {
 
     private List<Populator> populators;
 
     @Override
-    public ClientData convert(Client source) {
-        ClientData target = new ClientData();
+    public Client convert(ClientData source) {
+        Client target = new Client();
         if (source != null) {
             populators.forEach(populator -> populator.populate(source, target));
         }
@@ -24,7 +24,7 @@ public class ClientConverter implements Converter<Client, ClientData> {
     }
 
     @Override
-    public ClientData convert(Client source, ClientData target) {
+    public Client convert(ClientData source, Client target) {
         if (source != null) {
             populators.forEach(populator -> populator.populate(source, target));
         }
@@ -32,8 +32,8 @@ public class ClientConverter implements Converter<Client, ClientData> {
     }
 
     @Override
-    public List<ClientData> convertAll(List<Client> source) {
-        List<ClientData> targetList = new ArrayList<>();
+    public List<Client> convertAll(List<ClientData> source) {
+        List<Client> targetList = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(source)) {
             targetList.addAll(source.stream().map(this::convert).collect(Collectors.toList()));
         }
@@ -41,7 +41,7 @@ public class ClientConverter implements Converter<Client, ClientData> {
     }
 
     @Override
-    public List<ClientData> convertAll(List<Client> source, List<ClientData> target) {
+    public List<Client> convertAll(List<ClientData> source, List<Client> target) {
         if (CollectionUtils.isNotEmpty(source)) {
             target.addAll(source.stream().map(this::convert).collect(Collectors.toList()));
         }
