@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                    http://www.springframework.org/schema/util
+                    http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+
+    <alias name="defaultUserReversPopulator" alias="userReversPopulator"/>
+    <bean id="defaultUserReversPopulator" class="pl.university.project.populators.impl.DefaultUserReversPopulator"/>
+
+    <alias name="defaultUserReversConverter" alias="userReversConverter"/>
+    <bean id="defaultUserReversConverter"
+          class="pl.university.project.converters.impl.UserReversConverter">
+        <property name="userPopulators">
+            <list value-type="pl.university.project.populators.Populator">
+                <ref bean="userReversPopulator"/>
+            </list>
+        </property>
+    </bean>
+
+    <alias name="defaultUserPopulator" alias="userPopulator"/>
+    <bean id="defaultUserPopulator" class="pl.university.project.populators.impl.DefaultUserPopulator"/>
+
+    <alias name="defaultUserConverter" alias="userConverter"/>
+    <bean id="defaultUserConverter"
+          class="pl.university.project.converters.impl.UserConverter">
+        <property name="userPopulators">
+            <list value-type="pl.university.project.populators.Populator">
+                <ref bean="userPopulator"/>
+            </list>
+        </property>
+    </bean>
+
+</beans>
