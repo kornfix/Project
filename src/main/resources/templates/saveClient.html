@@ -6,8 +6,8 @@
 </head>
 <body>
 <h1>Form</h1>
-<form action="#" th:object="${client}" th:action="${client.Id} !=null? @{|/clients/${client.id}/update|} : @{/clients/add}"
-      method="post">
+<form action="#" th:object="${client}" th:action="${client.Id} != null? @{|/clients/${client.id}/update|} : @{/clients/add}"
+      th:method="${client.Id} != null? PUT : POST">
     <p>Imię: <input type="text" th:field="*{firstName}" /></p>
     <p>Nazwisko: <input type="text" th:field="*{lastName}" /></p>
     <p><input type="submit" value="Zapisz" /> <input type="reset" value="Resetuj" /></p>
