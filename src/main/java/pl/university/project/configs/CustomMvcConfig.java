@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class MvcConfig implements WebMvcConfigurer {
+public class CustomMvcConfig implements WebMvcConfigurer {
 
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/home").setViewName("home");
@@ -27,6 +27,8 @@ public class MvcConfig implements WebMvcConfigurer {
     @Bean
     public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> containerCustomizer() {
         return container -> {
+            container.addErrorPages(new ErrorPage(HttpStatus.BAD_REQUEST,
+                    "/error"));
             container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND,
                     "/notFound"));
         };

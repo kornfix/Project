@@ -25,7 +25,7 @@ public class ClientController {
     @GetMapping("/{clientId}")
     public String getClientById(@PathVariable Long clientId, Model model) {
         ClientData clientData = defaultClientService.getObjectById(clientId);
-        if (clientData == null || clientData.getId()==null) {
+        if (clientData == null || clientData.getId() == null) {
             return "notFound";
         }
         model.addAttribute("client", defaultClientService.getObjectById(clientId));
