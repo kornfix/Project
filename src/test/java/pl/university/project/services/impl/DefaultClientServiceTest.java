@@ -62,9 +62,9 @@ class DefaultClientServiceTest {
 
     @Test
     void testSave() {
-        ClientData result = defaultClientService.saveObject(clientData);
+        Long result = defaultClientService.saveObject(clientData);
 
         assertNotNull(result);
-        assertEquals(clientData,result);
+        assertEquals(clientData.getId(),result);
     }
 }

@@ -19,7 +19,7 @@ import java.util.Set;
 public class Client {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
     private String firstName;
     private String lastName;
@@ -33,8 +33,9 @@ public class Client {
     private Boolean hasConsumerCredit;
     private Double balance;
 
-    @OneToMany(mappedBy = "campaign")
+    @OneToMany(mappedBy = "campaign", cascade = CascadeType.ALL)
     private Set<ClientCampaign> clientCampaigns = new HashSet<>();
+
 
     @Override
     public boolean equals(Object o) {

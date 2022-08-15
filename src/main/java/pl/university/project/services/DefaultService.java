@@ -8,9 +8,9 @@ public interface DefaultService<T> {
 
     T getObjectById(Long id);
 
-    T saveObject(T object);
+    Long saveObject(T object);
 
-    T updateObject(T object);
+    Long updateObject(T object);
 
     void deleteObject(Long id);
 }

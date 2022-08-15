@@ -3,10 +3,7 @@ package pl.university.project.models;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.Objects;
@@ -25,7 +22,7 @@ public class Campaign {
     private Date campaignStartDate;
     private Date campaignEndDate;
 
-    @OneToMany(mappedBy = "campaign")
+    @OneToMany(mappedBy = "campaign", cascade = CascadeType.ALL)
     private Set<ClientCampaign> clientCampaigns = new HashSet<>();
 
     @Override
