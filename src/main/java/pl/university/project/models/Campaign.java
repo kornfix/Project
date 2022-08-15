@@ -1,10 +1,14 @@
 package pl.university.project.models;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -18,7 +22,9 @@ public class Campaign {
     @Id
     @GeneratedValue
     private Long id;
-    private Date creationTime;
+    private String title;
+    private String description;
+    private Timestamp creationTime;
     private Date campaignStartDate;
     private Date campaignEndDate;
 
