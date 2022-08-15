@@ -9,9 +9,15 @@
 <form action="#" th:object="${client}" th:action="${client.Id} != null? @{|/clients/${client.id}/update|} : @{/clients/add}"
       th:method="${client.Id} != null? PUT : POST">
     <p>Imię: <input type="text" th:field="*{firstName}" /></p>
+    <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"/>
     <p>Nazwisko: <input type="text" th:field="*{lastName}" /></p>
-    <p><input type="submit" value="Zapisz" /> <input type="reset" value="Resetuj" /></p>
-    <a th:href="@{|/clients|}"/>Anuluj</a>
+    <p  th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"/>
+    <p>
+        <input type="submit" value="Zapisz" />
+        <input type="reset" value="Resetuj" />
+        <a th:href="@{|/clients|}"/>Anuluj</a>
+    </p>
+
 </form>
 
 

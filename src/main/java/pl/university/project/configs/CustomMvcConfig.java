@@ -27,8 +27,8 @@ public class CustomMvcConfig implements WebMvcConfigurer {
     @Bean
     public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> containerCustomizer() {
         return container -> {
-            container.addErrorPages(new ErrorPage(HttpStatus.BAD_REQUEST,
-                    "/error"));
+//            container.addErrorPages(new ErrorPage(HttpStatus.BAD_REQUEST,
+//                    "/error"));
             container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND,
                     "/notFound"));
         };

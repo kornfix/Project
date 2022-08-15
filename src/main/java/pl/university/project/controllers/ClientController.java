@@ -2,11 +2,13 @@ package pl.university.project.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.university.project.odata.ClientData;
 import pl.university.project.services.impl.DefaultClientService;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/clients")
@@ -40,7 +42,11 @@ public class ClientController {
 
 
     @PostMapping(value = "/add")
-    public String addClient(@ModelAttribute("client") ClientData clientData) {
+    public String addClient(@Valid @ModelAttribute("client") ClientData clientData, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "saveClient";
+        }
+
         return "redirect:/clients/" + defaultClientService.saveObject(clientData);
     }
 
