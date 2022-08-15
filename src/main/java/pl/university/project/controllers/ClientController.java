@@ -24,6 +24,10 @@ public class ClientController {
 
     @GetMapping("/{clientId}")
     public String getClientById(@PathVariable Long clientId, Model model) {
+        ClientData clientData = defaultClientService.getObjectById(clientId);
+        if (clientData == null || clientData.getId()==null) {
+            return "notFound";
+        }
         model.addAttribute("client", defaultClientService.getObjectById(clientId));
         return "client";
     }
@@ -37,7 +41,7 @@ public class ClientController {
 
     @PostMapping(value = "/add")
     public String addClient(@ModelAttribute("client") ClientData clientData) {
-        return "redirect:/clients/"+defaultClientService.saveObject(clientData);
+        return "redirect:/clients/" + defaultClientService.saveObject(clientData);
     }
 
     @GetMapping(value = "/{clientId}/update")
@@ -46,13 +50,13 @@ public class ClientController {
         return "saveClient";
     }
 
-    @PostMapping("/{clientId}/update")
+    @PutMapping("/{clientId}/update")
     public String updateClient(@PathVariable Long clientId, @ModelAttribute("client") ClientData clientData) {
         clientData.setId(clientId);
-        return "redirect:/clients/"+defaultClientService.updateObject(clientData);
+        return "redirect:/clients/" + defaultClientService.updateObject(clientData);
     }
 
-    @GetMapping("/{clientId}/delete")
+    @DeleteMapping("/{clientId}/delete")
     public String deleteClient(@PathVariable Long clientId) {
         defaultClientService.deleteObject(clientId);
         return "redirect:/clients";
