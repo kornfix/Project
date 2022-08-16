@@ -15,7 +15,7 @@ public class DefaultClientPopulator implements Populator<Client, ClientData> {
         target.setContactType(source.getContactType());
         target.setAge(source.getAge());
         target.setMartialStatus(source.getMartialStatus());
-        target.setEducation(source.getEducation());
+        target.setEducationLevel(source.getEducationLevel());
         target.setDefaultCreditStatus(source.getDefaultCreditStatus());
         target.setHasMortgage(source.getHasMortgage());
         target.setHasConsumerCredit(source.getHasConsumerCredit());

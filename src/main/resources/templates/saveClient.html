@@ -14,6 +14,16 @@
     <p  th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"/>
     <p>Wiek: <input type="number" th:field="*{age}" min="11" max="150"></p>
     <p  th:if="${#fields.hasErrors('age')}">Wiek nie może być pusty oraz musi być większy od 18!</p>
+    <p>Numer telefonu: <input type="text" th:field="*{phoneNumber}" /></p>
+    <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"/>
+    <p>Rodzaj telefonu:
+        <select th:field="*{contactType}">
+            <option th:each="option : ${contactTypes}" th:value="${option}" th:text="${option}"
+                    th:selected="(${option} == *{contactType})">
+            </option>
+        </select>
+    </p>
+    <p  th:if="${#fields.hasErrors('contactType')}" th:errors="*{contactType}"/>
     <p>Zawód:
         <select th:field="*{job}">
             <option th:each="option : ${jobs}" th:value="${option}" th:text="${option}"
@@ -21,11 +31,26 @@
             </option>
         </select>
     </p>
-    <p  th:if="${#fields.hasErrors('job')}" th:errors="*{job}"/>
-
+    <p>Poziom edukacji:
+        <select th:field="*{educationLevel}">
+            <option th:each="option : ${educationLevels}" th:value="${option}" th:text="${option}"
+                    th:selected="(${option} == *{educationLevel})">
+            </option>
+        </select>
+    </p>
+    <p  th:if="${#fields.hasErrors('educationLevel')}" th:errors="*{educationLevel}"/>
+    <p>Status cywilny:
+        <select th:field="*{martialStatus}">
+            <option th:each="option : ${martialStatuses}" th:value="${option}" th:text="${option}"
+                    th:selected="(${option} == *{martialStatus})">
+            </option>
+        </select>
+    </p>
+    <p  th:if="${#fields.hasErrors('martialStatus')}" th:errors="*{martialStatus}"/>
     <p>
-        <input type="submit" value="Zapisz" />
-        <a th:href="@{|/clients|}"/>Anuluj</a>
+        <form>
+            <input type="button" value="Anuluj" onclick="history.back()">
+        </form>
     </p>
 
 </form>

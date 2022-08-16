@@ -14,30 +14,34 @@
     <tr>
         <th>Imie</th>
         <th>Nazwisko</th>
-        <th>Zawód</th>
         <th>Wiek</th>
+        <th>Numer telefonu</th>
+        <th>Zawód</th>
+        <th>Poziom Edukacji</th>
     </tr>
     </thead>
 <tr th:each="client: ${clients}">
-    <td th:text="|${client.firstName}|">
-    <td th:text="|${client.lastName}|">
-    <td th:text="|${client.job}|">
-    <td th:text="|${client.age}|">
+    <td th:text="${client.firstName}">
+    <td th:text="${client.lastName}">
+    <td th:text="${client.age}">
+    <td th:text="${client.phoneNumber}">
+    <td th:text="${client.job}=='Nie wiadomo'? 'Nie podano':${client.job}">
+    <td th:text="${client.educationLevel}=='Nie wiadomo'? 'Nie podano':${client.educationLevel}">
     <td>
     <a th:href="@{|/clients/${client.id}|}"/>
-    <button type="button">Otwórz profil</button>
+    <button type="button">Zobacz profil</button>
     </a>
     </td>
     <td>
     <a th:href="@{|/clients/${client.id}/update|}"/>
-    <button type="button">Edytuj</button>
+    <button type="button">Edytuj profil</button>
     </a>
     </td>
     <td>
     <form th:action="@{|/clients/${client.id}/delete|}"  th:method="delete">
         <button type="submit"
                 th:data-confirm-delete="|Czy na pewno chcesz usunąć klienta ${client.firstName} ${client.lastName}?|"
-                onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false">Usuń</button>
+                onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false">Usuń profil</button>
     </form>
     </td>
 </tr>

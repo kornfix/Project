@@ -19,8 +19,7 @@ public final class PropertyUtil {
         return List.of(value.split(divider));
     }
 
-    public static List<String> getJobCategories()
-    {
+    public static List<String> getJobCategories() {
         List<String> jobs = new ArrayList<>();
         jobs.add("Pracownik na stanowisku kierowniczym");
         jobs.add("Pracownik fizyczny");
@@ -36,4 +35,30 @@ public final class PropertyUtil {
         jobs.add("Nie wiadomo");
         return jobs;
     }
+
+    public static List<String> getMartialStatusCategories() {
+        List<String> martialStatuses = new ArrayList<>();
+        martialStatuses.add("Zamężny");
+        martialStatuses.add("Niezamężny");
+        martialStatuses.add("Rozwiedziony");
+        return martialStatuses;
+    }
+
+    public static List<String> getEducationLevelCategories() {
+        List<String> educationLevels = new ArrayList<>();
+        educationLevels.add("Wykształcenie wyższe");
+        educationLevels.add("Wykształcenie średnie");
+        educationLevels.add("Wykształcenie podstawowe");
+        educationLevels.add("Nie wiadomo");
+        return educationLevels;
+    }
+
+    public static List<String> getContactTypeCategories() {
+        List<String> contactTypes = new ArrayList<>();
+        contactTypes.add("Komórkowy");
+        contactTypes.add("Telefoniczny");
+        contactTypes.add("Nie wiadomo");
+        return contactTypes;
+    }
+
 }

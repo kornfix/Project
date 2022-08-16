@@ -28,7 +28,7 @@ public class Client {
     private Integer age;
     private String job;
     private String martialStatus;
-    private String education;
+    private String educationLevel;
     private Boolean defaultCreditStatus;
     private Boolean hasMortgage;
     private Boolean hasConsumerCredit;
