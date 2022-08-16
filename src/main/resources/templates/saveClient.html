@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Save user page</title>
@@ -12,9 +12,19 @@
     <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"/>
     <p>Nazwisko: <input type="text" th:field="*{lastName}" /></p>
     <p  th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"/>
+    <p>Wiek: <input type="number" th:field="*{age}" min="11" max="150"></p>
+    <p  th:if="${#fields.hasErrors('age')}">Wiek nie może być pusty oraz musi być większy od 18!</p>
+    <p>Zawód:
+        <select th:field="*{job}">
+            <option th:each="option : ${jobs}" th:value="${option}" th:text="${option}"
+                    th:selected="(${option} == *{job})">
+            </option>
+        </select>
+    </p>
+    <p  th:if="${#fields.hasErrors('job')}" th:errors="*{job}"/>
+
     <p>
         <input type="submit" value="Zapisz" />
-        <input type="reset" value="Resetuj" />
         <a th:href="@{|/clients|}"/>Anuluj</a>
     </p>
 

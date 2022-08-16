@@ -10,7 +10,9 @@ public class DefaultClientReversPopulator implements Populator<ClientData, Clien
         target.setId(source.getId());
         target.setFirstName(source.getFirstName());
         target.setLastName(source.getLastName());
+        target.setJob(source.getJob());
         target.setPhoneNumber(source.getPhoneNumber());
+        target.setContactType(source.getContactType());
         target.setAge(source.getAge());
         target.setMartialStatus(source.getMartialStatus());
         target.setEducation(source.getEducation());

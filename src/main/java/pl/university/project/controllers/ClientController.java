@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.university.project.odata.ClientData;
 import pl.university.project.services.impl.DefaultClientService;
+import pl.university.project.utils.PropertyUtil;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -36,6 +37,7 @@ public class ClientController {
 
     @GetMapping(value = "/add")
     public String addClient(Model model) {
+        model.addAttribute("jobs", PropertyUtil.getJobCategories());
         model.addAttribute("client", new ClientData());
         return "saveClient";
     }
@@ -44,6 +46,7 @@ public class ClientController {
     @PostMapping(value = "/add")
     public String addClient(@Valid @ModelAttribute("client") ClientData clientData, BindingResult result, Model model) {
         if (result.hasErrors()) {
+            model.addAttribute("jobs", PropertyUtil.getJobCategories());
             return "saveClient";
         }
 
@@ -52,12 +55,18 @@ public class ClientController {
 
     @GetMapping(value = "/{clientId}/update")
     public String updateClient(@PathVariable Long clientId, Model model) {
+        model.addAttribute("jobs", PropertyUtil.getJobCategories());
         model.addAttribute("client", defaultClientService.getObjectById(clientId));
         return "saveClient";
     }
 
     @PutMapping("/{clientId}/update")
-    public String updateClient(@PathVariable Long clientId, @ModelAttribute("client") ClientData clientData) {
+    public String updateClient(@PathVariable Long clientId, @ModelAttribute("client") ClientData clientData,
+                               BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("jobs", PropertyUtil.getJobCategories());
+            return "saveClient";
+        }
         clientData.setId(clientId);
         return "redirect:/clients/" + defaultClientService.updateObject(clientData);
     }

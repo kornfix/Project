@@ -19,11 +19,12 @@ import java.util.Set;
 public class Client {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String firstName;
     private String lastName;
     private String phoneNumber;
+    private String contactType;
     private Integer age;
     private String job;
     private String martialStatus;
