@@ -16,10 +16,10 @@ public class CustomMvcConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/home").setViewName("home");
         registry.addViewController("/").setViewName("home");
-        registry.addViewController("/hello").setViewName("hello");
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/users").setViewName("users");
         registry.addViewController("/clients").setViewName("clients");
+        registry.addViewController("/campaigns").setViewName("campaigns");
         registry.addViewController("/error").setViewName("error");
         registry.addViewController("/notFound").setViewName("notFound");
     }
@@ -33,8 +33,8 @@ public class CustomMvcConfig implements WebMvcConfigurer {
                     "/notFound"));
             container.addErrorPages(new ErrorPage(HttpStatus.METHOD_NOT_ALLOWED,
                     "/notFound"));
-//            container.addErrorPages(new ErrorPage(HttpStatus.Per,
-//                    "/notFound"));
+            container.addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN,
+                    "/notFound"));
         };
     }
 

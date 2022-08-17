@@ -59,4 +59,30 @@
         </property>
     </bean>
 
+    <alias name="defaultCampaignPopulator" alias="campaignPopulator"/>
+    <bean id="defaultCampaignPopulator" class="pl.university.project.populators.impl.DefaultCampaignPopulator"/>
+
+    <alias name="defaultCampaignConverter" alias="campaignConverter"/>
+    <bean id="defaultCampaignConverter"
+          class="pl.university.project.converters.impl.CampaignConverter">
+        <property name="populators">
+            <list value-type="pl.university.project.populators.Populator">
+                <ref bean="campaignPopulator"/>
+            </list>
+        </property>
+    </bean>
+
+    <alias name="defaultCampaignReversPopulator" alias="campaignReversPopulator"/>
+    <bean id="defaultCampaignReversPopulator" class="pl.university.project.populators.impl.DefaultCampaignReversPopulator"/>
+
+    <alias name="defaultCampaignReversConverter" alias="campaignReversConverter"/>
+    <bean id="defaultCampaignReversConverter"
+          class="pl.university.project.converters.impl.CampaignReversConverter">
+        <property name="populators">
+            <list value-type="pl.university.project.populators.Populator">
+                <ref bean="campaignReversPopulator"/>
+            </list>
+        </property>
+    </bean>
+
 </beans>

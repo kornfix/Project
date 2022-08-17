@@ -9,10 +9,10 @@ import pl.university.project.populators.Populator;
 public class DefaultUserPopulator implements Populator<User, UserData> {
 
     @Override
-    public void populate(User userModel, UserData userData) {
-        userData.setId(String.valueOf(userModel.getId()));
-        userData.setUsername(userModel.getUsername());
-        userData.setRole(userModel.getRole());
-        userData.setEnabled(userModel.isEnabled());
+    public void populate(User source, UserData target) {
+        target.setId(source.getId());
+        target.setUsername(source.getUsername());
+        target.setRole(source.getRole());
+        target.setEnabled(source.isEnabled());
     }
 }

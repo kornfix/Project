@@ -7,12 +7,10 @@ import pl.university.project.populators.Populator;
 public class DefaultUserReversPopulator implements Populator<UserData, User> {
 
     @Override
-    public void populate( UserData userData, User userModel) {
-        if(userData.getId()!=null) {
-            userModel.setId(Long.parseLong(userData.getId()));
-        }
-        userData.setUsername(userModel.getUsername());
-        userData.setRole(userModel.getRole());
-        userData.setEnabled(userModel.isEnabled());
+    public void populate( UserData target, User source) {
+        target.setId(source.getId());
+        target.setUsername(source.getUsername());
+        target.setRole(source.getRole());
+        target.setEnabled(source.isEnabled());
     }
 }
