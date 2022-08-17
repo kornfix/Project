@@ -10,18 +10,50 @@
     <input type="submit" value="Sign Out"/>
 </form>
 <div th:object="${client}">
-          <p th:text="*{firstName}" />
-          <p th:text="*{lastName}" />
-          <p th:text="*{age}" />
-          <p th:text="*{phoneNumber}" />
-          <p th:text="*{contactType}=='Nie wiadomo'? 'Nie podano':*{contactType}" />
-          <p th:text="*{job}=='Nie wiadomo'? 'Nie podano':*{job}" />
-          <p th:text="*{educationLevel}=='Nie wiadomo'? 'Nie podano':*{educationLevel}" />
-          <p th:text="*{martialStatus}" />
-
-          <a th:href="@{|/clients/*{id}/update|}"/>
-            <button type="button">Edytuj</button>
-          </a>
+    <table>
+        <tr>
+            <td>Imię</td><td th:text="*{firstName}"></td>
+        </tr>
+        <tr>
+            <td>Nazwisko</td><td th:text="*{lastName}"></td>
+        </tr>
+        <tr>
+            <td>Wiek</td><td th:text="*{age}"></td>
+        </tr>
+        <tr>
+            <td>Numer telefonu</td><td th:text="*{phoneNumber}"></td>
+        </tr>
+        <tr>
+            <td>Rodzaj telefonu</td><td th:text="*{contactType}=='Nie wiadomo'? 'Nie podano':*{contactType}"></td>
+        </tr>
+        <tr>
+            <td>Zawód:</td><td th:text="*{job}=='Nie wiadomo'? 'Nie podano':*{job}"></td>
+        </tr>
+        <tr>
+            <td>Poziom wykształcenia:</td><td th:text="*{educationLevel}=='Nie wiadomo'? 'Nie podano':*{educationLevel}"></td>
+        </tr>
+        <tr>
+            <td>Status cywilny:</td><td th:text="*{martialStatus}"></td>
+        </tr>
+        <tr>
+            <td>Saldo:</td><td th:text="*{balance}"></td>
+        </tr>
+        <tr>
+            <td>Zalega ze spłatami:</td><td><input type="checkbox"  disabled="true"
+                                                   th:checked="*{defaultCreditStatus}" /></td>
+        </tr>
+        <tr>
+            <td>Posiada kredyt hipoteczny:</td><td><input type="checkbox"  disabled="true"
+                                                          th:checked="*{hasMortgage}" /></td>
+        </tr>
+        <tr>
+            <td>Posiada kredyt konsumpcyjny:</td><td><input type="checkbox"  disabled="true"
+                                                            th:checked="*{hasConsumerCredit}" /></td>
+        </tr>
+    </table>
+    <a th:href="@{|/clients/*{id}/update|}"/>
+        <button type="button">Edytuj</button>
+    </a>
 </div>
 </body>
 </html>

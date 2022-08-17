@@ -31,6 +31,10 @@ public class CustomMvcConfig implements WebMvcConfigurer {
 //                    "/error"));
             container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND,
                     "/notFound"));
+            container.addErrorPages(new ErrorPage(HttpStatus.METHOD_NOT_ALLOWED,
+                    "/notFound"));
+//            container.addErrorPages(new ErrorPage(HttpStatus.Per,
+//                    "/notFound"));
         };
     }
 

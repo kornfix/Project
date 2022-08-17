@@ -17,7 +17,8 @@
         <th>Wiek</th>
         <th>Numer telefonu</th>
         <th>Zawód</th>
-        <th>Poziom Edukacji</th>
+        <th>Poziom wykształenia</th>
+        <th>Saldo</th>
     </tr>
     </thead>
 <tr th:each="client: ${clients}">
@@ -27,6 +28,7 @@
     <td th:text="${client.phoneNumber}">
     <td th:text="${client.job}=='Nie wiadomo'? 'Nie podano':${client.job}">
     <td th:text="${client.educationLevel}=='Nie wiadomo'? 'Nie podano':${client.educationLevel}">
+    <td th:text="${client.balance}">
     <td>
     <a th:href="@{|/clients/${client.id}|}"/>
     <button type="button">Zobacz profil</button>

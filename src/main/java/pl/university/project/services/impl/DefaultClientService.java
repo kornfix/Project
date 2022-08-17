@@ -30,11 +30,18 @@ public class DefaultClientService implements DefaultService<ClientData> {
 
     @Override
     public ClientData getObjectById(Long id) {
+        Client client = getClientById(id);
+        if (client == null) {
+            return null;
+        }
         return clientConverter.convert(getClientById(id));
     }
 
     @Override
     public Long saveObject(ClientData clientData) {
+        if (clientData == null) {
+            return null;
+        }
         Client client = clientRepository.saveAndFlush(clientReversConverter.convert(clientData));
         return client.getId();
     }
@@ -52,7 +59,7 @@ public class DefaultClientService implements DefaultService<ClientData> {
 
     @Override
     public void deleteObject(Long id) {
-            clientRepository.deleteById(id);
+        clientRepository.deleteById(id);
     }
 
     private Client getClientById(Long id) {

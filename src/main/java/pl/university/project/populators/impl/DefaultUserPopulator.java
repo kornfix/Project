@@ -11,7 +11,8 @@ public class DefaultUserPopulator implements Populator<User, UserData> {
     @Override
     public void populate(User userModel, UserData userData) {
         userData.setId(String.valueOf(userModel.getId()));
-        userData.setFirstName(userModel.getFirstName());
-        userData.setLastName(userModel.getLastName());
+        userData.setUsername(userModel.getUsername());
+        userData.setRole(userModel.getRole());
+        userData.setEnabled(userModel.isEnabled());
     }
 }

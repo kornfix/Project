@@ -11,7 +11,8 @@ public class DefaultUserReversPopulator implements Populator<UserData, User> {
         if(userData.getId()!=null) {
             userModel.setId(Long.parseLong(userData.getId()));
         }
-        userModel.setFirstName(userData.getFirstName());
-        userModel.setLastName(userData.getLastName());
+        userData.setUsername(userModel.getUsername());
+        userData.setRole(userModel.getRole());
+        userData.setEnabled(userModel.isEnabled());
     }
 }

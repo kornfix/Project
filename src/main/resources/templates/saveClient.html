@@ -31,7 +31,7 @@
             </option>
         </select>
     </p>
-    <p>Poziom edukacji:
+    <p>Poziom wykształcenia:
         <select th:field="*{educationLevel}">
             <option th:each="option : ${educationLevels}" th:value="${option}" th:text="${option}"
                     th:selected="(${option} == *{educationLevel})">
@@ -47,7 +47,19 @@
         </select>
     </p>
     <p  th:if="${#fields.hasErrors('martialStatus')}" th:errors="*{martialStatus}"/>
+    <p>Saldo: <input type="number" th:field="*{balance}" step="0.01"></p>
+    <p th:if="${#fields.hasErrors('balance')}" th:errors="*{balance}"/>
+    <p>Zalega ze spłatami: <input type="checkbox"  th:field="*{defaultCreditStatus}"
+                                  th:checked="*{defaultCreditStatus}" /></p>
+    <p th:if="${#fields.hasErrors('defaultCreditStatus')}" th:errors="*{defaultCreditStatus}"/>
+    <p>Posiada kredyt hipoteczny: <input type="checkbox"  th:field="*{hasMortgage}"
+                                         th:checked="*{hasMortgage}" /></p>
+    <p th:if="${#fields.hasErrors('hasMortgage')}" th:errors="*{hasMortgage}"/>
+    <p>Posiada kredyt konsumpcyjny: <input type="checkbox"  th:field="*{hasConsumerCredit}"
+                                           th:checked="*{hasConsumerCredit}" /></p>
+    <p th:if="${#fields.hasErrors('hasConsumerCredit')}" th:errors="*{hasConsumerCredit}"/>
     <p>
+        <input type="submit" value="Zapisz" />
         <form>
             <input type="button" value="Anuluj" onclick="history.back()">
         </form>

@@ -1,6 +1,7 @@
 package pl.university.project.services.impl;
 
 
+import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
 import pl.university.project.converters.impl.UserConverter;
 import pl.university.project.converters.impl.UserReversConverter;
@@ -26,7 +27,7 @@ public class DefaultUserService implements UserService {
 
     @Override
     public List<UserData> getAllUsers() {
-        return userConverter.convertAll(userRepository.findAll());
+        return userConverter.convertAll(Streamable.of(userRepository.findAll()).toList());
     }
 
     @Override

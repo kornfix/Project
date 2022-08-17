@@ -50,13 +50,16 @@ public class ClientController {
             setClientControllerAllCategories(model);
             return "saveClient";
         }
-
         return "redirect:/clients/" + defaultClientService.saveObject(clientData);
     }
 
     @GetMapping(value = "/{clientId}/update")
     public String updateClient(@PathVariable Long clientId, Model model) {
         setClientControllerAllCategories(model);
+        ClientData clientData = defaultClientService.getObjectById(clientId);
+        if (clientData == null) {
+            return "notFound";
+        }
         model.addAttribute("client", defaultClientService.getObjectById(clientId));
         return "saveClient";
     }
@@ -69,7 +72,7 @@ public class ClientController {
             return "saveClient";
         }
         clientData.setId(clientId);
-        return "redirect:/clients/" + defaultClientService.updateObject(clientData);
+        return "redirect:/clients/" +defaultClientService.updateObject(clientData);
     }
 
     @DeleteMapping("/{clientId}/delete")
