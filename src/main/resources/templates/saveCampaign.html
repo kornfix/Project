@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Campaign form page</title>
+</head>
+<body>
+<h1>Formularz</h1>
+<form action="#" th:object="${campaign}" th:action="${campaign.Id} != null? @{|/campaigns/${campaign.id}/update|} : @{/campaigns/add}"
+      th:method="${campaign.Id} != null? PUT : POST">
+    <p>Imię: <input type="text" th:field="*{title}" /></p>
+    <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"/>
+    <p>Data rozpoczęcia: <input type="date" th:field="*{campaignStartDate}" /></p>
+    <p  th:if="${#fields.hasErrors('campaignStartDate')}" th:errors="*{campaignStartDate}"/>
+    <p>Data zakończenia: <input type="date" th:field="*{campaignEndDate}" /></p>
+    <p  th:if="${#fields.hasErrors('campaignEndDate')}" th:errors="*{campaignEndDate}"/>
+    <p>Opis: <textarea th:field="*{description}" rows="4" cols="50"></textarea>
+    </p>
+    <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"/>
+    <p>
+        <input type="submit" value="Zapisz" />
+        <form>
+            <input type="button" value="Anuluj" onclick="history.back()">
+        </form>
+    </p>
+
+</form>
+
+
+</body>
+</html>

@@ -16,7 +16,6 @@ import static pl.university.project.utils.ModelUtil.setClientControllerAllCatego
 @RequestMapping("/clients")
 public class ClientController {
 
-
     @Resource
     private DefaultClientService defaultClientService;
 

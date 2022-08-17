@@ -14,7 +14,6 @@ import javax.validation.Valid;
 @RequestMapping("/campaigns")
 public class CampaignController {
 
-
     @Resource
     private DefaultCampaignService defaultCampaignService;
 
@@ -37,7 +36,7 @@ public class CampaignController {
     @GetMapping(value = "/add")
     public String addCampaign(Model model) {
 //        setCampaignControllerAllCategories(model);
-        model.addAttribute("Campaign", new CampaignData());
+        model.addAttribute("campaign", new CampaignData());
         return "saveCampaign";
     }
 
@@ -70,12 +69,12 @@ public class CampaignController {
             return "saveCampaign";
         }
         campaignData.setId(campaignId);
-        return "redirect:/Campaigns/" + defaultCampaignService.updateObject(campaignData);
+        return "redirect:/campaigns/" + defaultCampaignService.updateObject(campaignData);
     }
 
-    @DeleteMapping("/{CampaignId}/delete")
+    @DeleteMapping("/{campaignId}/delete")
     public String deleteCampaign(@PathVariable Long campaignId) {
         defaultCampaignService.deleteObject(campaignId);
-        return "redirect:/Campaigns";
+        return "redirect:/campaigns";
     }
 }

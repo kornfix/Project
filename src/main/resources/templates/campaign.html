@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User site</title>
+</head>
+<body>
+<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+<div th:object="${campaign}">
+    <table>
+        <tr>
+            <td>Tytuł:</td><td th:text="*{title}"></td>
+        </tr>
+        <tr>
+            <td>Data utworzenia</td><td th:text="*{#dates.format(creationTime, 'dd-MM-yyyy HH:mm')}"></td>
+        </tr>
+        <tr>
+            <td>Data rozpoczęcia:</td><td th:text="*{campaignStartDate}"></td>
+        </tr>
+        <tr>
+            <td>Data zakończenia</td><td th:text="*{campaignEndDate}"></td>
+        </tr>
+        <tr>
+            <td>Opis:</td><td th:text="*{description}"></td>
+        </tr>
+    </table>
+    <a th:href="@{|/campaigns/*{id}/update|}"/>
+        <button type="button">Edytuj</button>
+    </a>
+</div>
+</body>
+</html>

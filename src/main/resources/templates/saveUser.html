@@ -7,10 +7,14 @@
 <body>
 <h1>Form</h1>
 <form action="#" th:action="@{/users/add}" th:object="${user}" method="post">
-    <p>Imię: <input type="text" th:field="*{firstName}" /></p>
-    <p>Nazwisko: <input type="text" th:field="*{lastName}" /></p>
-    <p><input type="submit" value="Zapisz użytkownika" /> <input type="reset" value="Reset" /></p>
-    <a th:href="@{|/users|}"/>Anuluj</a>
+    <p>Nazwa użytkownika: <input type="text" th:field="*{username}" /></p>
+    <p>Hasło: <input type="text" th:field="*{password}" /></p>
+    <p>
+        <input type="submit" value="Zapisz użytkownika" />
+        <form>
+            <input type="button" value="Anuluj" onclick="history.back()">
+        </form>
+    </p>
 </form>
 
 
