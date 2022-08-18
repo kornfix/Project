@@ -2,15 +2,15 @@ package pl.university.project.services;
 
 import java.util.List;
 
-public interface DefaultService<T> {
+public interface DefaultService<T,S> {
 
     List<T> getAllObjects();
 
-    T getObjectById(Long id);
+    T getObjectById(S id);
 
-    Long saveObject(T object);
+    S saveObject(T object);
 
-    Long updateObject(T object);
+    S updateObject(T object);
 
-    void deleteObject(Long id);
+    void deleteObject(S id);
 }

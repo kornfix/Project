@@ -12,7 +12,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Service("clientService")
-public class DefaultClientService implements DefaultService<ClientData> {
+public class DefaultClientService implements DefaultService<ClientData,Long> {
 
     @Resource
     private ClientReversConverter clientReversConverter;

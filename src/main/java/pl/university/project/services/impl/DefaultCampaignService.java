@@ -12,7 +12,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Service("campaignService")
-public class DefaultCampaignService implements DefaultService<CampaignData> {
+public class DefaultCampaignService implements DefaultService<CampaignData,Long> {
 
     @Resource
     private CampaignReversConverter campaignReversConverter;
