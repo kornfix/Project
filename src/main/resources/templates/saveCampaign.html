@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Campaign form page</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
 <h1>Formularz</h1>
@@ -19,9 +20,9 @@
     </p>
     <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"/>
     <p>
-        <input type="submit" value="Zapisz" />
+        <input class="btn" type="submit" value="Zapisz" />
         <a th:href="${referer}!=null? ${referer}:'/'"/>
-        <button type="button">Anuluj</button>
+        <button class="btn" type="button">Anuluj</button>
         </a>
     </p>
 
