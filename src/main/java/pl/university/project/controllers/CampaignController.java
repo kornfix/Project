@@ -42,7 +42,7 @@ public class CampaignController {
 
 
     @PostMapping(value = "/add")
-    public String addCampaign(@Valid @ModelAttribute("Campaign") CampaignData campaignData, BindingResult result, Model model) {
+    public String addCampaign(@Valid @ModelAttribute("campaign") CampaignData campaignData, BindingResult result, Model model) {
         if (result.hasErrors()) {
 //            setCampaignControllerAllCategories(model);
             return "saveCampaign";
@@ -62,13 +62,13 @@ public class CampaignController {
     }
 
     @PutMapping("/{campaignId}/update")
-    public String updateCampaign(@PathVariable Long campaignId, @ModelAttribute("campaign") CampaignData campaignData,
+    public String updateCampaign(@PathVariable Long campaignId,@Valid @ModelAttribute("campaign") CampaignData campaignData,
                                BindingResult result, Model model) {
+        campaignData.setId(campaignId);
         if (result.hasErrors()) {
 //            setCampaignControllerAllCategories(model);
             return "saveCampaign";
         }
-        campaignData.setId(campaignId);
         return "redirect:/campaigns/" + defaultCampaignService.updateObject(campaignData);
     }
 

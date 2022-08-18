@@ -14,7 +14,6 @@ public class DefaultCampaignReversPopulator implements Populator<CampaignData, C
         if (source.getId() == null) {
             target.setCreationTime(Timestamp.from(Instant.now()));
         }
-        target.setId(source.getId());
         target.setCampaignEndDate(source.getCampaignEndDate());
         target.setCampaignStartDate(source.getCampaignStartDate());
         target.setTitle(source.getTitle());

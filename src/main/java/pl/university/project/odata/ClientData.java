@@ -12,13 +12,13 @@ public class ClientData {
     private Long id;
 
     @NotNull(message = "Imię nie może być puste!")
-    @NotEmpty(message = "Imię nie może być puste!")
+    @NotBlank(message = "Imię nie może być puste!")
     @Size(max = 50, message = "Imię może się składać tylko z 50 znaków!")
     @Pattern(regexp = "[a-zA-Z]+", message = "Imię może składać się tylko z liter!")
     private String firstName;
 
     @NotNull(message = "Nazwisko nie może być puste!")
-    @NotEmpty(message = "Nazwisko nie może być puste!")
+    @NotBlank(message = "Nazwisko nie może być puste!")
     @Size(max = 50, message = "Nazwisko może się składać tylko z 50 znaków!")
     @Pattern(regexp = "[a-zA-Z]+", message = "Nazwisko może składać się tylko z liter!")
     private String lastName;

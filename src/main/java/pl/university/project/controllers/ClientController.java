@@ -64,14 +64,14 @@ public class ClientController {
     }
 
     @PutMapping("/{clientId}/update")
-    public String updateClient(@PathVariable Long clientId, @ModelAttribute("client") ClientData clientData,
-                               BindingResult result, Model model) {
+    public String updateClient(@PathVariable Long clientId,@Valid @ModelAttribute("client") ClientData clientData
+            , BindingResult result, Model model) {
+        clientData.setId(clientId);
         if (result.hasErrors()) {
             setClientControllerAllCategories(model);
             return "saveClient";
         }
-        clientData.setId(clientId);
-        return "redirect:/clients/" +defaultClientService.updateObject(clientData);
+        return "redirect:/clients/" + defaultClientService.updateObject(clientData);
     }
 
     @DeleteMapping("/{clientId}/delete")

@@ -7,7 +7,7 @@
 <body>
 <h1>Form</h1>
 <form action="#" th:object="${client}" th:action="${client.Id} != null? @{|/clients/${client.id}/update|} : @{/clients/add}"
-      th:method="${client.Id} != null? PUT : POST">
+      th:method="${client.id} != null? PUT : POST">
     <p>Imię: <input type="text" th:field="*{firstName}" /></p>
     <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"/>
     <p>Nazwisko: <input type="text" th:field="*{lastName}" /></p>
