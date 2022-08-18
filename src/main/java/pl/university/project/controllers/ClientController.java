@@ -36,15 +36,17 @@ public class ClientController {
     }
 
     @GetMapping(value = "/add")
-    public String addClient(Model model) {
+    public String addClient(Model model, @RequestHeader(value = "referer", required = false) final String referer) {
         setClientControllerAllCategories(model);
+        model.addAttribute("referer", referer);
         model.addAttribute("client", new ClientData());
         return "saveClient";
     }
 
 
     @PostMapping(value = "/add")
-    public String addClient(@Valid @ModelAttribute("client") ClientData clientData, BindingResult result, Model model) {
+    public String addClient(@Valid @ModelAttribute("client") ClientData clientData, BindingResult result, Model model,
+     @ModelAttribute("referer") String referer) {
         if (result.hasErrors()) {
             setClientControllerAllCategories(model);
             return "saveClient";
@@ -53,8 +55,10 @@ public class ClientController {
     }
 
     @GetMapping(value = "/{clientId}/update")
-    public String updateClient(@PathVariable Long clientId, Model model) {
+    public String updateClient(@PathVariable Long clientId, Model model,
+                               @RequestHeader(value = "referer", required = false) final String referer) {
         setClientControllerAllCategories(model);
+        model.addAttribute("referer", referer);
         ClientData clientData = defaultClientService.getObjectById(clientId);
         if (clientData == null) {
             return "notFound";
@@ -65,7 +69,7 @@ public class ClientController {
 
     @PutMapping("/{clientId}/update")
     public String updateClient(@PathVariable Long clientId,@Valid @ModelAttribute("client") ClientData clientData
-            , BindingResult result, Model model) {
+            , BindingResult result, Model model, @ModelAttribute("referer") String referer) {
         clientData.setId(clientId);
         if (result.hasErrors()) {
             setClientControllerAllCategories(model);

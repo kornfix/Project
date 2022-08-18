@@ -8,20 +8,21 @@
 <h1>Formularz</h1>
 <form action="#" th:object="${campaign}" th:action="${campaign.id} != null? @{|/campaigns/${campaign.id}/update|} : @{/campaigns/add}"
       th:method="${campaign.id} != null? PUT : POST">
+    <input type="hidden" th:value="${referer}" name="referer"/>
     <p>Imię: <input type="text" th:field="*{title}" /></p>
     <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"/>
     <p>Data rozpoczęcia: <input type="date" th:field="*{campaignStartDate}" /></p>
     <p  th:if="${#fields.hasErrors('campaignStartDate')}">Data rozpoczęcia nie może być pusta!</p>
     <p>Data zakończenia: <input type="date" th:field="*{campaignEndDate}" /></p>
-    <p  th:if="${#fields.hasErrors('campaignStartDate')}">Data zakończenia nie może być pusta!</p>
+    <p  th:if="${#fields.hasErrors('campaignEndDate')}">Data zakończenia nie może być pusta!</p>
     <p>Opis: <textarea th:field="*{description}" rows="4" cols="50"></textarea>
     </p>
     <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"/>
     <p>
         <input type="submit" value="Zapisz" />
-        <form>
-            <input type="button" value="Anuluj" onclick="history.back()">
-        </form>
+        <a th:href="${referer}!=null? ${referer}:'/'"/>
+        <button type="button">Anuluj</button>
+        </a>
     </p>
 
 </form>

@@ -34,15 +34,17 @@ public class CampaignController {
     }
 
     @GetMapping(value = "/add")
-    public String addCampaign(Model model) {
+    public String addCampaign(Model model,@RequestHeader(value = "referer", required = false) final String referer) {
 //        setCampaignControllerAllCategories(model);
+        model.addAttribute("referer", referer);
         model.addAttribute("campaign", new CampaignData());
         return "saveCampaign";
     }
 
 
     @PostMapping(value = "/add")
-    public String addCampaign(@Valid @ModelAttribute("campaign") CampaignData campaignData, BindingResult result, Model model) {
+    public String addCampaign(@Valid @ModelAttribute("campaign") CampaignData campaignData, BindingResult result,
+                              Model model, @ModelAttribute("referer") String referer) {
         if (result.hasErrors()) {
 //            setCampaignControllerAllCategories(model);
             return "saveCampaign";
@@ -51,8 +53,10 @@ public class CampaignController {
     }
 
     @GetMapping(value = "/{campaignId}/update")
-    public String updateCampaign(@PathVariable Long campaignId, Model model) {
+    public String updateCampaign(@PathVariable Long campaignId, Model model,
+                                 @RequestHeader(value = "referer", required = false) final String referer) {
 //        setCampaignControllerAllCategories(model);
+        model.addAttribute("referer", referer);
         CampaignData campaignData = defaultCampaignService.getObjectById(campaignId);
         if (campaignData == null) {
             return "notFound";
@@ -62,8 +66,8 @@ public class CampaignController {
     }
 
     @PutMapping("/{campaignId}/update")
-    public String updateCampaign(@PathVariable Long campaignId,@Valid @ModelAttribute("campaign") CampaignData campaignData,
-                               BindingResult result, Model model) {
+    public String updateCampaign(@PathVariable Long campaignId, @Valid @ModelAttribute("campaign") CampaignData campaignData,
+                                 BindingResult result, Model model, @ModelAttribute("referer") String referer) {
         campaignData.setId(campaignId);
         if (result.hasErrors()) {
 //            setCampaignControllerAllCategories(model);

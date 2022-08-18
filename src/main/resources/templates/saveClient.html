@@ -6,8 +6,9 @@
 </head>
 <body>
 <h1>Form</h1>
-<form action="#" th:object="${client}" th:action="${client.Id} != null? @{|/clients/${client.id}/update|} : @{/clients/add}"
+<form action="#" th:object="${client}" th:action="${client.id} != null? @{|/clients/${client.id}/update|} : @{/clients/add}"
       th:method="${client.id} != null? PUT : POST">
+    <input type="hidden" th:value="${referer}" name="referer"/>
     <p>Imię: <input type="text" th:field="*{firstName}" /></p>
     <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"/>
     <p>Nazwisko: <input type="text" th:field="*{lastName}" /></p>
@@ -60,9 +61,9 @@
     <p th:if="${#fields.hasErrors('hasConsumerCredit')}" th:errors="*{hasConsumerCredit}"/>
     <p>
         <input type="submit" value="Zapisz" />
-        <form>
-            <input type="button" value="Anuluj" onclick="history.back()">
-        </form>
+        <a th:href="${referer}!=null? ${referer}:'/'"/>
+        <button type="button">Anuluj</button>
+        </a>
     </p>
 
 </form>

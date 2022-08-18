@@ -7,16 +7,15 @@
 <body>
 <h1>Form</h1>
 <form action="#" th:action="@{/users/add}" th:object="${user}" method="post">
+    <input type="hidden" th:value="${referer}" name="referer"/>
     <p>Nazwa użytkownika: <input type="text" th:field="*{username}" /></p>
     <p>Hasło: <input type="text" th:field="*{password}" /></p>
     <p>
         <input type="submit" value="Zapisz użytkownika" />
-        <form>
-            <input type="button" value="Anuluj" onclick="history.back()">
-        </form>
+        <a th:href="${referer}!=null? ${referer}:'/'"/>
+        <button type="button">Anuluj</button>
+        </a>
     </p>
 </form>
-
-
 </body>
 </html>
