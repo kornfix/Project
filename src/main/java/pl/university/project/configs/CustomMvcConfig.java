@@ -19,7 +19,7 @@ public class CustomMvcConfig implements WebMvcConfigurer {
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/users").setViewName("users");
         registry.addViewController("/clients").setViewName("clients");
-        registry.addViewController("/campaigns").setViewName("campaigns");
+        registry.addViewController("/campaigns/").setViewName("campaigns");
         registry.addViewController("/error").setViewName("error");
         registry.addViewController("/notFound").setViewName("notFound");
     }
@@ -29,6 +29,8 @@ public class CustomMvcConfig implements WebMvcConfigurer {
         return container -> {
 //            container.addErrorPages(new ErrorPage(HttpStatus.BAD_REQUEST,
 //                    "/error"));
+            container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "/error"));
             container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND,
                     "/notFound"));
             container.addErrorPages(new ErrorPage(HttpStatus.METHOD_NOT_ALLOWED,

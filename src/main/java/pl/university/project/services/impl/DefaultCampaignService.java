@@ -9,7 +9,7 @@ import pl.university.project.repositories.CampaignRepository;
 import pl.university.project.services.DefaultService;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.util.Collection;
 
 @Service("campaignService")
 public class DefaultCampaignService implements DefaultService<CampaignData,Long> {
@@ -24,7 +24,7 @@ public class DefaultCampaignService implements DefaultService<CampaignData,Long>
     private CampaignRepository campaignRepository;
 
     @Override
-    public List<CampaignData> getAllObjects() {
+    public Collection<CampaignData> getAllObjects() {
         return campaignConverter.convertAll(campaignRepository.findAll());
     }
 

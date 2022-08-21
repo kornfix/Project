@@ -1,7 +1,6 @@
 package pl.university.project.odata;
 
 import lombok.Data;
-import pl.university.project.models.ClientCampaign;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -27,5 +26,5 @@ public class CampaignData {
     private Date campaignStartDate;
     private Date campaignEndDate;
 
-    private Set<ClientCampaign> campaigns = new HashSet<>();
+    private Set<ClientCampaignData> campaigns = new HashSet<>();
 }

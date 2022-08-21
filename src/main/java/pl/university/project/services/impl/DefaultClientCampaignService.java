@@ -10,7 +10,8 @@ import pl.university.project.repositories.ClientCampaignRepository;
 import pl.university.project.services.DefaultService;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Service("clientCampaignService")
 public class DefaultClientCampaignService implements DefaultService<ClientCampaignData, ClientCampaignId> {
@@ -25,8 +26,12 @@ public class DefaultClientCampaignService implements DefaultService<ClientCampai
     private ClientCampaignRepository clientCampaignRepository;
 
     @Override
-    public List<ClientCampaignData> getAllObjects() {
+    public Collection<ClientCampaignData> getAllObjects() {
         return clientCampaignConverter.convertAll(clientCampaignRepository.findAll());
+    }
+
+    public Collection<Long> getAllParticipantsIDs() {
+        return clientCampaignRepository.findAll().stream().map(e -> e.getClient().getId()).collect(Collectors.toList());
     }
 
     @Override
@@ -55,6 +60,16 @@ public class DefaultClientCampaignService implements DefaultService<ClientCampai
             return null;
         }
         clientCampaignReversConverter.convert(clientCampaignData, clientCampaign);
+        clientCampaignRepository.saveAndFlush(clientCampaign);
+        return clientCampaign.getCampaignParticipantId();
+    }
+
+    public ClientCampaignId changeNumberOfContactsDuringCampaign(ClientCampaignId clientCampaignID, Long valueToAppend) {
+        ClientCampaign clientCampaign = getClientCampaignById(clientCampaignID);
+        if (clientCampaign == null) {
+            return null;
+        }
+        clientCampaign.setNumberOfContactsDuringCampaign(clientCampaign.getNumberOfContactsDuringCampaign()+valueToAppend);
         clientCampaignRepository.saveAndFlush(clientCampaign);
         return clientCampaign.getCampaignParticipantId();
     }

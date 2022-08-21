@@ -7,6 +7,7 @@ import pl.university.project.odata.CampaignData;
 import pl.university.project.populators.Populator;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,8 +33,8 @@ public class CampaignConverter implements Converter<Campaign, CampaignData> {
     }
 
     @Override
-    public List<CampaignData> convertAll(List<Campaign> source) {
-        List<CampaignData> targetList = new ArrayList<>();
+    public Collection<CampaignData> convertAll(Collection<Campaign> source) {
+        Collection<CampaignData> targetList = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(source)) {
             targetList.addAll(source.stream().map(this::convert).collect(Collectors.toList()));
         }
@@ -41,7 +42,7 @@ public class CampaignConverter implements Converter<Campaign, CampaignData> {
     }
 
     @Override
-    public List<CampaignData> convertAll(List<Campaign> source, List<CampaignData> target) {
+    public Collection<CampaignData> convertAll(Collection<Campaign> source, Collection<CampaignData> target) {
         if (CollectionUtils.isNotEmpty(source)) {
             target.addAll(source.stream().map(this::convert).collect(Collectors.toList()));
         }

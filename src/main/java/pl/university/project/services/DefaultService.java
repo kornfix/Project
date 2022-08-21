@@ -1,10 +1,10 @@
 package pl.university.project.services;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface DefaultService<T,S> {
 
-    List<T> getAllObjects();
+    Collection<T> getAllObjects();
 
     T getObjectById(S id);
 

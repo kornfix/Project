@@ -7,6 +7,7 @@ import pl.university.project.odata.ClientData;
 import pl.university.project.populators.Populator;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,8 +33,8 @@ public class ClientReversConverter implements Converter<ClientData, Client> {
     }
 
     @Override
-    public List<Client> convertAll(List<ClientData> source) {
-        List<Client> targetList = new ArrayList<>();
+    public Collection<Client> convertAll(Collection<ClientData> source) {
+        Collection<Client> targetList = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(source)) {
             targetList.addAll(source.stream().map(this::convert).collect(Collectors.toList()));
         }
@@ -41,7 +42,7 @@ public class ClientReversConverter implements Converter<ClientData, Client> {
     }
 
     @Override
-    public List<Client> convertAll(List<ClientData> source, List<Client> target) {
+    public Collection<Client> convertAll(Collection<ClientData> source, Collection<Client> target) {
         if (CollectionUtils.isNotEmpty(source)) {
             target.addAll(source.stream().map(this::convert).collect(Collectors.toList()));
         }

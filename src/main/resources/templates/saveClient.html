@@ -50,7 +50,7 @@
     </p>
     <p  th:if="${#fields.hasErrors('martialStatus')}" th:errors="*{martialStatus}"/>
     <p>Saldo: <input type="number" th:field="*{balance}" step="0.01"></p>
-    <p th:if="${#fields.hasErrors('balance')}" th:errors="*{balance}"/>
+    <p  th:if="${#fields.hasErrors('balance')}">Saldo klienta nie może być puste!</p>
     <p>Zalega ze spłatami: <input type="checkbox"  th:field="*{defaultCreditStatus}"
                                   th:checked="*{defaultCreditStatus}" /></p>
     <p th:if="${#fields.hasErrors('defaultCreditStatus')}" th:errors="*{defaultCreditStatus}"/>

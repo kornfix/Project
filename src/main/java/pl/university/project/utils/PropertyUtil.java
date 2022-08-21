@@ -1,6 +1,10 @@
 package pl.university.project.utils;
 
+import pl.university.project.odata.CampaignData;
+import pl.university.project.odata.ClientData;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public final class PropertyUtil {
@@ -59,6 +63,31 @@ public final class PropertyUtil {
         contactTypes.add("Telefoniczny");
         contactTypes.add("Nie wiadomo");
         return contactTypes;
+    }
+
+    public static boolean validateClient(ClientData clientData) {
+        return clientData != null && clientData.getId() != null
+                && clientData.getFirstName() != null && clientData.getLastName()!=null;
+    }
+
+    public static boolean clientNotWithIDs(ClientData clientData, Collection<Long> exceptIDs) {
+        return exceptIDs.stream().allMatch( id -> clientNotWithID(clientData,id));
+    }
+
+    public static boolean clientNotWithID(ClientData clientData, Long exceptIDs) {
+        return !clientData.getId().equals(exceptIDs);
+    }
+
+
+
+    public static boolean validateCampaign(CampaignData campaignData) {
+        return campaignData != null && campaignData.getId() != null
+                && campaignData.getTitle() != null && campaignData.getCreationTime()!=null;
+    }
+
+    public static boolean validateOldCampaign(CampaignData comparedCampaignData, CampaignData thisCampaignData) {
+        return validateCampaign(comparedCampaignData) &&
+                comparedCampaignData.getCampaignEndDate().before(thisCampaignData.getCampaignEndDate());
     }
 
 }

@@ -7,6 +7,7 @@ import pl.university.project.odata.ClientCampaignData;
 import pl.university.project.populators.Populator;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,8 +33,8 @@ public class ClientCampaignReversConverter implements Converter<ClientCampaignDa
     }
 
     @Override
-    public List<ClientCampaign> convertAll(List<ClientCampaignData> source) {
-        List<ClientCampaign> targetList = new ArrayList<>();
+    public Collection<ClientCampaign> convertAll(Collection<ClientCampaignData> source) {
+        Collection<ClientCampaign> targetList = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(source)) {
             targetList.addAll(source.stream().map(this::convert).collect(Collectors.toList()));
         }
@@ -41,7 +42,7 @@ public class ClientCampaignReversConverter implements Converter<ClientCampaignDa
     }
 
     @Override
-    public List<ClientCampaign> convertAll(List<ClientCampaignData> source, List<ClientCampaign> target) {
+    public Collection<ClientCampaign> convertAll(Collection<ClientCampaignData> source, Collection<ClientCampaign> target) {
         if (CollectionUtils.isNotEmpty(source)) {
             target.addAll(source.stream().map(this::convert).collect(Collectors.toList()));
         }

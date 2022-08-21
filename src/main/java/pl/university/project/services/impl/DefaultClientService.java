@@ -9,7 +9,7 @@ import pl.university.project.repositories.ClientRepository;
 import pl.university.project.services.DefaultService;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.util.Collection;
 
 @Service("clientService")
 public class DefaultClientService implements DefaultService<ClientData,Long> {
@@ -24,7 +24,7 @@ public class DefaultClientService implements DefaultService<ClientData,Long> {
     private ClientRepository clientRepository;
 
     @Override
-    public List<ClientData> getAllObjects() {
+    public Collection<ClientData> getAllObjects() {
         return clientConverter.convertAll(clientRepository.findAll());
     }
 

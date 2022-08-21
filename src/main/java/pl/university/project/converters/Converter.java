@@ -1,6 +1,6 @@
 package pl.university.project.converters;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface Converter<S, T> {
 
@@ -8,7 +8,7 @@ public interface Converter<S, T> {
 
     T convert(S source, T target);
 
-    List<T> convertAll(List<S> source);
+    Collection<T> convertAll(Collection<S> source);
 
-    List<T> convertAll(List<S> source, List<T> target);
+    Collection<T> convertAll(Collection<S> source, Collection<T> target);
 }

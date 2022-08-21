@@ -1,7 +1,6 @@
 package pl.university.project.odata;
 
 import lombok.Data;
-import pl.university.project.models.ClientCampaign;
 
 import javax.validation.constraints.*;
 import java.util.HashSet;
@@ -55,8 +54,8 @@ public class ClientData {
     private Boolean hasMortgage;
     @NotNull(message = "Informacja o tym, czy posiada kredyt konsumpcyjny,  nie może być pusta!")
     private Boolean hasConsumerCredit;
-    @NotNull(message = "Poziom wykształcenia nie może być pusty!")
+    @NotNull(message = "Saldo klienta nie może być puste!")
     private Double balance;
 
-    private Set<ClientCampaign> campaigns = new HashSet<>();
+    private Set<ClientCampaignData> campaigns = new HashSet<>();
 }
