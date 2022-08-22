@@ -1,14 +1,15 @@
 package pl.university.project.models;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
+import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity(name = "clientCampaigns")
 @Getter
@@ -32,6 +33,9 @@ public class ClientCampaign {
     private Long numberOfContactsDuringCampaign;
 
     private Date lastContactDate;
+
+    @OneToMany(mappedBy = "clientCampaign", cascade=CascadeType.ALL)
+    private Set<Forecast> forecasts;
 
     @Override
     public boolean equals(Object o) {
