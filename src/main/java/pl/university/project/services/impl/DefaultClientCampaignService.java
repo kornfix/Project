@@ -50,7 +50,7 @@ public class DefaultClientCampaignService implements DefaultService<ClientCampai
         }
         ClientCampaign clientCampaign = clientCampaignRepository.saveAndFlush(clientCampaignReversConverter.
                 convert(clientCampaignData));
-        return clientCampaign.getCampaignParticipantId();
+        return clientCampaign.getClientCampaignId();
     }
 
     @Override
@@ -61,7 +61,7 @@ public class DefaultClientCampaignService implements DefaultService<ClientCampai
         }
         clientCampaignReversConverter.convert(clientCampaignData, clientCampaign);
         clientCampaignRepository.saveAndFlush(clientCampaign);
-        return clientCampaign.getCampaignParticipantId();
+        return clientCampaign.getClientCampaignId();
     }
 
     public ClientCampaignId changeNumberOfContactsDuringCampaign(ClientCampaignId clientCampaignID, Long valueToAppend) {
@@ -71,7 +71,7 @@ public class DefaultClientCampaignService implements DefaultService<ClientCampai
         }
         clientCampaign.setNumberOfContactsDuringCampaign(clientCampaign.getNumberOfContactsDuringCampaign()+valueToAppend);
         clientCampaignRepository.saveAndFlush(clientCampaign);
-        return clientCampaign.getCampaignParticipantId();
+        return clientCampaign.getClientCampaignId();
     }
 
     @Override

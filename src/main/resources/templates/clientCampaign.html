@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User site</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+<h1><h1>
+<div th:object="${clientCampaign}">
+    <table>
+        <tr>
+            <td>Imię</td><td th:text="*{client.firstName}"></td>
+        </tr>
+        <tr>
+            <td>Nazwisko</td><td th:text="*{client.lastName}"></td>
+        </tr>
+        <tr>
+            <td>Najnowsza kampania</td><td th:text="*{campaign.title}"></td>
+        </tr>
+        <tr>
+            <td>Czas trwania ostatniego kontaktu (w sekundach)</td><td th:text="*{callDurationInSeconds}"></td>
+        </tr>
+        <tr>
+            <td>Liczba kontaktów:</td><td th:text="*{numberOfContactsDuringCampaign}"></td>
+        </tr>
+        <tr>
+            <td>Data ostatniego kontaktu:</td><td th:text="*{lastContactDate}"></td>
+        </tr>
+    </table>
+    <a th:href="@{|/campaigns/*{clientCampaignId.campaignId}/participants/*{clientCampaignId.clientId}/update|}"/>
+        <button type="button">Edytuj</button>
+    </a>
+</div>
+</body>
+</html>

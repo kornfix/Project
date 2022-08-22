@@ -18,7 +18,7 @@ public class DefaultClientCampaignReversPopulator implements Populator<ClientCam
 
     @Override
     public void populate(ClientCampaignData source, ClientCampaign target) {
-        target.setCampaignParticipantId(source.getClientCampaignId());
+        target.setClientCampaignId(source.getClientCampaignId());
         if (source.getClient() != null) {
             target.setClient(clientReversConverter.convert(source.getClient()));
         }

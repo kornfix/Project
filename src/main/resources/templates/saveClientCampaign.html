@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Save user page</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h1 th:text="|Dodaj uczestnika do kampanii '${clientCampaign.campaign.title}'|" ></h1>
+<form action="#" th:object="${clientCampaign}" th:action="${clientCampaign.clientCampaignId.clientId} != null?
+@{|/campaigns/${clientCampaign.clientCampaignId.campaignId}/participants/${clientCampaign.clientCampaignId.clientId}/update|} :
+@{|/campaigns/${clientCampaign.clientCampaignId.campaignId}/participants/add|}"
+      th:method="${clientCampaign.clientCampaignId.clientId} != null? PUT : POST">
+
+    <p th:if="*{clientCampaignId.clientId}==null">Wybierz klienta:
+        <select th:field="*{clientCampaignId.clientId}">
+            <option th:each="option : ${clients}" th:value="${option.id}" th:text="|${option.firstName} ${option.lastName}|">
+            </option>
+        </select>
+    </p>
+    <p  th:if="${#fields.hasErrors('client')}" th:errors="*{client}"/>
+    <p>Czas trwania ostatniego kontaktu (w sekundach): <input type="number" th:field="*{callDurationInSeconds}" min="0"/></p>
+    <p  th:if="${#fields.hasErrors('callDurationInSeconds')}">Czas trwania ostatniego kontaktu nie może być pusty, ani mniejszy od zera!</p>
+    <p>Liczba kontaktów podczas kampanii: <input type="number" th:field="*{numberOfContactsDuringCampaign}" min="0"/></p>
+    <p  th:if="${#fields.hasErrors('numberOfContactsDuringCampaign')}">Liczba kontaktów nie może być pusta, ani mniejsza od zera!</p>
+    <p>Data ostatniego kontaktu: <input type="date" th:field="*{lastContactDate}" /></p>
+    <p  th:if="${#fields.hasErrors('lastContactDate')}">Data ostatniego kontaktu nie może być pusta!</p>
+    <p>
+        <input type="submit" value="Zapisz" />
+        <a th:href="${referer}!=null? ${referer}:'/'"/>
+        <button type="button">Anuluj</button>
+        </a>
+    </p>
+
+</form>
+
+
+</body>
+</html>

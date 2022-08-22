@@ -18,7 +18,7 @@ import java.util.Objects;
 public class ClientCampaign {
 
     @EmbeddedId
-    private ClientCampaignId campaignParticipantId = new ClientCampaignId();
+    private ClientCampaignId clientCampaignId = new ClientCampaignId();
 
     @ManyToOne
     @MapsId("clientId")
@@ -38,11 +38,11 @@ public class ClientCampaign {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         ClientCampaign that = (ClientCampaign) o;
-        return campaignParticipantId != null && Objects.equals(campaignParticipantId, that.campaignParticipantId);
+        return clientCampaignId != null && Objects.equals(clientCampaignId, that.clientCampaignId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(campaignParticipantId);
+        return Objects.hash(clientCampaignId);
     }
 }

@@ -18,7 +18,7 @@ public class DefaultClientCampaignPopulator implements Populator<ClientCampaign,
 
     @Override
     public void populate(ClientCampaign source, ClientCampaignData target) {
-        target.setClientCampaignId(source.getCampaignParticipantId());
+        target.setClientCampaignId(source.getClientCampaignId());
         if (source.getClient() != null) {
             target.setClient(clientConverter.convert(source.getClient()));
         }
