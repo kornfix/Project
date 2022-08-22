@@ -1,6 +1,6 @@
 package pl.university.project.utils;
 
-import pl.university.project.odata.CampaignData;
+import pl.university.project.models.Campaign;
 import pl.university.project.odata.ClientData;
 
 import java.util.ArrayList;
@@ -80,14 +80,14 @@ public final class PropertyUtil {
 
 
 
-    public static boolean validateCampaign(CampaignData campaignData) {
-        return campaignData != null && campaignData.getId() != null
-                && campaignData.getTitle() != null && campaignData.getCreationTime()!=null;
+    public static boolean validateCampaign(Campaign campaign) {
+        return campaign != null && campaign.getId() != null
+                && campaign.getTitle() != null && campaign.getCreationTime()!=null;
     }
 
-    public static boolean validateOldCampaign(CampaignData comparedCampaignData, CampaignData thisCampaignData) {
-        return validateCampaign(comparedCampaignData) &&
-                comparedCampaignData.getCampaignEndDate().before(thisCampaignData.getCampaignEndDate());
+    public static boolean validateOldCampaign(Campaign comparedCampaign, Campaign thisCampaign) {
+        return validateCampaign(comparedCampaign) &&
+                comparedCampaign.getCampaignEndDate().before(thisCampaign.getCampaignEndDate());
     }
 
 }

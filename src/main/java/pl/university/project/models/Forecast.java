@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity(name = "forecasts")
 @Getter
@@ -18,6 +19,7 @@ public class Forecast {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Timestamp creationTime;
     private String contactType;
     private Integer age;
     private String job;
@@ -32,8 +34,9 @@ public class Forecast {
     private Long numberOfContactsDuringPreviousCampaign;
     private Date lastContactDate;
     private Date lastContactDateFromPreviousCampaign;
-    private String previousCampaignForeCast;
+    private String previousCampaignForecast;
     private String forecastOutcome;
+    private Double forecastProbability;
 
     @ManyToOne
     private ClientCampaign clientCampaign;

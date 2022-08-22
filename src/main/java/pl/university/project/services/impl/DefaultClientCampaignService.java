@@ -25,6 +25,10 @@ public class DefaultClientCampaignService implements DefaultService<ClientCampai
     @Resource
     private ClientCampaignRepository clientCampaignRepository;
 
+
+    @Resource
+    private DefaultForecastService forecastService;
+
     @Override
     public Collection<ClientCampaignData> getAllObjects() {
         return clientCampaignConverter.convertAll(clientCampaignRepository.findAll());
@@ -50,6 +54,7 @@ public class DefaultClientCampaignService implements DefaultService<ClientCampai
         }
         ClientCampaign clientCampaign = clientCampaignRepository.saveAndFlush(clientCampaignReversConverter.
                 convert(clientCampaignData));
+        forecastService.createNewPrediction(clientCampaign);
         return clientCampaign.getClientCampaignId();
     }
 
