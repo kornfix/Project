@@ -26,5 +26,6 @@ public class CampaignData {
     private Date campaignStartDate;
     private Date campaignEndDate;
 
+
     private Set<ClientCampaignData> campaigns = new HashSet<>();
 }

@@ -18,13 +18,16 @@ public class DefaultModelDictionaryPopulator implements Populator<Forecast, Hash
         target.put("log_duration", Math.log(source.getCallDurationInSeconds()));
         target.put("log_campaign", Math.log(source.getNumberOfContactsDuringCampaign()));
         target.put("log_pdays", Math.log(source.getNumberOfContactsDuringPreviousCampaign()));
-        target.put("job_Pokojówka", source.getJob().equals("Pokojówka")? 1d : 0d);
-        target.put("job_Przedsiębiorca", source.getJob().equals("Przedsiębiorca")? 1d : 0d);
+        target.put("job_Bezrobotny", source.getJob().equals("Bezrobotny")? 1d : 0d);
+        target.put("job_Pracownik zarządzający", source.getJob().equals("Pracownik na stanowisku kierowniczym")? 1d : 0d);
         target.put("job_Samozatrudniony", source.getJob().equals("Samozatrudniony")? 1d : 0d);
+        target.put("job_Student", source.getJob().equals("Student")? 1d : 0d);
         target.put("education_Wykształcenie średnie", source.getEducationLevel().equals("Wykształcenie średnie")? 1d : 0d);
         target.put("default_Tak", source.getDefaultCreditStatus()? 1d : 0d);
         target.put("housing_Tak", source.getHasMortgage()? 1d : 0d);
+        target.put("contact_Nie podano", source.getContactType().equals("Nie wiadomo")? 1d : 0d);
         target.put("contact_Telefoniczny", source.getContactType().equals("Telefoniczny")? 1d : 0d);
-        target.put("poutcome_Porażka", source.getPreviousCampaignForecast().equals("Porażka")? 1d : 0d);
+        target.put("poutcome_Nie podano", source.getPreviousCampaignOutcome().equals("Nie wiadomo")? 1d : 0d);
+        target.put("poutcome_Porażka", source.getPreviousCampaignOutcome().equals("Porażka")? 1d : 0d);
     }
 }

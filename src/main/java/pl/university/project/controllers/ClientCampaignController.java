@@ -57,6 +57,7 @@ public class ClientCampaignController {
         CampaignData thisCampaignData = defaultCampaignService.getObjectById(campaignId);
         ClientCampaignId clientCampaignId = new ClientCampaignId();
         clientCampaignId.setCampaignId(thisCampaignData.getId());
+        model.addAttribute("outcomes", PropertyUtil.getOutcomesCategories());
         model.addAttribute("referer", referer);
         Collection<ClientData> avaiableClients = getAvailableClientForCampaign();
         if (avaiableClients.size() == 0) {
@@ -86,6 +87,7 @@ public class ClientCampaignController {
         clientCampaignData.setClient(clientData);
         model.addAttribute("clientCampaign", clientCampaignData);
         if (result.hasErrors()) {
+            model.addAttribute("outcomes", PropertyUtil.getOutcomesCategories());
             clientCampaignData.getClientCampaignId().setClientId(null);
             return "saveClientCampaign";
         }
@@ -98,6 +100,7 @@ public class ClientCampaignController {
     public String updateClientCampaign(@PathVariable Long campaignId, @PathVariable Long clientId, Model model,
                                        @RequestHeader(value = "referer", required = false) final String referer) {
         CampaignData thisCampaignData = defaultCampaignService.getObjectById(campaignId);
+        model.addAttribute("outcomes", PropertyUtil.getOutcomesCategories());
         model.addAttribute("referer", referer);
         setCampaignClients(model);
 //        model.addAttribute("oldCampaigns", defaultCampaignService.getAllObjects().stream()
@@ -118,6 +121,7 @@ public class ClientCampaignController {
         setCampaignClients(model);
         clientCampaignData.setClientCampaignId(new ClientCampaignId(campaignId, clientId));
         if (result.hasErrors()) {
+            model.addAttribute("outcomes", PropertyUtil.getOutcomesCategories());
             return "saveClientCampaign";
         }
         defaultClientCampaignService.updateObject(clientCampaignData);

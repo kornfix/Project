@@ -13,6 +13,7 @@ public class ClientCampaignData {
     private ClientCampaignId clientCampaignId;
     private ClientData client;
     private CampaignData campaign;
+    private String campaignOutcome;
 
     @NotNull
     @Min(value = 0)

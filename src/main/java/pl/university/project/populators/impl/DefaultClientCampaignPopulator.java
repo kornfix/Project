@@ -25,6 +25,9 @@ public class DefaultClientCampaignPopulator implements Populator<ClientCampaign,
         if (source.getCampaign() != null) {
             target.setCampaign(campaignConverter.convert(source.getCampaign()));
         }
+        if (source.getCampaignOutcome() != null) {
+            target.setCampaignOutcome(source.getCampaignOutcome());
+        }
         target.setCallDurationInSeconds(source.getCallDurationInSeconds());
         target.setLastContactDate(source.getLastContactDate());
         target.setNumberOfContactsDuringCampaign(source.getNumberOfContactsDuringCampaign());

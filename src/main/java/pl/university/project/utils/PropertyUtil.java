@@ -65,6 +65,15 @@ public final class PropertyUtil {
         return contactTypes;
     }
 
+    public static List<String> getOutcomesCategories() {
+        List<String> outcomes = new ArrayList<>();
+        outcomes.add("Nie wiadomo");
+        outcomes.add("Porażka");
+        outcomes.add("Sukces");
+        outcomes.add("Inny");
+        return outcomes;
+    }
+
     public static boolean validateClient(ClientData clientData) {
         return clientData != null && clientData.getId() != null
                 && clientData.getFirstName() != null && clientData.getLastName()!=null;

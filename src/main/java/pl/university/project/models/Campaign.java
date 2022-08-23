@@ -28,6 +28,7 @@ public class Campaign {
     private Date campaignStartDate;
     private Date campaignEndDate;
 
+
     @OneToMany(mappedBy = "campaign", cascade = CascadeType.ALL)
     private Set<ClientCampaign> clientCampaigns = new HashSet<>();
 

@@ -25,6 +25,9 @@ public class DefaultClientCampaignReversPopulator implements Populator<ClientCam
         if (source.getCampaign() != null) {
             target.setCampaign(campaignReversConverter.convert(source.getCampaign()));
         }
+        if (source.getCampaignOutcome() != null) {
+            target.setCampaignOutcome(source.getCampaignOutcome());
+        }
         target.setCallDurationInSeconds(source.getCallDurationInSeconds());
         target.setLastContactDate(source.getLastContactDate());
         target.setNumberOfContactsDuringCampaign(source.getNumberOfContactsDuringCampaign());

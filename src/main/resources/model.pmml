@@ -2,14 +2,14 @@
 <PMML xmlns="http://www.dmg.org/PMML-4_4" xmlns:data="http://jpmml.org/jpmml-model/InlineTable" version="4.4">
 	<Header>
 		<Application name="JPMML-SkLearn library" version="1.7.2"/>
-		<Timestamp>2022-08-22T16:19:21Z</Timestamp>
+		<Timestamp>2022-08-23T18:12:49Z</Timestamp>
 	</Header>
 	<MiningBuildTask>
 		<Extension name="repr">PMMLPipeline(steps=[('scaler', StandardScaler()),
        ('regressor', XGBClassifier(base_score=0.5, booster='gbtree', colsample_bylevel=0.9,
               colsample_bynode=0.6, colsample_bytree=0.7, gamma=6, gpu_id=-1,
               importance_type='gain', interaction_constraints='',
-              learning_rate=0.300000012, max_delta_step=0, max_depth=6,
+              learning_rate=0.300000012, max_delta_step=0, max_depth=3,
               min_child_weight=13, missing=nan, monotone_constraints='()',
               n_estimators=100, n_jobs=-1, num_parallel_tree=1, random_state=0,
               reg_alpha=0, reg_lambda=1, scale_pos_weight=1, subsample=1.0,
@@ -25,14 +25,16 @@
 		<DataField name="log_duration" optype="continuous" dataType="double"/>
 		<DataField name="log_campaign" optype="continuous" dataType="double"/>
 		<DataField name="log_pdays" optype="continuous" dataType="double"/>
-		<DataField name="job_Pokojówka" optype="continuous" dataType="double"/>
-		<DataField name="job_Przedsiębiorca" optype="continuous" dataType="double"/>
+		<DataField name="job_Bezrobotny" optype="continuous" dataType="double"/>
+		<DataField name="job_Pracownik zarządzający" optype="continuous" dataType="double"/>
 		<DataField name="job_Samozatrudniony" optype="continuous" dataType="double"/>
 		<DataField name="job_Student" optype="continuous" dataType="double"/>
 		<DataField name="education_Wykształcenie średnie" optype="continuous" dataType="double"/>
 		<DataField name="default_Tak" optype="continuous" dataType="double"/>
 		<DataField name="housing_Tak" optype="continuous" dataType="double"/>
+		<DataField name="contact_Nie podano" optype="continuous" dataType="double"/>
 		<DataField name="contact_Telefoniczny" optype="continuous" dataType="double"/>
+		<DataField name="poutcome_Nie podano" optype="continuous" dataType="double"/>
 		<DataField name="poutcome_Porażka" optype="continuous" dataType="double"/>
 	</DataDictionary>
 	<MiningModel functionName="classification" algorithmName="XGBoost (GBTree)" x-mathContext="float">
@@ -43,14 +45,16 @@
 			<MiningField name="log_duration"/>
 			<MiningField name="log_campaign"/>
 			<MiningField name="log_pdays"/>
-			<MiningField name="job_Pokojówka"/>
-			<MiningField name="job_Przedsiębiorca"/>
+			<MiningField name="job_Bezrobotny"/>
+			<MiningField name="job_Pracownik zarządzający"/>
 			<MiningField name="job_Samozatrudniony"/>
 			<MiningField name="job_Student"/>
 			<MiningField name="education_Wykształcenie średnie"/>
 			<MiningField name="default_Tak"/>
 			<MiningField name="housing_Tak"/>
+			<MiningField name="contact_Nie podano"/>
 			<MiningField name="contact_Telefoniczny"/>
+			<MiningField name="poutcome_Nie podano"/>
 			<MiningField name="poutcome_Porażka"/>
 		</MiningSchema>
 		<Segmentation multipleModelMethod="modelChain" missingPredictionTreatment="returnMissing">
@@ -58,26 +62,28 @@
 				<True/>
 				<MiningModel functionName="regression" x-mathContext="float">
 					<MiningSchema>
-						<MiningField name="job_Pokojówka"/>
+						<MiningField name="job_Samozatrudniony"/>
+						<MiningField name="job_Student"/>
+						<MiningField name="default_Tak"/>
 						<MiningField name="age"/>
 						<MiningField name="day_of_year"/>
 						<MiningField name="log_duration"/>
 						<MiningField name="log_campaign"/>
 						<MiningField name="log_pdays"/>
-						<MiningField name="job_Przedsiębiorca"/>
-						<MiningField name="job_Samozatrudniony"/>
-						<MiningField name="job_Student"/>
+						<MiningField name="job_Bezrobotny"/>
+						<MiningField name="job_Pracownik zarządzający"/>
 						<MiningField name="education_Wykształcenie średnie"/>
-						<MiningField name="default_Tak"/>
 						<MiningField name="housing_Tak"/>
+						<MiningField name="contact_Nie podano"/>
 						<MiningField name="contact_Telefoniczny"/>
+						<MiningField name="poutcome_Nie podano"/>
 						<MiningField name="poutcome_Porażka"/>
 					</MiningSchema>
 					<Output>
 						<OutputField name="xgbValue" optype="continuous" dataType="float" isFinalResult="false"/>
 					</Output>
 					<Targets>
-						<Target rescaleConstant="9.314447E-4"/>
+						<Target rescaleConstant="6.4429035E-4"/>
 					</Targets>
 					<LocalTransformations>
 						<DerivedField name="standardScaler(age)" optype="continuous" dataType="double">
@@ -111,9 +117,9 @@
 							<Apply function="/">
 								<Apply function="-">
 									<FieldRef field="log_campaign"/>
-									<Constant dataType="double">0.2761662832309444</Constant>
+									<Constant dataType="double">0.6358963669551441</Constant>
 								</Apply>
-								<Constant dataType="double">0.29724662048265027</Constant>
+								<Constant dataType="double">0.6844356372662092</Constant>
 							</Apply>
 						</DerivedField>
 						<DerivedField name="standardScaler(log_pdays)" optype="continuous" dataType="double">
@@ -125,31 +131,22 @@
 								<Constant dataType="double">2.700912762268433</Constant>
 							</Apply>
 						</DerivedField>
-						<DerivedField name="standardScaler(job_Przedsiębiorca)" optype="continuous" dataType="double">
+						<DerivedField name="standardScaler(job_Bezrobotny)" optype="continuous" dataType="double">
 							<Apply function="/">
 								<Apply function="-">
-									<FieldRef field="job_Przedsiębiorca"/>
-									<Constant dataType="double">0.02790221425828747</Constant>
+									<FieldRef field="job_Bezrobotny"/>
+									<Constant dataType="double">0.03225393574811212</Constant>
 								</Apply>
-								<Constant dataType="double">0.16469268562316935</Constant>
+								<Constant dataType="double">0.17667376538940008</Constant>
 							</Apply>
 						</DerivedField>
-						<DerivedField name="standardScaler(job_Samozatrudniony)" optype="continuous" dataType="double">
+						<DerivedField name="standardScaler(job_Pracownik zarządzający)" optype="continuous" dataType="double">
 							<Apply function="/">
 								<Apply function="-">
-									<FieldRef field="job_Samozatrudniony"/>
-									<Constant dataType="double">0.0359656981953155</Constant>
+									<FieldRef field="job_Pracownik zarządzający"/>
+									<Constant dataType="double">0.23217714066299758</Constant>
 								</Apply>
-								<Constant dataType="double">0.18620463675386545</Constant>
-							</Apply>
-						</DerivedField>
-						<DerivedField name="standardScaler(job_Student)" optype="continuous" dataType="double">
-							<Apply function="/">
-								<Apply function="-">
-									<FieldRef field="job_Student"/>
-									<Constant dataType="double">0.0331498784077819</Constant>
-								</Apply>
-								<Constant dataType="double">0.17902783015311102</Constant>
+								<Constant dataType="double">0.4222214063930822</Constant>
 							</Apply>
 						</DerivedField>
 						<DerivedField name="standardScaler(education_Wykształcenie średnie)" optype="continuous" dataType="double">
@@ -161,15 +158,6 @@
 								<Constant dataType="double">0.4999253543822633</Constant>
 							</Apply>
 						</DerivedField>
-						<DerivedField name="standardScaler(default_Tak)" optype="continuous" dataType="double">
-							<Apply function="/">
-								<Apply function="-">
-									<FieldRef field="default_Tak"/>
-									<Constant dataType="double">0.015998976065531807</Constant>
-								</Apply>
-								<Constant dataType="double">0.12547114740204754</Constant>
-							</Apply>
-						</DerivedField>
 						<DerivedField name="standardScaler(housing_Tak)" optype="continuous" dataType="double">
 							<Apply function="/">
 								<Apply function="-">
@@ -179,6 +167,15 @@
 								<Constant dataType="double">0.49954017379243165</Constant>
 							</Apply>
 						</DerivedField>
+						<DerivedField name="standardScaler(contact_Nie podano)" optype="continuous" dataType="double">
+							<Apply function="/">
+								<Apply function="-">
+									<FieldRef field="contact_Nie podano"/>
+									<Constant dataType="double">0.2059388199155254</Constant>
+								</Apply>
+								<Constant dataType="double">0.4043859819124869</Constant>
+							</Apply>
+						</DerivedField>
 						<DerivedField name="standardScaler(contact_Telefoniczny)" optype="continuous" dataType="double">
 							<Apply function="/">
 								<Apply function="-">
@@ -186,6 +183,15 @@
 									<Constant dataType="double">0.06873160117752464</Constant>
 								</Apply>
 								<Constant dataType="double">0.25299717029464647</Constant>
+							</Apply>
+						</DerivedField>
+						<DerivedField name="standardScaler(poutcome_Nie podano)" optype="continuous" dataType="double">
+							<Apply function="/">
+								<Apply function="-">
+									<FieldRef field="poutcome_Nie podano"/>
+									<Constant dataType="double">0.7440163829514911</Constant>
+								</Apply>
+								<Constant dataType="double">0.43641265432073717</Constant>
 							</Apply>
 						</DerivedField>
 						<DerivedField name="standardScaler(poutcome_Porażka)" optype="continuous" dataType="double">
@@ -212,26 +218,26 @@
 						<DerivedField name="float(standardScaler(log_pdays))" optype="continuous" dataType="float">
 							<FieldRef field="standardScaler(log_pdays)"/>
 						</DerivedField>
-						<DerivedField name="float(standardScaler(job_Przedsiębiorca))" optype="continuous" dataType="float">
-							<FieldRef field="standardScaler(job_Przedsiębiorca)"/>
+						<DerivedField name="float(standardScaler(job_Bezrobotny))" optype="continuous" dataType="float">
+							<FieldRef field="standardScaler(job_Bezrobotny)"/>
 						</DerivedField>
-						<DerivedField name="float(standardScaler(job_Samozatrudniony))" optype="continuous" dataType="float">
-							<FieldRef field="standardScaler(job_Samozatrudniony)"/>
-						</DerivedField>
-						<DerivedField name="float(standardScaler(job_Student))" optype="continuous" dataType="float">
-							<FieldRef field="standardScaler(job_Student)"/>
+						<DerivedField name="float(standardScaler(job_Pracownik zarządzający))" optype="continuous" dataType="float">
+							<FieldRef field="standardScaler(job_Pracownik zarządzający)"/>
 						</DerivedField>
 						<DerivedField name="float(standardScaler(education_Wykształcenie średnie))" optype="continuous" dataType="float">
 							<FieldRef field="standardScaler(education_Wykształcenie średnie)"/>
 						</DerivedField>
-						<DerivedField name="float(standardScaler(default_Tak))" optype="continuous" dataType="float">
-							<FieldRef field="standardScaler(default_Tak)"/>
-						</DerivedField>
 						<DerivedField name="float(standardScaler(housing_Tak))" optype="continuous" dataType="float">
 							<FieldRef field="standardScaler(housing_Tak)"/>
 						</DerivedField>
+						<DerivedField name="float(standardScaler(contact_Nie podano))" optype="continuous" dataType="float">
+							<FieldRef field="standardScaler(contact_Nie podano)"/>
+						</DerivedField>
 						<DerivedField name="float(standardScaler(contact_Telefoniczny))" optype="continuous" dataType="float">
 							<FieldRef field="standardScaler(contact_Telefoniczny)"/>
+						</DerivedField>
+						<DerivedField name="float(standardScaler(poutcome_Nie podano))" optype="continuous" dataType="float">
+							<FieldRef field="standardScaler(poutcome_Nie podano)"/>
 						</DerivedField>
 						<DerivedField name="float(standardScaler(poutcome_Porażka))" optype="continuous" dataType="float">
 							<FieldRef field="standardScaler(poutcome_Porażka)"/>
@@ -242,56 +248,32 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(age))"/>
+									<MiningField name="float(standardScaler(day_of_year))"/>
 									<MiningField name="float(standardScaler(log_duration))"/>
-									<MiningField name="float(standardScaler(log_campaign))"/>
-									<MiningField name="float(standardScaler(job_Student))"/>
-									<MiningField name="float(standardScaler(housing_Tak))"/>
-									<MiningField name="float(standardScaler(poutcome_Porażka))"/>
+									<MiningField name="float(standardScaler(log_pdays))"/>
 								</MiningSchema>
-								<Node score="-0.23756346">
+								<Node score="-0.37122303">
 									<True/>
-									<Node score="0.17142859">
-										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="1.6306129"/>
-										<Node score="0.1322034">
-											<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="2.7234912"/>
-											<Node score="0.44615388">
-												<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.025358442"/>
+									<Node score="-0.115240805">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.18941043"/>
+										<Node score="0.25967214">
+											<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="-0.082789965"/>
+											<Node score="0.44466576">
+												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.424959"/>
 											</Node>
 										</Node>
-										<Node score="0.4918033">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.44447315"/>
+										<Node score="0.36965945">
+											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.6739149"/>
 										</Node>
 									</Node>
-									<Node score="-0.38652483">
-										<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
-										<Node score="0.30855748">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.51085037"/>
-										</Node>
-										<Node score="-0.3167109">
-											<SimplePredicate field="float(standardScaler(poutcome_Porażka))" operator="greaterOrEqual" value="1.2354923"/>
-										</Node>
-										<Node score="-0.5104895">
-											<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="0.8862148"/>
+									<Node score="-0.48359075">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.67849344"/>
+										<Node score="-0.15886214">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.88708174"/>
 										</Node>
 									</Node>
-									<Node score="0.27366415">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.43806753"/>
-										<Node score="0.4682081">
-											<SimplePredicate field="float(standardScaler(job_Student))" operator="greaterOrEqual" value="2.6076958"/>
-										</Node>
-										<Node score="0.16056338">
-											<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="-0.42271727"/>
-										</Node>
-									</Node>
-									<Node score="0.020000001">
-										<SimplePredicate field="float(standardScaler(job_Student))" operator="greaterOrEqual" value="2.6076958"/>
-									</Node>
-									<Node score="-0.5416667">
-										<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="0.8862148"/>
-									</Node>
-									<Node score="-0.35639098">
-										<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="-0.42271727"/>
+									<Node score="0.18956523">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.6672778"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -300,51 +282,32 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(age))"/>
-									<MiningField name="float(standardScaler(log_duration))"/>
-									<MiningField name="float(standardScaler(job_Student))"/>
-									<MiningField name="float(standardScaler(housing_Tak))"/>
+									<MiningField name="float(standardScaler(day_of_year))"/>
+									<MiningField name="float(standardScaler(poutcome_Nie podano))"/>
+									<MiningField name="float(standardScaler(poutcome_Porażka))"/>
 								</MiningSchema>
-								<Node score="-0.37765923">
+								<Node score="0.22927509">
 									<True/>
-									<Node score="0.21853508">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.18941043"/>
-										<Node score="-0.13348868">
-											<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
-											<Node score="0.285552">
-												<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.7146562"/>
+									<Node score="-0.13200036">
+										<SimplePredicate field="float(standardScaler(poutcome_Nie podano))" operator="greaterOrEqual" value="-0.5591414"/>
+										<Node score="-0.16690642">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.6024331"/>
+											<Node score="0.063722685">
+												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.88708174"/>
 											</Node>
 										</Node>
-										<Node score="0.32913738">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.52230036"/>
-										</Node>
-										<Node score="0.32811567">
-											<SimplePredicate field="float(standardScaler(job_Student))" operator="greaterOrEqual" value="2.6076958"/>
-										</Node>
-										<Node score="0.40229636">
-											<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="1.6306129"/>
-										</Node>
-										<Node score="0.028420378">
-											<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-0.89141434"/>
+										<Node score="0.24281763">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.6672778"/>
 										</Node>
 									</Node>
-									<Node score="-0.43387917">
-										<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
-										<Node score="-0.2851717">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.64985895"/>
+									<Node score="-0.14757513">
+										<SimplePredicate field="float(standardScaler(poutcome_Porażka))" operator="greaterOrEqual" value="1.2354923"/>
+										<Node score="0.11467372">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.4122823"/>
 										</Node>
 									</Node>
-									<Node score="0.14519185">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.90618604"/>
-										<Node score="0.18727638">
-											<SimplePredicate field="float(standardScaler(job_Student))" operator="greaterOrEqual" value="2.6076958"/>
-										</Node>
-										<Node score="0.1799212">
-											<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="1.5465453"/>
-										</Node>
-										<Node score="-0.17653115">
-											<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-0.97548187"/>
-										</Node>
+									<Node score="0.37618735">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.424959"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -353,86 +316,29 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(log_duration))"/>
-									<MiningField name="float(standardScaler(log_campaign))"/>
-									<MiningField name="float(standardScaler(log_pdays))"/>
-									<MiningField name="float(standardScaler(education_Wykształcenie średnie))"/>
-									<MiningField name="float(standardScaler(default_Tak))"/>
+									<MiningField name="float(standardScaler(day_of_year))"/>
 									<MiningField name="float(standardScaler(housing_Tak))"/>
+									<MiningField name="float(standardScaler(contact_Nie podano))"/>
 								</MiningSchema>
-								<Node score="-0.29735237">
+								<Node score="0.25491917">
 									<True/>
-									<Node score="-0.2705053">
+									<Node score="-0.05978488">
 										<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
-										<Node score="0.41705853">
-											<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="-0.39622977"/>
-											<Node score="-0.09734522">
-												<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.4994429"/>
-												<Node score="-0.25332856">
-													<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="-0.42271727"/>
-													<Node score="-0.22799066">
-														<SimplePredicate field="float(standardScaler(education_Wykształcenie średnie))" operator="greaterOrEqual" value="0.017281473"/>
-														<Node score="0.16542631">
-															<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.096451536"/>
-														</Node>
-													</Node>
-													<Node score="0.22934063">
-														<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.1794084"/>
-													</Node>
-												</Node>
-												<Node score="-0.27657005">
-													<SimplePredicate field="float(standardScaler(education_Wykształcenie średnie))" operator="greaterOrEqual" value="0.017281473"/>
-													<Node score="0.1916252">
-														<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.44447315"/>
-													</Node>
-												</Node>
-												<Node score="0.21963646">
-													<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.018555157"/>
-												</Node>
+										<Node score="-0.3028973">
+											<SimplePredicate field="float(standardScaler(contact_Nie podano))" operator="greaterOrEqual" value="0.7271795"/>
+											<Node score="-0.14379135">
+												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.2981918"/>
 											</Node>
 										</Node>
-										<Node score="-0.15977418">
-											<SimplePredicate field="float(standardScaler(education_Wykształcenie średnie))" operator="greaterOrEqual" value="0.017281473"/>
-										</Node>
-										<Node score="-0.27122658">
-											<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="1.8013942"/>
-										</Node>
-										<Node score="-0.17025383">
-											<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="1.2593877"/>
-										</Node>
-										<Node score="0.21035343">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.69018686"/>
+										<Node score="-0.28800985">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8822044"/>
 										</Node>
 									</Node>
-									<Node score="0.34548798">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="0.41853133"/>
-										<Node score="0.20998634">
-											<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.7440315"/>
-										</Node>
+									<Node score="-0.24867256">
+										<SimplePredicate field="float(standardScaler(contact_Nie podano))" operator="greaterOrEqual" value="0.7271795"/>
 									</Node>
-									<Node score="-0.2989031">
-										<SimplePredicate field="float(standardScaler(default_Tak))" operator="greaterOrEqual" value="3.8574688"/>
-									</Node>
-									<Node score="-0.22469546">
-										<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="-0.42271727"/>
-										<Node score="-0.37370038">
-											<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="1.5555916"/>
-											<Node score="0.26831967">
-												<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.3784646"/>
-											</Node>
-										</Node>
-										<Node score="0.19882235">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.35663047"/>
-										</Node>
-									</Node>
-									<Node score="-0.18782352">
-										<SimplePredicate field="float(standardScaler(education_Wykształcenie średnie))" operator="greaterOrEqual" value="0.017281473"/>
-										<Node score="0.11187725">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.40044266"/>
-										</Node>
-									</Node>
-									<Node score="0.061388697">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.810476"/>
+									<Node score="0.056160185">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.19620039"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -441,61 +347,32 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="job_Pokojówka"/>
-									<MiningField name="float(standardScaler(age))"/>
-									<MiningField name="float(standardScaler(log_campaign))"/>
-									<MiningField name="float(standardScaler(job_Przedsiębiorca))"/>
-									<MiningField name="float(standardScaler(job_Samozatrudniony))"/>
-									<MiningField name="float(standardScaler(education_Wykształcenie średnie))"/>
+									<MiningField name="float(standardScaler(day_of_year))"/>
+									<MiningField name="float(standardScaler(log_duration))"/>
+									<MiningField name="float(standardScaler(housing_Tak))"/>
 								</MiningSchema>
-								<LocalTransformations>
-									<DerivedField name="standardScaler(job_Pokojówka)" optype="continuous" dataType="double">
-										<Apply function="/">
-											<Apply function="-">
-												<FieldRef field="job_Pokojówka"/>
-												<Constant dataType="double">0.023678484576987072</Constant>
-											</Apply>
-											<Constant dataType="double">0.15204543381872557</Constant>
-										</Apply>
-									</DerivedField>
-									<DerivedField name="float(standardScaler(job_Pokojówka))" optype="continuous" dataType="float">
-										<FieldRef field="standardScaler(job_Pokojówka)"/>
-									</DerivedField>
-								</LocalTransformations>
-								<Node score="0.025159542">
+								<Node score="-0.23198889">
 									<True/>
-									<Node score="-0.12651621">
-										<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="1.2593877"/>
-									</Node>
-									<Node score="-0.00214062">
-										<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="-0.42271727"/>
-										<Node score="-0.06860931">
-											<SimplePredicate field="float(standardScaler(education_Wykształcenie średnie))" operator="greaterOrEqual" value="0.017281473"/>
-											<Node score="-0.090515964">
-												<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="0.8862148"/>
-											</Node>
-											<Node score="0.32555988">
-												<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="1.5465453"/>
+									<Node score="0.24609621">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.40308064"/>
+										<Node score="0.23209058">
+											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.98033917"/>
+											<Node score="0.39403614">
+												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.7799072"/>
 											</Node>
 										</Node>
-										<Node score="-0.057141375">
-											<SimplePredicate field="float(standardScaler(job_Samozatrudniony))" operator="greaterOrEqual" value="2.4920664"/>
-										</Node>
-										<Node score="0.22864261">
-											<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="1.6306129"/>
-										</Node>
-										<Node score="-0.2547123">
-											<SimplePredicate field="float(standardScaler(job_Pokojówka))" operator="greaterOrEqual" value="3.1327577"/>
+										<Node score="0.0763197">
+											<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
 										</Node>
 									</Node>
-									<Node score="-0.059246216">
-										<SimplePredicate field="float(standardScaler(job_Pokojówka))" operator="greaterOrEqual" value="3.1327577"/>
+									<Node score="0.071894646">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.6736244"/>
+										<Node score="-0.2518463">
+											<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
+										</Node>
 									</Node>
-									<Node score="-0.14350106">
-										<SimplePredicate field="float(standardScaler(job_Przedsiębiorca))" operator="greaterOrEqual" value="2.8665378"/>
-									</Node>
-									<Node score="0.20320043">
-										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="1.6306129"/>
+									<Node score="-0.38716626">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.8432908"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -507,68 +384,32 @@
 									<MiningField name="float(standardScaler(day_of_year))"/>
 									<MiningField name="float(standardScaler(log_pdays))"/>
 									<MiningField name="float(standardScaler(housing_Tak))"/>
+									<MiningField name="float(standardScaler(contact_Nie podano))"/>
+									<MiningField name="float(standardScaler(poutcome_Nie podano))"/>
+									<MiningField name="float(standardScaler(poutcome_Porażka))"/>
 								</MiningSchema>
-								<Node score="0.019418845">
+								<Node score="0.286475">
 									<True/>
-									<Node score="-0.15984835">
+									<Node score="0.0663509">
+										<SimplePredicate field="float(standardScaler(poutcome_Nie podano))" operator="greaterOrEqual" value="-0.5591414"/>
+										<Node score="-0.19795504">
+											<SimplePredicate field="float(standardScaler(contact_Nie podano))" operator="greaterOrEqual" value="0.7271795"/>
+											<Node score="0.105968155">
+												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.1454935"/>
+											</Node>
+										</Node>
+										<Node score="-0.06406933">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.19620039"/>
+										</Node>
+									</Node>
+									<Node score="0.3049879">
 										<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
-										<Node score="0.21576436">
-											<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.2056398"/>
-											<Node score="0.4283869">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.424959"/>
-												<Node score="-0.16758098">
-													<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8822044"/>
-												</Node>
-											</Node>
-											<Node score="-0.12205849">
-												<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.726673"/>
-											</Node>
-										</Node>
-										<Node score="-0.19278684">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.6024331"/>
-											<Node score="-0.08696726">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.26649997"/>
-												<Node score="0.05280205">
-													<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.88708174"/>
-												</Node>
-											</Node>
-										</Node>
-										<Node score="0.53539705">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.6609395"/>
-											<Node score="0.0107515445">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.9447046"/>
-											</Node>
+										<Node score="-0.038867395">
+											<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.4845564"/>
 										</Node>
 									</Node>
-									<Node score="-0.0129564">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="0.41853133"/>
-										<Node score="0.28718933">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.6989696"/>
-											<Node score="-0.02084037">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8948811"/>
-											</Node>
-										</Node>
-									</Node>
-									<Node score="-0.022084005">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.6024331"/>
-										<Node score="0.2523238">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.88708174"/>
-											<Node score="-0.11301073">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8822044"/>
-											</Node>
-										</Node>
-										<Node score="-0.16128656">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.196778"/>
-										</Node>
-									</Node>
-									<Node score="0.4169617">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.6672778"/>
-										<Node score="0.21386033">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.6658167"/>
-										</Node>
-									</Node>
-									<Node score="-0.20921166">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.8193984"/>
+									<Node score="0.09341508">
+										<SimplePredicate field="float(standardScaler(poutcome_Porażka))" operator="greaterOrEqual" value="1.2354923"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -577,78 +418,23 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(day_of_year))"/>
-									<MiningField name="float(standardScaler(log_pdays))"/>
-									<MiningField name="float(standardScaler(job_Przedsiębiorca))"/>
-									<MiningField name="float(standardScaler(education_Wykształcenie średnie))"/>
-									<MiningField name="float(standardScaler(default_Tak))"/>
-									<MiningField name="float(standardScaler(housing_Tak))"/>
-									<MiningField name="float(standardScaler(poutcome_Porażka))"/>
+									<MiningField name="float(standardScaler(age))"/>
+									<MiningField name="float(standardScaler(log_duration))"/>
+									<MiningField name="float(standardScaler(poutcome_Nie podano))"/>
 								</MiningSchema>
-								<Node score="0.15725379">
+								<Node score="0.028252488">
 									<True/>
-									<Node score="0.2662071">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.0414679"/>
-										<Node score="0.2980393">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.424959"/>
-											<Node score="0.19640516">
-												<SimplePredicate field="float(standardScaler(education_Wykształcenie średnie))" operator="greaterOrEqual" value="0.017281473"/>
-												<Node score="0.2754056">
-													<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.7063804"/>
-												</Node>
-												<Node score="-0.08443919">
-													<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.495777"/>
-												</Node>
-											</Node>
-											<Node score="0.30590415">
-												<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.7325501"/>
-											</Node>
-											<Node score="0.07156429">
-												<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
-											</Node>
-											<Node score="0.07209151">
-												<SimplePredicate field="float(standardScaler(poutcome_Porażka))" operator="greaterOrEqual" value="1.2354923"/>
-											</Node>
-										</Node>
-										<Node score="0.1534886">
-											<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
-											<Node score="-0.15395786">
-												<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.726673"/>
-												<Node score="0.07580984">
-													<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.8664497"/>
-													<Node score="-0.13251609">
-														<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.6024331"/>
-													</Node>
-												</Node>
-											</Node>
-										</Node>
-										<Node score="-0.0809595">
-											<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.7227025"/>
+									<Node score="0.06607934">
+										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="1.6306129"/>
+										<Node score="0.34536552">
+											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.44447315"/>
 										</Node>
 									</Node>
-									<Node score="-0.07124196">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.6024331"/>
-										<Node score="-0.1691131">
-											<SimplePredicate field="float(standardScaler(default_Tak))" operator="greaterOrEqual" value="3.8574688"/>
-										</Node>
-										<Node score="-0.09477421">
-											<SimplePredicate field="float(standardScaler(education_Wykształcenie średnie))" operator="greaterOrEqual" value="0.017281473"/>
-											<Node score="-0.14771968">
-												<SimplePredicate field="float(standardScaler(job_Przedsiębiorca))" operator="greaterOrEqual" value="2.8665378"/>
-											</Node>
-											<Node score="0.097236685">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.88708174"/>
-											</Node>
-										</Node>
-										<Node score="-0.13303134">
-											<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
-											<Node score="0.015039868">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.62720895"/>
-											</Node>
-										</Node>
+									<Node score="0.2312033">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.51085037"/>
 									</Node>
-									<Node score="0.01636104">
-										<SimplePredicate field="float(standardScaler(education_Wykształcenie średnie))" operator="greaterOrEqual" value="0.017281473"/>
+									<Node score="-0.2079669">
+										<SimplePredicate field="float(standardScaler(poutcome_Nie podano))" operator="greaterOrEqual" value="-0.5591414"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -658,57 +444,18 @@
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
 									<MiningField name="float(standardScaler(age))"/>
-									<MiningField name="float(standardScaler(log_duration))"/>
-									<MiningField name="float(standardScaler(log_campaign))"/>
-									<MiningField name="float(standardScaler(education_Wykształcenie średnie))"/>
-									<MiningField name="float(standardScaler(poutcome_Porażka))"/>
+									<MiningField name="float(standardScaler(contact_Nie podano))"/>
 								</MiningSchema>
-								<Node score="0.1507519">
+								<Node score="0.2993898">
 									<True/>
-									<Node score="-0.2535012">
+									<Node score="-0.13426267">
+										<SimplePredicate field="float(standardScaler(contact_Nie podano))" operator="greaterOrEqual" value="0.7271795"/>
+									</Node>
+									<Node score="-0.007990667">
 										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-1.3117522"/>
-										<Node score="0.1448427">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.40308064"/>
-											<Node score="0.30691275">
-												<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="1.2593877"/>
-											</Node>
-											<Node score="0.07760443">
-												<SimplePredicate field="float(standardScaler(poutcome_Porażka))" operator="greaterOrEqual" value="1.2354923"/>
-											</Node>
-											<Node score="0.07424601">
-												<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-0.97548187"/>
-												<Node score="0.29514936">
-													<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.9900601"/>
-												</Node>
-											</Node>
-											<Node score="0.3951055">
-												<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.0404139"/>
-											</Node>
-										</Node>
-										<Node score="0.1047604">
+										<Node score="0.21824618">
 											<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="1.5465453"/>
 										</Node>
-										<Node score="-0.35801277">
-											<SimplePredicate field="float(standardScaler(education_Wykształcenie średnie))" operator="greaterOrEqual" value="0.017281473"/>
-											<Node score="-0.30381238">
-												<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="0.8862148"/>
-											</Node>
-											<Node score="-0.13016455">
-												<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-1.1799538"/>
-											</Node>
-										</Node>
-										<Node score="-0.3129514">
-											<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-0.30294132"/>
-											<Node score="-0.09013436">
-												<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.65772045"/>
-											</Node>
-										</Node>
-										<Node score="0.025308272">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.62662566"/>
-										</Node>
-									</Node>
-									<Node score="0.39137483">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.85228133"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -718,44 +465,24 @@
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
 									<MiningField name="float(standardScaler(age))"/>
-									<MiningField name="float(standardScaler(log_duration))"/>
-									<MiningField name="float(standardScaler(log_campaign))"/>
-									<MiningField name="float(standardScaler(job_Student))"/>
-									<MiningField name="float(standardScaler(education_Wykształcenie średnie))"/>
+									<MiningField name="float(standardScaler(log_pdays))"/>
+									<MiningField name="float(standardScaler(housing_Tak))"/>
 								</MiningSchema>
-								<Node score="-0.30411792">
+								<Node score="0.19245067">
 									<True/>
-									<Node score="0.123583466">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.6739149"/>
-										<Node score="0.27934644">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.2087971"/>
+									<Node score="-0.06800959">
+										<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
+										<Node score="0.09796441">
+											<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="1.4624777"/>
+										</Node>
+										<Node score="0.29925266">
+											<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.9818244"/>
 										</Node>
 									</Node>
-									<Node score="0.11446334">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-1.0686617"/>
-										<Node score="0.0073127258">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.21484558"/>
-											<Node score="0.18571839">
-												<SimplePredicate field="float(standardScaler(job_Student))" operator="greaterOrEqual" value="2.6076958"/>
-											</Node>
-											<Node score="-0.067143954">
-												<SimplePredicate field="float(standardScaler(education_Wykształcenie średnie))" operator="greaterOrEqual" value="0.017281473"/>
-												<Node score="0.10342904">
-													<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="0.78993714"/>
-												</Node>
-											</Node>
-											<Node score="0.2290422">
-												<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="1.6306129"/>
-											</Node>
-										</Node>
-										<Node score="-0.23785593">
-											<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="0.8862148"/>
-										</Node>
-										<Node score="0.061596714">
-											<SimplePredicate field="float(standardScaler(job_Student))" operator="greaterOrEqual" value="2.6076958"/>
-										</Node>
-										<Node score="-0.099613495">
-											<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-1.2276846"/>
+									<Node score="-0.02054818">
+										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-0.97548187"/>
+										<Node score="0.14366722">
+											<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="0.9247246"/>
 										</Node>
 									</Node>
 								</Node>
@@ -765,28 +492,28 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(age))"/>
+									<MiningField name="float(standardScaler(day_of_year))"/>
 									<MiningField name="float(standardScaler(log_duration))"/>
-									<MiningField name="float(standardScaler(log_pdays))"/>
+									<MiningField name="float(standardScaler(log_campaign))"/>
 								</MiningSchema>
-								<Node score="-0.30652666">
+								<Node score="-0.2640143">
 									<True/>
-									<Node score="0.18997814">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.93543184"/>
-									</Node>
-									<Node score="-0.13899407">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.0414679"/>
-										<Node score="0.15448177">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.7061827"/>
+									<Node score="-0.02121576">
+										<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="-0.42271727"/>
+										<Node score="-0.05060187">
+											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.34768474"/>
+											<Node score="0.17905591">
+												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.6989696"/>
+											</Node>
+										</Node>
+										<Node score="-0.20784803">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.8306141"/>
 										</Node>
 									</Node>
-									<Node score="0.019992827">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.39738685"/>
-									</Node>
-									<Node score="-0.13403857">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-1.2063944"/>
-										<Node score="0.15162778">
-											<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="1.6306129"/>
+									<Node score="0.044235587">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.8013732"/>
+										<Node score="0.23507465">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.5765021"/>
 										</Node>
 									</Node>
 								</Node>
@@ -796,57 +523,24 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(age))"/>
-									<MiningField name="float(standardScaler(day_of_year))"/>
-									<MiningField name="float(standardScaler(log_duration))"/>
+									<MiningField name="float(standardScaler(log_campaign))"/>
+									<MiningField name="float(standardScaler(job_Pracownik zarządzający))"/>
+									<MiningField name="float(standardScaler(contact_Nie podano))"/>
 									<MiningField name="float(standardScaler(poutcome_Porażka))"/>
 								</MiningSchema>
-								<Node score="-0.23920797">
+								<Node score="0.048408322">
 									<True/>
-									<Node score="-0.05968247">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.6024331"/>
-										<Node score="0.056661572">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.67609954"/>
-											<Node score="0.18219726">
-												<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.98033917"/>
-											</Node>
-										</Node>
-										<Node score="-0.04905993">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.88708174"/>
-											<Node score="-0.11115956">
-												<SimplePredicate field="float(standardScaler(poutcome_Porażka))" operator="greaterOrEqual" value="1.2354923"/>
-											</Node>
-											<Node score="0.16165929">
-												<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.65772045"/>
-											</Node>
-										</Node>
-										<Node score="-0.2693202">
-											<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-0.97548187"/>
-											<Node score="-0.11491778">
-												<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.41908458"/>
-											</Node>
-										</Node>
-										<Node score="0.17762594">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.40589273"/>
+									<Node score="-0.09221331">
+										<SimplePredicate field="float(standardScaler(poutcome_Porażka))" operator="greaterOrEqual" value="1.2354923"/>
+										<Node score="0.036114812">
+											<SimplePredicate field="float(standardScaler(job_Pracownik zarządzający))" operator="greaterOrEqual" value="0.6343186"/>
 										</Node>
 									</Node>
-									<Node score="-0.14417587">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-1.2473633"/>
-										<Node score="0.31115833">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.6989696"/>
-											<Node score="0.01691235">
-												<SimplePredicate field="float(standardScaler(poutcome_Porażka))" operator="greaterOrEqual" value="1.2354923"/>
-											</Node>
-											<Node score="0.069812156">
-												<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.4940793"/>
-											</Node>
-										</Node>
-										<Node score="-0.26334342">
-											<SimplePredicate field="float(standardScaler(poutcome_Porażka))" operator="greaterOrEqual" value="1.2354923"/>
-										</Node>
-										<Node score="0.100560926">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.0060546"/>
-										</Node>
+									<Node score="-0.08991338">
+										<SimplePredicate field="float(standardScaler(contact_Nie podano))" operator="greaterOrEqual" value="0.7271795"/>
+									</Node>
+									<Node score="-0.109207995">
+										<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="1.2593877"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -856,26 +550,28 @@
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
 									<MiningField name="float(standardScaler(age))"/>
+									<MiningField name="float(standardScaler(day_of_year))"/>
 									<MiningField name="float(standardScaler(log_duration))"/>
-									<MiningField name="float(standardScaler(log_campaign))"/>
-									<MiningField name="float(standardScaler(poutcome_Porażka))"/>
 								</MiningSchema>
-								<Node score="-0.24903499">
+								<Node score="-0.27171475">
 									<True/>
-									<Node score="-0.16277623">
-										<SimplePredicate field="float(standardScaler(poutcome_Porażka))" operator="greaterOrEqual" value="1.2354923"/>
-										<Node score="-0.013171744">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.4317012"/>
-										</Node>
-									</Node>
-									<Node score="0.035352487">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-1.2063944"/>
-										<Node score="0.18235067">
-											<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="-0.42271727"/>
-											<Node score="-0.0029024656">
-												<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-1.3117522"/>
+									<Node score="-0.051871356">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.6989696"/>
+										<Node score="-0.19932823">
+											<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-0.97548187"/>
+											<Node score="0.072573">
+												<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.4317012"/>
 											</Node>
 										</Node>
+										<Node score="0.17422213">
+											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.36413443"/>
+										</Node>
+									</Node>
+									<Node score="-0.06684965">
+										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="1.210275"/>
+									</Node>
+									<Node score="0.2324651">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.073676"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -884,52 +580,29 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
+									<MiningField name="float(standardScaler(age))"/>
 									<MiningField name="float(standardScaler(day_of_year))"/>
 									<MiningField name="float(standardScaler(log_duration))"/>
-									<MiningField name="float(standardScaler(log_pdays))"/>
-									<MiningField name="float(standardScaler(housing_Tak))"/>
-									<MiningField name="float(standardScaler(poutcome_Porażka))"/>
 								</MiningSchema>
-								<Node score="-0.045058966">
+								<Node score="-0.29806718">
 									<True/>
-									<Node score="-0.40682742">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8822044"/>
-										<Node score="0.2881721">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.9836183"/>
+									<Node score="0.030346014">
+										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="1.6306129"/>
+										<Node score="-0.054477423">
+											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.6695272"/>
 										</Node>
-										<Node score="-0.3294752">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.9202346"/>
-											<Node score="0.12524976">
-												<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.6130125"/>
-											</Node>
-										</Node>
-										<Node score="-0.09082498">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.47037715"/>
+										<Node score="0.30223033">
+											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.44447315"/>
 										</Node>
 									</Node>
-									<Node score="0.16172853">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.99483395"/>
-										<Node score="0.36620983">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.539933"/>
+									<Node score="0.033451747">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.93543184"/>
+										<Node score="0.24925844">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.7799072"/>
 										</Node>
 									</Node>
-									<Node score="0.15178406">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="0.9247246"/>
-										<Node score="0.24343269">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.424959"/>
-										</Node>
-										<Node score="-0.114065036">
-											<SimplePredicate field="float(standardScaler(poutcome_Porażka))" operator="greaterOrEqual" value="1.2354923"/>
-										</Node>
-									</Node>
-									<Node score="0.04362023">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.76793563"/>
-										<Node score="0.18004334">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.2294871"/>
-										</Node>
-									</Node>
-									<Node score="-0.17130561">
-										<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
+									<Node score="-0.034979556">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-1.0686617"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -939,72 +612,29 @@
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
 									<MiningField name="float(standardScaler(age))"/>
-									<MiningField name="float(standardScaler(day_of_year))"/>
 									<MiningField name="float(standardScaler(log_duration))"/>
-									<MiningField name="float(standardScaler(log_pdays))"/>
 									<MiningField name="float(standardScaler(housing_Tak))"/>
+									<MiningField name="float(standardScaler(poutcome_Nie podano))"/>
 								</MiningSchema>
-								<Node score="-0.13577218">
+								<Node score="-0.29696843">
 									<True/>
-									<Node score="-0.17953244">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.6024331"/>
-										<Node score="0.0015913073">
-											<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.0414679"/>
-											<Node score="0.1358366">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.424959"/>
-												<Node score="-0.055915326">
-													<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.7063804"/>
-													<Node score="0.25213793">
-														<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.43495274"/>
-													</Node>
-												</Node>
-												<Node score="-0.20263304">
-													<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8948811"/>
-												</Node>
-											</Node>
-											<Node score="-0.3483316">
-												<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.9286132"/>
-												<Node score="-0.056960765">
-													<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.22200012"/>
-												</Node>
-											</Node>
+									<Node score="0.09321867">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.76793563"/>
+										<Node score="0.03798657">
+											<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="0.9580723"/>
 										</Node>
-										<Node score="0.14261703">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.27283832"/>
-											<Node score="-0.12522016">
-												<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-1.0595495"/>
-												<Node score="0.06825979">
-													<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.36549973"/>
-												</Node>
-											</Node>
-										</Node>
-										<Node score="-0.27656147">
-											<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-0.89141434"/>
-											<Node score="0.030716596">
-												<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.58965325"/>
-											</Node>
-										</Node>
-										<Node score="0.1246329">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.41291028"/>
+										<Node score="0.23446642">
+											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.2087971"/>
 										</Node>
 									</Node>
-									<Node score="-0.18462814">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.7227025"/>
-										<Node score="0.06783058">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.6989696"/>
+									<Node score="-0.023819426">
+										<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
+										<Node score="-0.18254878">
+											<SimplePredicate field="float(standardScaler(poutcome_Nie podano))" operator="greaterOrEqual" value="-0.5591414"/>
 										</Node>
 									</Node>
-									<Node score="0.24241884">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.6989696"/>
-										<Node score="0.5036574">
-											<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
-											<Node score="-0.05983922">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.020765"/>
-											</Node>
-										</Node>
-									</Node>
-									<Node score="0.17014554">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="0.21515337"/>
+									<Node score="0.045505743">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-1.2063944"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -1013,36 +643,24 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(day_of_year))"/>
 									<MiningField name="float(standardScaler(log_duration))"/>
-									<MiningField name="float(standardScaler(log_campaign))"/>
-									<MiningField name="float(standardScaler(housing_Tak))"/>
+									<MiningField name="float(standardScaler(log_pdays))"/>
+									<MiningField name="float(standardScaler(contact_Nie podano))"/>
+									<MiningField name="float(standardScaler(poutcome_Porażka))"/>
 								</MiningSchema>
-								<Node score="-0.23257323">
+								<Node score="-0.054078583">
 									<True/>
-									<Node score="-0.035979256">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.020765"/>
-										<Node score="0.10451904">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.5194568"/>
-											<Node score="-0.022840427">
-												<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="-0.42271727"/>
-											</Node>
-										</Node>
-										<Node score="0.024338847">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.17187977"/>
-										</Node>
-										<Node score="-0.20087992">
-											<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
+									<Node score="0.15136872">
+										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.0414679"/>
+										<Node score="-0.039258774">
+											<SimplePredicate field="float(standardScaler(poutcome_Porażka))" operator="greaterOrEqual" value="1.2354923"/>
 										</Node>
 									</Node>
-									<Node score="0.37873518">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.6672778"/>
-										<Node score="0.09842387">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.27801073"/>
-										</Node>
+									<Node score="0.08042925">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.39738685"/>
 									</Node>
-									<Node score="-0.031717025">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.7061827"/>
+									<Node score="-0.26306218">
+										<SimplePredicate field="float(standardScaler(contact_Nie podano))" operator="greaterOrEqual" value="0.7271795"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -1051,38 +669,23 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(age))"/>
-									<MiningField name="float(standardScaler(log_duration))"/>
-									<MiningField name="float(standardScaler(log_pdays))"/>
-									<MiningField name="float(standardScaler(job_Samozatrudniony))"/>
-									<MiningField name="float(standardScaler(education_Wykształcenie średnie))"/>
-									<MiningField name="float(standardScaler(contact_Telefoniczny))"/>
+									<MiningField name="float(standardScaler(day_of_year))"/>
+									<MiningField name="float(standardScaler(log_campaign))"/>
+									<MiningField name="float(standardScaler(contact_Nie podano))"/>
 								</MiningSchema>
-								<Node score="0.104260676">
+								<Node score="0.07951229">
 									<True/>
-									<Node score="-0.15627655">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.0414679"/>
-										<Node score="-0.081008166">
-											<SimplePredicate field="float(standardScaler(contact_Telefoniczny))" operator="greaterOrEqual" value="1.7046373"/>
-										</Node>
-										<Node score="0.054744262">
-											<SimplePredicate field="float(standardScaler(education_Wykształcenie średnie))" operator="greaterOrEqual" value="0.017281473"/>
-										</Node>
-										<Node score="0.091487125">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.9264349"/>
+									<Node score="-0.01927758">
+										<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="-0.42271727"/>
+										<Node score="-0.18927059">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8822044"/>
 										</Node>
 									</Node>
-									<Node score="-0.04905024">
-										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-1.3117522"/>
-										<Node score="-0.07170142">
-											<SimplePredicate field="float(standardScaler(job_Samozatrudniony))" operator="greaterOrEqual" value="2.4920664"/>
-										</Node>
-										<Node score="0.11575523">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.2249956"/>
-										</Node>
-										<Node score="0.08781488">
-											<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="1.6306129"/>
-										</Node>
+									<Node score="-0.19209923">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8822044"/>
+									</Node>
+									<Node score="-0.049427554">
+										<SimplePredicate field="float(standardScaler(contact_Nie podano))" operator="greaterOrEqual" value="0.7271795"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -1091,51 +694,34 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(day_of_year))"/>
-									<MiningField name="float(standardScaler(log_duration))"/>
-									<MiningField name="float(standardScaler(log_pdays))"/>
-									<MiningField name="float(standardScaler(poutcome_Porażka))"/>
+									<MiningField name="default_Tak"/>
+									<MiningField name="float(standardScaler(log_campaign))"/>
+									<MiningField name="float(standardScaler(housing_Tak))"/>
 								</MiningSchema>
-								<Node score="-0.2519928">
+								<LocalTransformations>
+									<DerivedField name="standardScaler(default_Tak)" optype="continuous" dataType="double">
+										<Apply function="/">
+											<Apply function="-">
+												<FieldRef field="default_Tak"/>
+												<Constant dataType="double">0.015998976065531807</Constant>
+											</Apply>
+											<Constant dataType="double">0.12547114740204754</Constant>
+										</Apply>
+									</DerivedField>
+									<DerivedField name="float(standardScaler(default_Tak))" optype="continuous" dataType="float">
+										<FieldRef field="standardScaler(default_Tak)"/>
+									</DerivedField>
+								</LocalTransformations>
+								<Node score="0.04762158">
 									<True/>
-									<Node score="0.23273137">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-1.4296262"/>
-										<Node score="-0.059180755">
-											<SimplePredicate field="float(standardScaler(poutcome_Porażka))" operator="greaterOrEqual" value="1.2354923"/>
-											<Node score="0.12782231">
-												<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.9687082"/>
-											</Node>
-											<Node score="-0.27059546">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.856851"/>
-											</Node>
-										</Node>
-										<Node score="0.18482672">
-											<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.4315723"/>
-											<Node score="0.18606138">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.424959"/>
-											</Node>
-											<Node score="-0.0037408916">
-												<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.7246931"/>
-											</Node>
-										</Node>
-										<Node score="-0.16857356">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.6024331"/>
-											<Node score="-0.011186884">
-												<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.10731681"/>
-												<Node score="0.07336684">
-													<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.5638253"/>
-												</Node>
-											</Node>
-											<Node score="0.056930438">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.99483395"/>
-											</Node>
-										</Node>
-										<Node score="-0.036342155">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.46393073"/>
-											<Node score="0.21404855">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.7799072"/>
-											</Node>
-										</Node>
+									<Node score="-0.0590986">
+										<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="0.8862148"/>
+									</Node>
+									<Node score="-0.13909173">
+										<SimplePredicate field="float(standardScaler(default_Tak))" operator="greaterOrEqual" value="3.8574688"/>
+									</Node>
+									<Node score="-0.02616155">
+										<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -1144,35 +730,29 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(age))"/>
 									<MiningField name="float(standardScaler(day_of_year))"/>
-									<MiningField name="float(standardScaler(log_pdays))"/>
+									<MiningField name="float(standardScaler(job_Pracownik zarządzający))"/>
+									<MiningField name="float(standardScaler(contact_Nie podano))"/>
 								</MiningSchema>
-								<Node score="-0.06445136">
+								<Node score="0.09257492">
 									<True/>
-									<Node score="-0.21253535">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8822044"/>
-										<Node score="0.20688422">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.9836183"/>
-										</Node>
-									</Node>
-									<Node score="0.26951504">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.5272563"/>
-									</Node>
-									<Node score="-0.046238933">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.0461184"/>
-										<Node score="0.044346377">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.27283832"/>
-											<Node score="0.13887087">
-												<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.4315723"/>
-											</Node>
-											<Node score="-0.036880117">
-												<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-0.47107643"/>
-											</Node>
-										</Node>
-									</Node>
-									<Node score="0.24613203">
+									<Node score="0.33001572">
 										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.6989696"/>
+										<Node score="-0.08075902">
+											<SimplePredicate field="float(standardScaler(contact_Nie podano))" operator="greaterOrEqual" value="0.7271795"/>
+											<Node score="0.272332">
+												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.006627169"/>
+											</Node>
+										</Node>
+										<Node score="0.0013234647">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.0714718"/>
+										</Node>
+									</Node>
+									<Node score="-0.113302924">
+										<SimplePredicate field="float(standardScaler(job_Pracownik zarządzający))" operator="greaterOrEqual" value="0.6343186"/>
+									</Node>
+									<Node score="-0.2405401">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.8193984"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -1181,29 +761,22 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(day_of_year))"/>
 									<MiningField name="float(standardScaler(log_duration))"/>
 									<MiningField name="float(standardScaler(log_pdays))"/>
 								</MiningSchema>
-								<Node score="-0.21604243">
+								<Node score="-0.23840965">
 									<True/>
-									<Node score="-0.2762235">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8948811"/>
-										<Node score="0.002964377">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.057579793"/>
+									<Node score="0.23309734">
+										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.9828144"/>
+									</Node>
+									<Node score="-0.26632112">
+										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.9205136"/>
+										<Node score="0.0537541">
+											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.6223403"/>
 										</Node>
 									</Node>
-									<Node score="-0.033241242">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-1.334498"/>
-										<Node score="0.08177454">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.0541551"/>
-										</Node>
-										<Node score="0.0047895918">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.5964356"/>
-											<Node score="0.20323095">
-												<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.9813275"/>
-											</Node>
-										</Node>
+									<Node score="0.021948028">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-1.0686617"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -1212,23 +785,27 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(age))"/>
 									<MiningField name="float(standardScaler(day_of_year))"/>
-									<MiningField name="float(standardScaler(log_duration))"/>
 								</MiningSchema>
-								<Node score="-0.20408514">
+								<Node score="0.012753389">
 									<True/>
-									<Node score="0.19157103">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-1.4296262"/>
-										<Node score="0.13620026">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.6183848"/>
+									<Node score="-0.3032164">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8822044"/>
+										<Node score="0.29167932">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.9836183"/>
 										</Node>
-										<Node score="-9.17613E-4">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.8193984"/>
-											<Node score="-0.18561527">
-												<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="2.3031535"/>
-											</Node>
+										<Node score="-0.1203299">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.9202346"/>
 										</Node>
+									</Node>
+									<Node score="0.17049307">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.99483395"/>
+										<Node score="0.379429">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.5272563"/>
+										</Node>
+									</Node>
+									<Node score="-0.0701156">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.19620039"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -1237,29 +814,34 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(log_duration))"/>
-									<MiningField name="float(standardScaler(log_pdays))"/>
-									<MiningField name="float(standardScaler(poutcome_Porażka))"/>
+									<MiningField name="job_Student"/>
+									<MiningField name="float(standardScaler(day_of_year))"/>
+									<MiningField name="float(standardScaler(poutcome_Nie podano))"/>
 								</MiningSchema>
-								<Node score="-0.03294963">
+								<LocalTransformations>
+									<DerivedField name="standardScaler(job_Student)" optype="continuous" dataType="double">
+										<Apply function="/">
+											<Apply function="-">
+												<FieldRef field="job_Student"/>
+												<Constant dataType="double">0.0331498784077819</Constant>
+											</Apply>
+											<Constant dataType="double">0.17902783015311102</Constant>
+										</Apply>
+									</DerivedField>
+									<DerivedField name="float(standardScaler(job_Student))" optype="continuous" dataType="float">
+										<FieldRef field="standardScaler(job_Student)"/>
+									</DerivedField>
+								</LocalTransformations>
+								<Node score="-0.11014851">
 									<True/>
-									<Node score="-0.055853818">
-										<SimplePredicate field="float(standardScaler(poutcome_Porażka))" operator="greaterOrEqual" value="1.2354923"/>
-									</Node>
-									<Node score="-0.009167427">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="0.99408877"/>
-										<Node score="0.18880509">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.44770586"/>
-											<Node score="0.009638514">
-												<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.926317"/>
-											</Node>
-											<Node score="-0.012879874">
-												<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.54359597"/>
+									<Node score="0.04879747">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.6672778"/>
+										<Node score="-0.007175793">
+											<SimplePredicate field="float(standardScaler(poutcome_Nie podano))" operator="greaterOrEqual" value="-0.5591414"/>
+											<Node score="0.1640667">
+												<SimplePredicate field="float(standardScaler(job_Student))" operator="greaterOrEqual" value="2.6076958"/>
 											</Node>
 										</Node>
-									</Node>
-									<Node score="0.025676513">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.36549973"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -1268,40 +850,22 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(age))"/>
-									<MiningField name="float(standardScaler(day_of_year))"/>
-									<MiningField name="float(standardScaler(log_campaign))"/>
-									<MiningField name="float(standardScaler(log_pdays))"/>
+									<MiningField name="float(standardScaler(log_duration))"/>
 									<MiningField name="float(standardScaler(housing_Tak))"/>
 								</MiningSchema>
-								<Node score="0.058096673">
+								<Node score="-0.08838357">
 									<True/>
-									<Node score="0.14769681">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.9818244"/>
+									<Node score="0.1488566">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.0465473"/>
 									</Node>
-									<Node score="-0.26483104">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8948811"/>
-										<Node score="0.026131492">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.9202346"/>
-										</Node>
-									</Node>
-									<Node score="0.2625133">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.9631421"/>
-										<Node score="-0.11082741">
-											<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="1.2943425"/>
-										</Node>
-										<Node score="0.049030665">
-											<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="-0.42271727"/>
-										</Node>
-									</Node>
-									<Node score="0.10708346">
-										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="1.6306129"/>
-									</Node>
-									<Node score="-0.050331574">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.07001078"/>
-									</Node>
-									<Node score="-0.02803146">
+									<Node score="-0.12043207">
 										<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
+										<Node score="0.0015879535">
+											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.14310291"/>
+										</Node>
+									</Node>
+									<Node score="0.042439617">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.43806753"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -1310,20 +874,19 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(age))"/>
-									<MiningField name="float(standardScaler(job_Samozatrudniony))"/>
-									<MiningField name="float(standardScaler(default_Tak))"/>
+									<MiningField name="float(standardScaler(log_duration))"/>
+									<MiningField name="float(standardScaler(contact_Nie podano))"/>
 								</MiningSchema>
-								<Node score="0.005557294">
+								<Node score="-0.2350687">
 									<True/>
-									<Node score="-0.038754065">
-										<SimplePredicate field="float(standardScaler(job_Samozatrudniony))" operator="greaterOrEqual" value="2.4920664"/>
-									</Node>
-									<Node score="-0.03804521">
-										<SimplePredicate field="float(standardScaler(default_Tak))" operator="greaterOrEqual" value="3.8574688"/>
-									</Node>
-									<Node score="-0.19787394">
-										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="2.7234912"/>
+									<Node score="0.013088577">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-1.2063944"/>
+										<Node score="0.14555417">
+											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.2087971"/>
+										</Node>
+										<Node score="-0.116515346">
+											<SimplePredicate field="float(standardScaler(contact_Nie podano))" operator="greaterOrEqual" value="0.7271795"/>
+										</Node>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -1332,27 +895,22 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(age))"/>
+									<MiningField name="float(standardScaler(day_of_year))"/>
 									<MiningField name="float(standardScaler(log_duration))"/>
-									<MiningField name="float(standardScaler(log_pdays))"/>
-									<MiningField name="float(standardScaler(poutcome_Porażka))"/>
 								</MiningSchema>
-								<Node score="-0.008321922">
+								<Node score="-0.26160565">
 									<True/>
-									<Node score="-0.122196965">
-										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="2.7234912"/>
-									</Node>
-									<Node score="0.052643392">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.9754444"/>
-									</Node>
-									<Node score="0.14216225">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.9818244"/>
-									</Node>
-									<Node score="-0.073211245">
-										<SimplePredicate field="float(standardScaler(poutcome_Porażka))" operator="greaterOrEqual" value="1.2354923"/>
-									</Node>
-									<Node score="0.14768243">
-										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="1.6306129"/>
+									<Node score="-0.0027300222">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-1.4296262"/>
+										<Node score="-0.19441307">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8948811"/>
+											<Node score="0.21691604">
+												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.9836183"/>
+											</Node>
+										</Node>
+										<Node score="0.20336038">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.9631421"/>
+										</Node>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -1361,38 +919,22 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(age))"/>
-									<MiningField name="float(standardScaler(day_of_year))"/>
 									<MiningField name="float(standardScaler(log_duration))"/>
+									<MiningField name="float(standardScaler(log_campaign))"/>
 								</MiningSchema>
-								<Node score="0.08726417">
+								<Node score="-0.19889583">
 									<True/>
-									<Node score="-0.19288209">
-										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-1.3958198"/>
-										<Node score="0.1174047">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-1.4296262"/>
-											<Node score="0.2069052">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.6989696"/>
-												<Node score="0.016102508">
-													<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.0714718"/>
-													<Node score="0.15788479">
-														<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.79258394"/>
-														<Node score="-0.008658081">
-															<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.6024331"/>
-														</Node>
-													</Node>
-													<Node score="-0.26248184">
-														<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.8432908"/>
-													</Node>
-												</Node>
-											</Node>
-											<Node score="-0.27435735">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.8193984"/>
-												<Node score="-0.059923243">
-													<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.7877066"/>
-												</Node>
-											</Node>
+									<Node score="0.011608656">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.21484558"/>
+										<Node score="0.115990855">
+											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.2087971"/>
 										</Node>
+									</Node>
+									<Node score="-0.22656257">
+										<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="0.8862148"/>
+									</Node>
+									<Node score="-0.013923863">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-1.4296262"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -1402,35 +944,15 @@
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
 									<MiningField name="float(standardScaler(age))"/>
-									<MiningField name="float(standardScaler(day_of_year))"/>
-									<MiningField name="float(standardScaler(log_duration))"/>
-									<MiningField name="float(standardScaler(log_campaign))"/>
+									<MiningField name="float(standardScaler(job_Pracownik zarządzający))"/>
 								</MiningSchema>
-								<Node score="-0.045462646">
+								<Node score="0.14916277">
 									<True/>
-									<Node score="0.013997536">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.14310291"/>
-										<Node score="0.1211327">
-											<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="1.2593877"/>
-										</Node>
-										<Node score="0.077404395">
-											<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="1.4624777"/>
-											<Node score="-0.17791225">
-												<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.5729265"/>
-											</Node>
-										</Node>
+									<Node score="0.038696878">
+										<SimplePredicate field="float(standardScaler(job_Pracownik zarządzający))" operator="greaterOrEqual" value="0.6343186"/>
 									</Node>
-									<Node score="-0.19088483">
-										<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="1.2593877"/>
-									</Node>
-									<Node score="-0.10802949">
-										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="2.3872209"/>
-									</Node>
-									<Node score="-0.05730049">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.810476"/>
-										<Node score="0.053902965">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.3615754"/>
-										</Node>
+									<Node score="-0.02178578">
+										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-1.3117522"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -1439,30 +961,20 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(age))"/>
 									<MiningField name="float(standardScaler(log_duration))"/>
 									<MiningField name="float(standardScaler(log_pdays))"/>
-									<MiningField name="float(standardScaler(poutcome_Porażka))"/>
+									<MiningField name="float(standardScaler(contact_Nie podano))"/>
 								</MiningSchema>
-								<Node score="-0.11892189">
+								<Node score="-0.0061829314">
 									<True/>
-									<Node score="0.09656262">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.6183848"/>
+									<Node score="0.18514962">
+										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.9828144"/>
 									</Node>
-									<Node score="0.04895776">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-1.334498"/>
-										<Node score="-0.03701067">
-											<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-1.3117522"/>
-											<Node score="-0.008326957">
-												<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.5964356"/>
-												<Node score="0.08771912">
-													<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="0.17384446"/>
-													<Node score="-0.01946536">
-														<SimplePredicate field="float(standardScaler(poutcome_Porażka))" operator="greaterOrEqual" value="1.2354923"/>
-													</Node>
-												</Node>
-											</Node>
-										</Node>
+									<Node score="0.04915214">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.5944025"/>
+									</Node>
+									<Node score="-0.19285513">
+										<SimplePredicate field="float(standardScaler(contact_Nie podano))" operator="greaterOrEqual" value="0.7271795"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -1472,30 +984,19 @@
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
 									<MiningField name="float(standardScaler(day_of_year))"/>
-									<MiningField name="float(standardScaler(log_duration))"/>
+									<MiningField name="float(standardScaler(log_pdays))"/>
+									<MiningField name="float(standardScaler(poutcome_Porażka))"/>
 								</MiningSchema>
-								<Node score="-0.008448718">
+								<Node score="-0.00961538">
 									<True/>
-									<Node score="0.043545917">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.2087971"/>
-									</Node>
-									<Node score="-0.16265617">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.1517473"/>
-									</Node>
-									<Node score="-0.19928914">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8822044"/>
-										<Node score="-0.1204839">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.019282501"/>
-											<Node score="0.22189753">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.9329113"/>
-											</Node>
+									<Node score="-0.017545965">
+										<SimplePredicate field="float(standardScaler(poutcome_Porażka))" operator="greaterOrEqual" value="1.2354923"/>
+										<Node score="-0.2563566">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.856851"/>
 										</Node>
 									</Node>
-									<Node score="0.12309318">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.0810902"/>
-									</Node>
-									<Node score="0.21579508">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.539933"/>
+									<Node score="0.09699308">
+										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="0.99408877"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -1505,29 +1006,20 @@
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
 									<MiningField name="float(standardScaler(day_of_year))"/>
-									<MiningField name="float(standardScaler(job_Samozatrudniony))"/>
+									<MiningField name="float(standardScaler(log_duration))"/>
 								</MiningSchema>
-								<Node score="-0.033540394">
+								<Node score="-0.21488883">
 									<True/>
-									<Node score="-0.032413274">
-										<SimplePredicate field="float(standardScaler(job_Samozatrudniony))" operator="greaterOrEqual" value="2.4920664"/>
-									</Node>
-									<Node score="-0.15490453">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.8432908"/>
-										<Node score="0.35939163">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.7799072"/>
-											<Node score="-0.104883455">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.6658167"/>
-												<Node score="0.005642765">
-													<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.5136961"/>
-												</Node>
+									<Node score="0.119928055">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-1.4296262"/>
+										<Node score="0.2957983">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.6989696"/>
+											<Node score="-0.0069750333">
+												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.0714718"/>
 											</Node>
 										</Node>
-									</Node>
-									<Node score="0.3342709">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.6672778"/>
-										<Node score="0.07467074">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.5278338"/>
+										<Node score="-0.14384969">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.8193984"/>
 										</Node>
 									</Node>
 								</Node>
@@ -1537,65 +1029,26 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(age))"/>
-									<MiningField name="float(standardScaler(day_of_year))"/>
 									<MiningField name="float(standardScaler(log_duration))"/>
+									<MiningField name="float(standardScaler(log_campaign))"/>
+									<MiningField name="float(standardScaler(log_pdays))"/>
 								</MiningSchema>
-								<Node score="0.004922283">
+								<Node score="-0.046143517">
 									<True/>
-									<Node score="-0.12914234">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.6024331"/>
-										<Node score="-0.25103515">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.5136961"/>
-											<Node score="0.16986656">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.07001078"/>
-												<Node score="0.06075458">
-													<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.5194568"/>
-													<Node score="-0.16653378">
-														<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="2.3031535"/>
-													</Node>
-													<Node score="-0.05372746">
-														<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8631893"/>
-													</Node>
-												</Node>
-												<Node score="-0.13225812">
-													<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-0.7232792"/>
-												</Node>
-												<Node score="-0.0621684">
-													<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.32296762"/>
-												</Node>
-											</Node>
-											<Node score="0.27525166">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.27283832"/>
-												<Node score="0.08904878">
-													<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.059586592"/>
-												</Node>
-											</Node>
-											<Node score="0.09244908">
-												<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.084963664"/>
-												<Node score="-0.07502508">
-													<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.424959"/>
-												</Node>
-											</Node>
-											<Node score="-0.03197135">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.39960557"/>
-											</Node>
+									<Node score="0.008746653">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.14310291"/>
+										<Node score="0.14618279">
+											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.6183848"/>
+										</Node>
+										<Node score="0.12525219">
+											<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="1.2593877"/>
 										</Node>
 									</Node>
-									<Node score="0.15875366">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.7799072"/>
+									<Node score="-0.11287544">
+										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.7514927"/>
 									</Node>
-									<Node score="-0.10617916">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.8432908"/>
-									</Node>
-									<Node score="-0.078152865">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.3887871"/>
-									</Node>
-									<Node score="-0.039598837">
-										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-0.80734676"/>
-										<Node score="0.21274365">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.6672778"/>
-										</Node>
+									<Node score="0.084810995">
+										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="0.99408877"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -1604,57 +1057,18 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(day_of_year))"/>
 									<MiningField name="float(standardScaler(log_duration))"/>
 									<MiningField name="float(standardScaler(log_campaign))"/>
-									<MiningField name="float(standardScaler(log_pdays))"/>
-									<MiningField name="float(standardScaler(education_Wykształcenie średnie))"/>
 								</MiningSchema>
-								<Node score="-0.082191065">
+								<Node score="0.019956505">
 									<True/>
-									<Node score="-0.05084655">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.7042885"/>
-										<Node score="-0.005720679">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.4285471"/>
-											<Node score="0.27040303">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.41862065"/>
-												<Node score="-0.022756647">
-													<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.9060968"/>
-												</Node>
-											</Node>
+									<Node score="-0.02119556">
+										<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="-0.42271727"/>
+										<Node score="0.011325436">
+											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.10731681"/>
 										</Node>
-									</Node>
-									<Node score="-0.08447598">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.5681"/>
-										<Node score="0.04253293">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.72920036"/>
-										</Node>
-									</Node>
-									<Node score="-0.33132914">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.6658167"/>
-										<Node score="0.08433363">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.44397408"/>
-											<Node score="-0.1917072">
-												<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="1.2593877"/>
-											</Node>
-											<Node score="-0.02778173">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.20945472"/>
-											</Node>
-										</Node>
-										<Node score="0.09095008">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.26226157"/>
-											<Node score="-0.16440257">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.58975637"/>
-											</Node>
-										</Node>
-									</Node>
-									<Node score="0.20744689">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.7560148"/>
-										<Node score="0.12538417">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.46393073"/>
-											<Node score="-0.05859265">
-												<SimplePredicate field="float(standardScaler(education_Wykształcenie średnie))" operator="greaterOrEqual" value="0.017281473"/>
-											</Node>
+										<Node score="-0.18173757">
+											<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="0.8862148"/>
 										</Node>
 									</Node>
 								</Node>
@@ -1664,22 +1078,19 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
+									<MiningField name="float(standardScaler(age))"/>
 									<MiningField name="float(standardScaler(day_of_year))"/>
-									<MiningField name="float(standardScaler(log_duration))"/>
-									<MiningField name="float(standardScaler(job_Samozatrudniony))"/>
+									<MiningField name="float(standardScaler(log_pdays))"/>
 								</MiningSchema>
-								<Node score="0.14076254">
+								<Node score="0.12394533">
 									<True/>
-									<Node score="-0.14258371">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.8193984"/>
-										<Node score="-0.03578374">
-											<SimplePredicate field="float(standardScaler(job_Samozatrudniony))" operator="greaterOrEqual" value="2.4920664"/>
-										</Node>
-										<Node score="0.103888184">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.7133598"/>
-										</Node>
-										<Node score="8.1506826E-4">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.7560148"/>
+									<Node score="-0.088855475">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8822044"/>
+									</Node>
+									<Node score="0.013979928">
+										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-1.3958198"/>
+										<Node score="-0.06655147">
+											<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.7227025"/>
 										</Node>
 									</Node>
 								</Node>
@@ -1690,28 +1101,21 @@
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
 									<MiningField name="float(standardScaler(day_of_year))"/>
-									<MiningField name="float(standardScaler(log_pdays))"/>
-									<MiningField name="float(standardScaler(job_Student))"/>
+									<MiningField name="float(standardScaler(housing_Tak))"/>
 								</MiningSchema>
-								<Node score="0.011712981">
+								<Node score="0.07753269">
 									<True/>
-									<Node score="-0.025227444">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.7227025"/>
+									<Node score="0.08484095">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.7560148"/>
+										<Node score="-0.008946803">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.020765"/>
+										</Node>
+										<Node score="0.24674983">
+											<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
+										</Node>
 									</Node>
-									<Node score="-0.0436767">
-										<SimplePredicate field="float(standardScaler(job_Student))" operator="greaterOrEqual" value="2.6076958"/>
-									</Node>
-									<Node score="0.19339405">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.7042885"/>
-									</Node>
-									<Node score="0.031509437">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.5638253"/>
-									</Node>
-									<Node score="-0.11240267">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.5720799"/>
-									</Node>
-									<Node score="-0.111904606">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.20887712"/>
+									<Node score="-0.22111928">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.8193984"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -1723,30 +1127,20 @@
 									<MiningField name="float(standardScaler(age))"/>
 									<MiningField name="float(standardScaler(day_of_year))"/>
 									<MiningField name="float(standardScaler(log_pdays))"/>
-									<MiningField name="float(standardScaler(job_Student))"/>
 								</MiningSchema>
-								<Node score="-0.0041346177">
+								<Node score="-0.023887748">
 									<True/>
-									<Node score="-0.06328622">
-										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="2.3031535"/>
-									</Node>
-									<Node score="-0.028139329">
-										<SimplePredicate field="float(standardScaler(job_Student))" operator="greaterOrEqual" value="2.6076958"/>
-									</Node>
-									<Node score="0.09153456">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.9818244"/>
-									</Node>
-									<Node score="-0.121123664">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8631893"/>
-										<Node score="0.086517274">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.9329113"/>
-										</Node>
-									</Node>
-									<Node score="-0.05997349">
+									<Node score="0.11964428">
 										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.88708174"/>
-										<Node score="0.20097697">
-											<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-0.80734676"/>
+										<Node score="-0.04233299">
+											<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.4089886"/>
 										</Node>
+									</Node>
+									<Node score="0.16888945">
+										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="1.6306129"/>
+									</Node>
+									<Node score="0.26775476">
+										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.9828144"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -1755,23 +1149,23 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(day_of_year))"/>
-									<MiningField name="float(standardScaler(log_campaign))"/>
-									<MiningField name="float(standardScaler(contact_Telefoniczny))"/>
+									<MiningField name="float(standardScaler(age))"/>
+									<MiningField name="float(standardScaler(log_duration))"/>
+									<MiningField name="float(standardScaler(log_pdays))"/>
 								</MiningSchema>
-								<Node score="0.10316656">
+								<Node score="0.12053433">
 									<True/>
-									<Node score="-0.0065589556">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.8193984"/>
-										<Node score="0.12290881">
-											<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="0.37985075"/>
-											<Node score="-0.046777606">
-												<SimplePredicate field="float(standardScaler(contact_Telefoniczny))" operator="greaterOrEqual" value="1.7046373"/>
-											</Node>
-											<Node score="-0.009170078">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.6024331"/>
+									<Node score="-0.00195512">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.5964356"/>
+										<Node score="0.11765819">
+											<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.0414679"/>
+											<Node score="-0.02795287">
+												<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.7227025"/>
 											</Node>
 										</Node>
+									</Node>
+									<Node score="-0.075382136">
+										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-1.143617"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -1780,50 +1174,20 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(age))"/>
 									<MiningField name="float(standardScaler(day_of_year))"/>
 									<MiningField name="float(standardScaler(log_duration))"/>
+									<MiningField name="float(standardScaler(log_campaign))"/>
 								</MiningSchema>
-								<Node score="-0.09709401">
+								<Node score="0.007522851">
 									<True/>
-									<Node score="0.041227985">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.14310291"/>
-										<Node score="-0.10399549">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.74129945"/>
-											<Node score="0.076759994">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.9075578"/>
-											</Node>
+									<Node score="-0.22236893">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8822044"/>
+										<Node score="-0.09696884">
+											<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="-0.42271727"/>
 										</Node>
-										<Node score="0.1427653">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.5765021"/>
+										<Node score="0.17164926">
+											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.46080214"/>
 										</Node>
-										<Node score="0.25446922">
-											<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-0.7232792"/>
-											<Node score="-0.027547738">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.424959"/>
-											</Node>
-											<Node score="0.012756367">
-												<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.27641177"/>
-											</Node>
-										</Node>
-									</Node>
-									<Node score="-0.20385106">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.6658167"/>
-										<Node score="0.09374979">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.3615754"/>
-											<Node score="-0.08928363">
-												<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-1.0595495"/>
-												<Node score="-0.042121716">
-													<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.196778"/>
-												</Node>
-												<Node score="0.22337775">
-													<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.26649997"/>
-												</Node>
-											</Node>
-										</Node>
-									</Node>
-									<Node score="0.08675171">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.7306614"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -1832,15 +1196,22 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(log_pdays))"/>
+									<MiningField name="float(standardScaler(day_of_year))"/>
+									<MiningField name="float(standardScaler(log_duration))"/>
 								</MiningSchema>
-								<Node score="-0.001487445">
+								<Node score="0.012227486">
 									<True/>
-									<Node score="-0.023498092">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.7207012"/>
+									<Node score="0.06669861">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.2087971"/>
 									</Node>
-									<Node score="0.17904183">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.7042885"/>
+									<Node score="0.17186375">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.88708174"/>
+										<Node score="-0.07944512">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8822044"/>
+										</Node>
+									</Node>
+									<Node score="-0.08831588">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.19620039"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -1850,41 +1221,26 @@
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
 									<MiningField name="float(standardScaler(day_of_year))"/>
-									<MiningField name="float(standardScaler(log_duration))"/>
-									<MiningField name="float(standardScaler(log_campaign))"/>
-									<MiningField name="float(standardScaler(education_Wykształcenie średnie))"/>
+									<MiningField name="float(standardScaler(log_pdays))"/>
+									<MiningField name="float(standardScaler(housing_Tak))"/>
+									<MiningField name="float(standardScaler(contact_Nie podano))"/>
 								</MiningSchema>
-								<Node score="-0.042674787">
+								<Node score="0.07031341">
 									<True/>
-									<Node score="0.12391214">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.5964356"/>
-										<Node score="-0.09563625">
-											<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="0.37985075"/>
-											<Node score="0.14113672">
-												<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.18941043"/>
-												<Node score="0.004404789">
-													<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.6208706"/>
-												</Node>
-												<Node score="0.0102047715">
-													<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.018380111"/>
-													<Node score="0.17018597">
-														<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.32296762"/>
-													</Node>
-												</Node>
-											</Node>
+									<Node score="-0.14568557">
+										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.7227025"/>
+										<Node score="0.17085558">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.424959"/>
 										</Node>
-										<Node score="0.010582135">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.51080287"/>
-											<Node score="0.009213536">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.7799072"/>
-											</Node>
-											<Node score="-0.009809915">
-												<SimplePredicate field="float(standardScaler(education_Wykształcenie średnie))" operator="greaterOrEqual" value="0.017281473"/>
-												<Node score="-0.20833485">
-													<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.2109158"/>
-												</Node>
-											</Node>
+									</Node>
+									<Node score="-0.05484721">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.1454935"/>
+										<Node score="0.031977724">
+											<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
 										</Node>
+									</Node>
+									<Node score="-0.05286401">
+										<SimplePredicate field="float(standardScaler(contact_Nie podano))" operator="greaterOrEqual" value="0.7271795"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -1893,43 +1249,24 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(age))"/>
 									<MiningField name="float(standardScaler(day_of_year))"/>
-									<MiningField name="float(standardScaler(log_pdays))"/>
+									<MiningField name="float(standardScaler(job_Bezrobotny))"/>
+									<MiningField name="float(standardScaler(education_Wykształcenie średnie))"/>
 									<MiningField name="float(standardScaler(housing_Tak))"/>
-									<MiningField name="float(standardScaler(poutcome_Porażka))"/>
 								</MiningSchema>
-								<Node score="-0.009040355">
+								<Node score="0.025337411">
 									<True/>
-									<Node score="-0.042541057">
-										<SimplePredicate field="float(standardScaler(poutcome_Porażka))" operator="greaterOrEqual" value="1.2354923"/>
-										<Node score="-0.114221565">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.6652391"/>
-										</Node>
-										<Node score="-0.024440723">
-											<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-0.555144"/>
-											<Node score="0.17512536">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.4883426"/>
-											</Node>
-										</Node>
+									<Node score="0.079404384">
+										<SimplePredicate field="float(standardScaler(job_Bezrobotny))" operator="greaterOrEqual" value="2.647513"/>
 									</Node>
-									<Node score="0.08654776">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.8526587"/>
-									</Node>
-									<Node score="-0.11910895">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.7207012"/>
-									</Node>
-									<Node score="0.03881371">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.88708174"/>
-										<Node score="-0.039758928">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8822044"/>
-										</Node>
-										<Node score="0.32397">
+									<Node score="-0.005155826">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.46298915"/>
+										<Node score="0.062805675">
 											<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
 										</Node>
 									</Node>
-									<Node score="0.20871009">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.6184745"/>
+									<Node score="-0.10612019">
+										<SimplePredicate field="float(standardScaler(education_Wykształcenie średnie))" operator="greaterOrEqual" value="0.017281473"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -1938,44 +1275,19 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(age))"/>
 									<MiningField name="float(standardScaler(day_of_year))"/>
-									<MiningField name="float(standardScaler(log_campaign))"/>
-									<MiningField name="float(standardScaler(job_Przedsiębiorca))"/>
-									<MiningField name="float(standardScaler(education_Wykształcenie średnie))"/>
-									<MiningField name="float(standardScaler(housing_Tak))"/>
+									<MiningField name="float(standardScaler(log_duration))"/>
 								</MiningSchema>
-								<Node score="0.013045729">
+								<Node score="0.004184526">
 									<True/>
-									<Node score="0.027160827">
-										<SimplePredicate field="float(standardScaler(job_Przedsiębiorca))" operator="greaterOrEqual" value="2.8665378"/>
+									<Node score="0.24207832">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.9836183"/>
 									</Node>
-									<Node score="-0.16226244">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.20887712"/>
-										<Node score="-0.038607646">
-											<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="-0.42271727"/>
+									<Node score="-0.30076498">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8948811"/>
+										<Node score="0.11412127">
+											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.6200394"/>
 										</Node>
-										<Node score="0.050032746">
-											<SimplePredicate field="float(standardScaler(education_Wykształcenie średnie))" operator="greaterOrEqual" value="0.017281473"/>
-										</Node>
-										<Node score="0.027580103">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.5765021"/>
-										</Node>
-									</Node>
-									<Node score="0.079578094">
-										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="1.7146804"/>
-									</Node>
-									<Node score="-0.022021014">
-										<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
-										<Node score="0.20703098">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.20945472"/>
-										</Node>
-									</Node>
-									<Node score="-0.025197705">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.20945472"/>
-									</Node>
-									<Node score="0.28047886">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.27283832"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -1984,29 +1296,18 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(log_duration))"/>
-									<MiningField name="float(standardScaler(log_campaign))"/>
-									<MiningField name="float(standardScaler(education_Wykształcenie średnie))"/>
-									<MiningField name="float(standardScaler(housing_Tak))"/>
+									<MiningField name="float(standardScaler(day_of_year))"/>
+									<MiningField name="float(standardScaler(log_pdays))"/>
 								</MiningSchema>
-								<Node score="-0.004685741">
+								<Node score="-0.075757585">
 									<True/>
-									<Node score="-3.5466487E-4">
-										<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
-										<Node score="-0.080628455">
-											<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="0.37985075"/>
-											<Node score="0.15095906">
-												<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.07916641"/>
-												<Node score="0.01983328">
-													<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.4940793"/>
-													<Node score="-0.08138009">
-														<SimplePredicate field="float(standardScaler(education_Wykształcenie średnie))" operator="greaterOrEqual" value="0.017281473"/>
-														<Node score="0.18726064">
-															<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.0624557"/>
-														</Node>
-													</Node>
-												</Node>
-											</Node>
+									<Node score="0.099084415">
+										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.9828144"/>
+									</Node>
+									<Node score="0.011597964">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.6672778"/>
+										<Node score="-0.10621943">
+											<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.9205136"/>
 										</Node>
 									</Node>
 								</Node>
@@ -2017,27 +1318,22 @@
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
 									<MiningField name="float(standardScaler(day_of_year))"/>
-									<MiningField name="float(standardScaler(log_duration))"/>
+									<MiningField name="float(standardScaler(job_Bezrobotny))"/>
+									<MiningField name="float(standardScaler(poutcome_Nie podano))"/>
 								</MiningSchema>
-								<Node score="0.032663096">
+								<Node score="0.041191712">
 									<True/>
-									<Node score="0.01998273">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.5944025"/>
+									<Node score="0.05778099">
+										<SimplePredicate field="float(standardScaler(job_Bezrobotny))" operator="greaterOrEqual" value="2.647513"/>
 									</Node>
-									<Node score="-0.14754981">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.6024331"/>
-										<Node score="-0.010659571">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.45031244"/>
-											<Node score="-0.17293291">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.20887712"/>
-												<Node score="0.006318049">
-													<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.5194568"/>
-												</Node>
-											</Node>
-											<Node score="0.29325452">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.08210988"/>
-											</Node>
+									<Node score="-0.023766376">
+										<SimplePredicate field="float(standardScaler(poutcome_Nie podano))" operator="greaterOrEqual" value="-0.5591414"/>
+										<Node score="0.10039382">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.88708174"/>
 										</Node>
+									</Node>
+									<Node score="-0.09650381">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.1976614"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -2046,25 +1342,16 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(age))"/>
 									<MiningField name="float(standardScaler(log_duration))"/>
+									<MiningField name="float(standardScaler(contact_Telefoniczny))"/>
 								</MiningSchema>
-								<Node score="-0.034115694">
+								<Node score="0.0013636763">
 									<True/>
-									<Node score="0.07108109">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.5964356"/>
-										<Node score="-0.00931473">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.51767516"/>
-											<Node score="0.02466306">
-												<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.9754444"/>
-											</Node>
-											<Node score="0.07096537">
-												<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="1.0421399"/>
-												<Node score="-0.17861155">
-													<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.72511274"/>
-												</Node>
-											</Node>
-										</Node>
+									<Node score="-0.0719403">
+										<SimplePredicate field="float(standardScaler(contact_Telefoniczny))" operator="greaterOrEqual" value="1.7046373"/>
+									</Node>
+									<Node score="0.16627255">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.7133598"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -2073,19 +1360,23 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
+									<MiningField name="float(standardScaler(age))"/>
 									<MiningField name="float(standardScaler(day_of_year))"/>
 									<MiningField name="float(standardScaler(log_pdays))"/>
 								</MiningSchema>
-								<Node score="-0.010764842">
+								<Node score="0.023040874">
 									<True/>
-									<Node score="0.026733005">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.8691473"/>
+									<Node score="-0.17470647">
+										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="2.7234912"/>
 									</Node>
-									<Node score="0.0028426398">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.6672778"/>
+									<Node score="-0.024398856">
+										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.0414679"/>
+										<Node score="0.08824554">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.32354522"/>
+										</Node>
 									</Node>
-									<Node score="-0.22592129">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.7146314"/>
+									<Node score="-0.042397358">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.1454935"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -2094,29 +1385,27 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(age))"/>
-									<MiningField name="float(standardScaler(day_of_year))"/>
+									<MiningField name="float(standardScaler(log_campaign))"/>
 									<MiningField name="float(standardScaler(log_pdays))"/>
+									<MiningField name="float(standardScaler(housing_Tak))"/>
+									<MiningField name="float(standardScaler(contact_Nie podano))"/>
 								</MiningSchema>
-								<Node score="-0.0059768856">
+								<Node score="0.001750847">
 									<True/>
-									<Node score="-0.064439856">
-										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="2.3031535"/>
-									</Node>
-									<Node score="0.026180144">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.7021849"/>
-									</Node>
-									<Node score="-0.11385194">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.5896447"/>
-									</Node>
-									<Node score="-0.041632235">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.88708174"/>
-										<Node score="0.18479791">
-											<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-0.89141434"/>
-											<Node score="-0.027646353">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8822044"/>
+									<Node score="-0.005246628">
+										<SimplePredicate field="float(standardScaler(contact_Nie podano))" operator="greaterOrEqual" value="0.7271795"/>
+										<Node score="-0.1735428">
+											<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="-0.42271727"/>
+											<Node score="0.0038664003">
+												<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
 											</Node>
 										</Node>
+									</Node>
+									<Node score="-0.03351705">
+										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.7227025"/>
+									</Node>
+									<Node score="0.24296749">
+										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.7042885"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -2126,21 +1415,18 @@
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
 									<MiningField name="float(standardScaler(day_of_year))"/>
-									<MiningField name="float(standardScaler(log_duration))"/>
-									<MiningField name="float(standardScaler(log_campaign))"/>
+									<MiningField name="float(standardScaler(log_pdays))"/>
+									<MiningField name="float(standardScaler(contact_Telefoniczny))"/>
 								</MiningSchema>
-								<Node score="0.030382898">
+								<Node score="0.0031373587">
 									<True/>
-									<Node score="0.012493501">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.34768474"/>
-									</Node>
-									<Node score="-0.117355995">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.69117016"/>
-										<Node score="-0.17642967">
-											<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="1.2593877"/>
+									<Node score="-0.08001645">
+										<SimplePredicate field="float(standardScaler(contact_Telefoniczny))" operator="greaterOrEqual" value="1.7046373"/>
+										<Node score="-0.16654506">
+											<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="-0.39622977"/>
 										</Node>
-										<Node score="0.0024661345">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.45031244"/>
+										<Node score="0.13936417">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.5384719"/>
 										</Node>
 									</Node>
 								</Node>
@@ -2151,24 +1437,21 @@
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
 									<MiningField name="float(standardScaler(age))"/>
-									<MiningField name="float(standardScaler(day_of_year))"/>
 									<MiningField name="float(standardScaler(log_duration))"/>
+									<MiningField name="float(standardScaler(housing_Tak))"/>
 								</MiningSchema>
-								<Node score="0.004792912">
+								<Node score="-0.17011629">
 									<True/>
-									<Node score="0.079160236">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.9329113"/>
-									</Node>
-									<Node score="-0.016152555">
-										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="0.5377344"/>
-									</Node>
-									<Node score="0.08805174">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.6113186"/>
-									</Node>
-									<Node score="-0.25158376">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8948811"/>
-										<Node score="0.03571208">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.49528375"/>
+									<Node score="0.020658627">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-1.4296262"/>
+										<Node score="0.04648377">
+											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.7994132"/>
+											<Node score="-0.17358598">
+												<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="1.4624777"/>
+											</Node>
+										</Node>
+										<Node score="-0.04443843">
+											<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
 										</Node>
 									</Node>
 								</Node>
@@ -2178,26 +1461,26 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(age))"/>
+									<MiningField name="float(standardScaler(day_of_year))"/>
 									<MiningField name="float(standardScaler(log_duration))"/>
-									<MiningField name="float(standardScaler(log_campaign))"/>
+									<MiningField name="float(standardScaler(housing_Tak))"/>
 								</MiningSchema>
-								<Node score="0.051222537">
+								<Node score="0.02793268">
 									<True/>
-									<Node score="-0.03704885">
-										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-1.3958198"/>
-										<Node score="0.20613019">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.5964356"/>
-											<Node score="0.021085268">
-												<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="0.37985075"/>
-											</Node>
-											<Node score="-0.006895332">
-												<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.4704985"/>
-											</Node>
-											<Node score="-0.06923564">
-												<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-0.30294132"/>
-											</Node>
+									<Node score="-0.2105677">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.19620039"/>
+										<Node score="0.022244241">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.5194568"/>
 										</Node>
+										<Node score="-0.010880223">
+											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.55958706"/>
+										</Node>
+									</Node>
+									<Node score="0.17057538">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.27283832"/>
+									</Node>
+									<Node score="-0.049249347">
+										<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -2206,40 +1489,22 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
+									<MiningField name="float(standardScaler(age))"/>
 									<MiningField name="float(standardScaler(day_of_year))"/>
-									<MiningField name="float(standardScaler(log_duration))"/>
 								</MiningSchema>
-								<Node score="0.087313145">
+								<Node score="-0.0013360744">
 									<True/>
-									<Node score="0.024264779">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.8193984"/>
-										<Node score="0.062166806">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.18941043"/>
-											<Node score="-0.1136364">
-												<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.053045567"/>
-												<Node score="-0.06223754">
-													<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.015164637"/>
-													<Node score="0.17343757">
-														<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.7799072"/>
-														<Node score="0.009875683">
-															<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.6024331"/>
-														</Node>
-													</Node>
-												</Node>
-											</Node>
+									<Node score="-0.12163477">
+										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="2.7234912"/>
+									</Node>
+									<Node score="-0.16950178">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8822044"/>
+										<Node score="0.09619634">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.9329113"/>
 										</Node>
-										<Node score="-0.08503024">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.24091989"/>
-										</Node>
-										<Node score="0.054796897">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.989666"/>
-											<Node score="-0.23900694">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.67849344"/>
-												<Node score="-0.02477537">
-													<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.38692883"/>
-												</Node>
-											</Node>
-										</Node>
+									</Node>
+									<Node score="0.23615953">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.5272563"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -2251,25 +1516,25 @@
 									<MiningField name="float(standardScaler(day_of_year))"/>
 									<MiningField name="float(standardScaler(log_duration))"/>
 								</MiningSchema>
-								<Node score="-0.069146015">
+								<Node score="-0.17316659">
 									<True/>
-									<Node score="0.05664245">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.9329113"/>
-									</Node>
-									<Node score="-0.2283627">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8948811"/>
-										<Node score="0.1054687">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.67609495"/>
+									<Node score="0.14952339">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.5964356"/>
+										<Node score="-0.19792098">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.8193984"/>
+											<Node score="0.008313396">
+												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.7877066"/>
+											</Node>
 										</Node>
 									</Node>
-									<Node score="0.0027943347">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-1.2063944"/>
-										<Node score="0.09186946">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.539933"/>
+									<Node score="-0.3288023">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.69117016"/>
+										<Node score="-0.042563524">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.424959"/>
 										</Node>
-										<Node score="-0.18095201">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.2737218"/>
-										</Node>
+									</Node>
+									<Node score="0.20287944">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.6672778"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -2278,26 +1543,16 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(age))"/>
 									<MiningField name="float(standardScaler(log_duration))"/>
-									<MiningField name="float(standardScaler(log_pdays))"/>
+									<MiningField name="float(standardScaler(log_campaign))"/>
 								</MiningSchema>
-								<Node score="0.008012154">
+								<Node score="-0.0045643914">
 									<True/>
-									<Node score="-0.040839124">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.9205136"/>
+									<Node score="0.008646848">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.21484558"/>
 									</Node>
-									<Node score="-0.097577654">
-										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="0.5377344"/>
-										<Node score="-0.05191176">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.490455"/>
-											<Node score="0.06696582">
-												<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="0.78993714"/>
-												<Node score="-0.06706339">
-													<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.724074"/>
-												</Node>
-											</Node>
-										</Node>
+									<Node score="-0.13621375">
+										<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="0.8862148"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -2306,26 +1561,18 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(age))"/>
-									<MiningField name="float(standardScaler(day_of_year))"/>
 									<MiningField name="float(standardScaler(log_pdays))"/>
 								</MiningSchema>
-								<Node score="-0.031043818">
+								<Node score="-1.9578374E-4">
 									<True/>
-									<Node score="-0.02854621">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.9205136"/>
+									<Node score="0.2234573">
+										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.7042885"/>
+										<Node score="-0.010514934">
+											<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.7207012"/>
+										</Node>
 									</Node>
-									<Node score="0.13958055">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.6672778"/>
-										<Node score="-0.030637572">
-											<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="1.4624777"/>
-										</Node>
-										<Node score="-0.0039291233">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.2235925"/>
-											<Node score="0.11344217">
-												<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.7042885"/>
-											</Node>
-										</Node>
+									<Node score="-0.15665607">
+										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.5896447"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -2334,30 +1581,19 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
-									<MiningField name="float(standardScaler(log_duration))"/>
-									<MiningField name="float(standardScaler(log_campaign))"/>
-									<MiningField name="float(standardScaler(job_Student))"/>
-									<MiningField name="float(standardScaler(education_Wykształcenie średnie))"/>
+									<MiningField name="float(standardScaler(day_of_year))"/>
+									<MiningField name="float(standardScaler(contact_Nie podano))"/>
 								</MiningSchema>
-								<Node score="0.011625038">
+								<Node score="0.039147392">
 									<True/>
-									<Node score="-0.043684553">
-										<SimplePredicate field="float(standardScaler(job_Student))" operator="greaterOrEqual" value="2.6076958"/>
+									<Node score="-0.06018674">
+										<SimplePredicate field="float(standardScaler(contact_Nie podano))" operator="greaterOrEqual" value="0.7271795"/>
+										<Node score="0.11772181">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.019303892"/>
+										</Node>
 									</Node>
-									<Node score="-0.047514547">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.5866597"/>
-									</Node>
-									<Node score="-0.041559987">
-										<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="1.8013942"/>
-									</Node>
-									<Node score="0.0024668337">
-										<SimplePredicate field="float(standardScaler(education_Wykształcenie średnie))" operator="greaterOrEqual" value="0.017281473"/>
-									</Node>
-									<Node score="0.15891005">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.3626769"/>
-									</Node>
-									<Node score="-0.19301465">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.1517473"/>
+									<Node score="-0.028133191">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.19620039"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -2366,19 +1602,26 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
+									<MiningField name="float(standardScaler(age))"/>
 									<MiningField name="float(standardScaler(day_of_year))"/>
-									<MiningField name="float(standardScaler(log_duration))"/>
+									<MiningField name="float(standardScaler(education_Wykształcenie średnie))"/>
 								</MiningSchema>
-								<Node score="0.072031885">
+								<Node score="0.074595466">
 									<True/>
-									<Node score="-0.19710039">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.8193984"/>
-										<Node score="0.011290512">
-											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.59911394"/>
+									<Node score="0.112540476">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.46298915"/>
+										<Node score="0.07770827">
+											<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="-1.143617"/>
+											<Node score="-0.017299108">
+												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.07001078"/>
+											</Node>
 										</Node>
-										<Node score="-0.0022672245">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.7560148"/>
-										</Node>
+									</Node>
+									<Node score="-0.06603219">
+										<SimplePredicate field="float(standardScaler(education_Wykształcenie średnie))" operator="greaterOrEqual" value="0.017281473"/>
+									</Node>
+									<Node score="-0.1140993">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.6024331"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -2387,30 +1630,22 @@
 							<True/>
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
+									<MiningField name="float(standardScaler(age))"/>
 									<MiningField name="float(standardScaler(day_of_year))"/>
-									<MiningField name="float(standardScaler(log_pdays))"/>
-									<MiningField name="float(standardScaler(job_Samozatrudniony))"/>
-									<MiningField name="float(standardScaler(contact_Telefoniczny))"/>
 								</MiningSchema>
-								<Node score="0.012755369">
+								<Node score="0.006406099">
 									<True/>
-									<Node score="0.036906224">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.949744"/>
+									<Node score="-0.09251481">
+										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="2.7234912"/>
 									</Node>
-									<Node score="-0.029751355">
-										<SimplePredicate field="float(standardScaler(contact_Telefoniczny))" operator="greaterOrEqual" value="1.7046373"/>
-									</Node>
-									<Node score="-0.17153941">
-										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.9098327"/>
-									</Node>
-									<Node score="-0.17309707">
-										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.07001078"/>
-										<Node score="-0.08848876">
-											<SimplePredicate field="float(standardScaler(job_Samozatrudniony))" operator="greaterOrEqual" value="2.4920664"/>
+									<Node score="0.058580667">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.5194568"/>
+										<Node score="-0.042572707">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8631893"/>
 										</Node>
-										<Node score="0.010082774">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.006627169"/>
-										</Node>
+									</Node>
+									<Node score="-0.100824945">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.20887712"/>
 									</Node>
 								</Node>
 							</TreeModel>
@@ -2420,28 +1655,448 @@
 							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
 								<MiningSchema>
 									<MiningField name="float(standardScaler(day_of_year))"/>
-									<MiningField name="float(standardScaler(log_duration))"/>
-									<MiningField name="float(standardScaler(education_Wykształcenie średnie))"/>
+									<MiningField name="float(standardScaler(log_pdays))"/>
 								</MiningSchema>
-								<Node score="-0.0029983036">
+								<Node score="-0.059491187">
 									<True/>
-									<Node score="0.060426224">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.7133598"/>
-									</Node>
-									<Node score="-0.08578491">
-										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.5211091"/>
-									</Node>
-									<Node score="-0.05114105">
-										<SimplePredicate field="float(standardScaler(education_Wykształcenie średnie))" operator="greaterOrEqual" value="0.017281473"/>
-										<Node score="0.14678034">
-											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.7799072"/>
-											<Node score="-0.0043837395">
-												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.6024331"/>
-												<Node score="0.12178872">
-													<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.9996908"/>
-												</Node>
+									<Node score="0.18952627">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.6672778"/>
+										<Node score="0.07032352">
+											<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.7042885"/>
+											<Node score="-0.10204623">
+												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.9060968"/>
 											</Node>
 										</Node>
+										<Node score="-0.0090065105">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.020765"/>
+										</Node>
+									</Node>
+								</Node>
+							</TreeModel>
+						</Segment>
+						<Segment id="56">
+							<True/>
+							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
+								<MiningSchema>
+									<MiningField name="float(standardScaler(log_duration))"/>
+									<MiningField name="float(standardScaler(job_Pracownik zarządzający))"/>
+								</MiningSchema>
+								<Node score="-0.028853396">
+									<True/>
+									<Node score="-0.097565494">
+										<SimplePredicate field="float(standardScaler(job_Pracownik zarządzający))" operator="greaterOrEqual" value="0.6343186"/>
+										<Node score="0.07929457">
+											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.63431245"/>
+											<Node score="-0.03772877">
+												<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.44208598"/>
+											</Node>
+										</Node>
+									</Node>
+									<Node score="0.031943787">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.44481677"/>
+									</Node>
+								</Node>
+							</TreeModel>
+						</Segment>
+						<Segment id="57">
+							<True/>
+							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
+								<MiningSchema>
+									<MiningField name="float(standardScaler(day_of_year))"/>
+									<MiningField name="float(standardScaler(housing_Tak))"/>
+								</MiningSchema>
+								<Node score="-0.021636017">
+									<True/>
+									<Node score="-0.006982041">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.27283832"/>
+										<Node score="0.07416623">
+											<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
+										</Node>
+									</Node>
+								</Node>
+							</TreeModel>
+						</Segment>
+						<Segment id="58">
+							<True/>
+							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
+								<MiningSchema>
+									<MiningField name="float(standardScaler(day_of_year))"/>
+									<MiningField name="float(standardScaler(job_Pracownik zarządzający))"/>
+									<MiningField name="float(standardScaler(housing_Tak))"/>
+									<MiningField name="float(standardScaler(contact_Nie podano))"/>
+									<MiningField name="float(standardScaler(poutcome_Porażka))"/>
+								</MiningSchema>
+								<Node score="0.040893704">
+									<True/>
+									<Node score="-0.123831145">
+										<SimplePredicate field="float(standardScaler(contact_Nie podano))" operator="greaterOrEqual" value="0.7271795"/>
+										<Node score="-0.08111983">
+											<SimplePredicate field="float(standardScaler(job_Pracownik zarządzający))" operator="greaterOrEqual" value="0.6343186"/>
+										</Node>
+										<Node score="0.019146938">
+											<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
+										</Node>
+									</Node>
+									<Node score="-0.022676058">
+										<SimplePredicate field="float(standardScaler(poutcome_Porażka))" operator="greaterOrEqual" value="1.2354923"/>
+									</Node>
+									<Node score="-0.016801717">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.19620039"/>
+									</Node>
+								</Node>
+							</TreeModel>
+						</Segment>
+						<Segment id="59">
+							<True/>
+							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
+								<MiningSchema>
+									<MiningField name="float(standardScaler(log_duration))"/>
+									<MiningField name="float(standardScaler(housing_Tak))"/>
+									<MiningField name="float(standardScaler(contact_Nie podano))"/>
+								</MiningSchema>
+								<Node score="0.0045866976">
+									<True/>
+									<Node score="-0.07840461">
+										<SimplePredicate field="float(standardScaler(contact_Nie podano))" operator="greaterOrEqual" value="0.7271795"/>
+										<Node score="-0.1320798">
+											<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
+											<Node score="0.1177642">
+												<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.72615564"/>
+											</Node>
+										</Node>
+									</Node>
+								</Node>
+							</TreeModel>
+						</Segment>
+						<Segment id="60">
+							<True/>
+							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
+								<MiningSchema>
+									<MiningField name="float(standardScaler(day_of_year))"/>
+								</MiningSchema>
+								<Node score="-0.02880161">
+									<True/>
+									<Node score="0.12158707">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.32354522"/>
+										<Node score="-0.0017848408">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.07001078"/>
+										</Node>
+									</Node>
+									<Node score="-0.16784894">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.6024331"/>
+										<Node score="-0.031129444">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.5136961"/>
+										</Node>
+									</Node>
+									<Node score="0.21730958">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.7799072"/>
+									</Node>
+								</Node>
+							</TreeModel>
+						</Segment>
+						<Segment id="61">
+							<True/>
+							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
+								<MiningSchema>
+									<MiningField name="float(standardScaler(day_of_year))"/>
+									<MiningField name="float(standardScaler(log_duration))"/>
+								</MiningSchema>
+								<Node score="0.070535585">
+									<True/>
+									<Node score="0.13140227">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.27283832"/>
+										<Node score="-0.0012503986">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.07001078"/>
+										</Node>
+									</Node>
+									<Node score="-0.13745138">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.8432908"/>
+										<Node score="0.008653139">
+											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.14310291"/>
+										</Node>
+									</Node>
+									<Node score="-0.07773908">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.3887871"/>
+									</Node>
+								</Node>
+							</TreeModel>
+						</Segment>
+						<Segment id="62">
+							<True/>
+							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
+								<MiningSchema>
+									<MiningField name="float(standardScaler(log_duration))"/>
+									<MiningField name="float(standardScaler(contact_Nie podano))"/>
+								</MiningSchema>
+								<Node score="0.0041581504">
+									<True/>
+									<Node score="0.035608146">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.0296112"/>
+									</Node>
+									<Node score="-0.07999821">
+										<SimplePredicate field="float(standardScaler(contact_Nie podano))" operator="greaterOrEqual" value="0.7271795"/>
+									</Node>
+								</Node>
+							</TreeModel>
+						</Segment>
+						<Segment id="63">
+							<True/>
+							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
+								<MiningSchema>
+									<MiningField name="float(standardScaler(log_pdays))"/>
+								</MiningSchema>
+								<Node score="-0.0040548346">
+									<True/>
+									<Node score="0.037134107">
+										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.8691473"/>
+									</Node>
+									<Node score="-0.07987182">
+										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.7207012"/>
+									</Node>
+									<Node score="0.18084522">
+										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.7042885"/>
+									</Node>
+								</Node>
+							</TreeModel>
+						</Segment>
+						<Segment id="64">
+							<True/>
+							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
+								<MiningSchema>
+									<MiningField name="float(standardScaler(age))"/>
+									<MiningField name="float(standardScaler(day_of_year))"/>
+									<MiningField name="float(standardScaler(log_duration))"/>
+								</MiningSchema>
+								<Node score="-0.0062215063">
+									<True/>
+									<Node score="0.09102629">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.9329113"/>
+									</Node>
+									<Node score="0.118709326">
+										<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="1.5465453"/>
+										<Node score="-0.18086015">
+											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.6002865"/>
+										</Node>
+									</Node>
+								</Node>
+							</TreeModel>
+						</Segment>
+						<Segment id="65">
+							<True/>
+							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
+								<MiningSchema>
+									<MiningField name="job_Samozatrudniony"/>
+									<MiningField name="float(standardScaler(day_of_year))"/>
+								</MiningSchema>
+								<LocalTransformations>
+									<DerivedField name="standardScaler(job_Samozatrudniony)" optype="continuous" dataType="double">
+										<Apply function="/">
+											<Apply function="-">
+												<FieldRef field="job_Samozatrudniony"/>
+												<Constant dataType="double">0.0359656981953155</Constant>
+											</Apply>
+											<Constant dataType="double">0.18620463675386545</Constant>
+										</Apply>
+									</DerivedField>
+									<DerivedField name="float(standardScaler(job_Samozatrudniony))" optype="continuous" dataType="float">
+										<FieldRef field="standardScaler(job_Samozatrudniony)"/>
+									</DerivedField>
+								</LocalTransformations>
+								<Node score="-0.0032688244">
+									<True/>
+									<Node score="-0.058804844">
+										<SimplePredicate field="float(standardScaler(job_Samozatrudniony))" operator="greaterOrEqual" value="2.4920664"/>
+									</Node>
+									<Node score="0.19897482">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.5272563"/>
+										<Node score="-0.01872412">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8631893"/>
+										</Node>
+									</Node>
+								</Node>
+							</TreeModel>
+						</Segment>
+						<Segment id="66">
+							<True/>
+							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
+								<MiningSchema>
+									<MiningField name="float(standardScaler(day_of_year))"/>
+									<MiningField name="float(standardScaler(housing_Tak))"/>
+								</MiningSchema>
+								<Node score="-0.040921357">
+									<True/>
+									<Node score="0.062691346">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.6672778"/>
+										<Node score="-0.004095536">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.0714718"/>
+										</Node>
+										<Node score="0.33761328">
+											<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
+										</Node>
+									</Node>
+								</Node>
+							</TreeModel>
+						</Segment>
+						<Segment id="67">
+							<True/>
+							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
+								<MiningSchema>
+									<MiningField name="float(standardScaler(day_of_year))"/>
+									<MiningField name="float(standardScaler(log_duration))"/>
+									<MiningField name="float(standardScaler(log_pdays))"/>
+									<MiningField name="float(standardScaler(contact_Nie podano))"/>
+								</MiningSchema>
+								<Node score="6.7353115E-4">
+									<True/>
+									<Node score="-0.037045784">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.7799072"/>
+										<Node score="-0.1367116">
+											<SimplePredicate field="float(standardScaler(contact_Nie podano))" operator="greaterOrEqual" value="0.7271795"/>
+											<Node score="0.064093076">
+												<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.63831556"/>
+											</Node>
+										</Node>
+										<Node score="0.037331987">
+											<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="-0.16950187"/>
+										</Node>
+									</Node>
+									<Node score="0.046612717">
+										<SimplePredicate field="float(standardScaler(log_pdays))" operator="greaterOrEqual" value="1.8691473"/>
+									</Node>
+									<Node score="-0.13816403">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.49017325"/>
+									</Node>
+								</Node>
+							</TreeModel>
+						</Segment>
+						<Segment id="68">
+							<True/>
+							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
+								<MiningSchema>
+									<MiningField name="float(standardScaler(day_of_year))"/>
+									<MiningField name="float(standardScaler(housing_Tak))"/>
+								</MiningSchema>
+								<Node score="-0.016822418">
+									<True/>
+									<Node score="0.14496836">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.020765"/>
+										<Node score="0.34705663">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.7799072"/>
+											<Node score="-0.0020447613">
+												<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.6658167"/>
+											</Node>
+										</Node>
+										<Node score="-0.21627219">
+											<SimplePredicate field="float(standardScaler(housing_Tak))" operator="greaterOrEqual" value="0.042916715"/>
+										</Node>
+									</Node>
+									<Node score="0.13317725">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-1.6672778"/>
+									</Node>
+								</Node>
+							</TreeModel>
+						</Segment>
+						<Segment id="69">
+							<True/>
+							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
+								<MiningSchema>
+									<MiningField name="float(standardScaler(log_duration))"/>
+									<MiningField name="float(standardScaler(log_campaign))"/>
+								</MiningSchema>
+								<Node score="-0.0020650593">
+									<True/>
+									<Node score="0.095599644">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.7133598"/>
+									</Node>
+									<Node score="0.009132708">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="0.14310291"/>
+									</Node>
+									<Node score="-0.16419479">
+										<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="1.2593877"/>
+									</Node>
+								</Node>
+							</TreeModel>
+						</Segment>
+						<Segment id="70">
+							<True/>
+							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
+								<MiningSchema>
+									<MiningField name="float(standardScaler(day_of_year))"/>
+									<MiningField name="float(standardScaler(log_duration))"/>
+								</MiningSchema>
+								<Node score="-0.001299023">
+									<True/>
+									<Node score="0.07125277">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.9329113"/>
+									</Node>
+									<Node score="0.03028712">
+										<SimplePredicate field="float(standardScaler(log_duration))" operator="greaterOrEqual" value="1.0296112"/>
+									</Node>
+									<Node score="-0.17487328">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="1.8948811"/>
+									</Node>
+								</Node>
+							</TreeModel>
+						</Segment>
+						<Segment id="71">
+							<True/>
+							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
+								<MiningSchema>
+									<MiningField name="float(standardScaler(day_of_year))"/>
+									<MiningField name="float(standardScaler(log_campaign))"/>
+								</MiningSchema>
+								<Node score="-0.012351469">
+									<True/>
+									<Node score="0.08141817">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.5194568"/>
+										<Node score="-0.027998526">
+											<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="-0.42271727"/>
+										</Node>
+									</Node>
+									<Node score="-0.086597554">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="0.20887712"/>
+									</Node>
+									<Node score="0.08484711">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.27283832"/>
+									</Node>
+								</Node>
+							</TreeModel>
+						</Segment>
+						<Segment id="72">
+							<True/>
+							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
+								<MiningSchema>
+									<MiningField name="float(standardScaler(age))"/>
+									<MiningField name="float(standardScaler(day_of_year))"/>
+								</MiningSchema>
+								<Node score="0.028047198">
+									<True/>
+									<Node score="-0.22792147">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.8432908"/>
+										<Node score="-0.12089689">
+											<SimplePredicate field="float(standardScaler(age))" operator="greaterOrEqual" value="2.3031535"/>
+										</Node>
+										<Node score="0.0045418916">
+											<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.79258394"/>
+										</Node>
+									</Node>
+								</Node>
+							</TreeModel>
+						</Segment>
+						<Segment id="73">
+							<True/>
+							<TreeModel functionName="regression" noTrueChildStrategy="returnLastPrediction" x-mathContext="float">
+								<MiningSchema>
+									<MiningField name="float(standardScaler(day_of_year))"/>
+									<MiningField name="float(standardScaler(log_campaign))"/>
+								</MiningSchema>
+								<Node score="0.0045095165">
+									<True/>
+									<Node score="-0.0066082524">
+										<SimplePredicate field="float(standardScaler(day_of_year))" operator="greaterOrEqual" value="-0.6024331"/>
+									</Node>
+									<Node score="0.22118096">
+										<SimplePredicate field="float(standardScaler(log_campaign))" operator="greaterOrEqual" value="1.2593877"/>
 									</Node>
 								</Node>
 							</TreeModel>

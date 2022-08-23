@@ -34,7 +34,7 @@ public class Forecast {
     private Long numberOfContactsDuringPreviousCampaign;
     private Date lastContactDate;
     private Date lastContactDateFromPreviousCampaign;
-    private String previousCampaignForecast;
+    private String previousCampaignOutcome;
     private String forecastOutcome;
     private Double forecastProbability;
 

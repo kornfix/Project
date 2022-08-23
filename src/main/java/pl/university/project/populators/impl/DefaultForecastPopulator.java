@@ -38,16 +38,14 @@ public class DefaultForecastPopulator implements Populator<ClientCampaign, Forec
             target.setLastContactDateFromPreviousCampaign(previousCampaign.getLastContactDate());
             Forecast previousForecast = previousCampaign.getForecasts().stream()
                     .sorted(Comparator.comparing(Forecast::getCreationTime)).findFirst().orElse(null);
-            if(previousForecast!=null)
+            if(previousCampaign.getCampaignOutcome()!=null)
             {
-                target.setPreviousCampaignForecast(previousForecast.getForecastOutcome());
-            }else {
-                target.setPreviousCampaignForecast("Nie wiadomo");
+                target.setPreviousCampaignOutcome(previousCampaign.getCampaignOutcome());
             }
         }else{
             target.setNumberOfContactsDuringPreviousCampaign(0L);
             target.setLastContactDateFromPreviousCampaign(null);
-            target.setPreviousCampaignForecast("Nie wiadomo");
+            target.setPreviousCampaignOutcome("Nie wiadomo");
         }
     }
 }

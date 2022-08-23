@@ -34,6 +34,8 @@ public class ClientCampaign {
 
     private Date lastContactDate;
 
+    private String campaignOutcome;
+
     @OneToMany(mappedBy = "clientCampaign", cascade=CascadeType.ALL)
     private Set<Forecast> forecasts;
 
