@@ -6,6 +6,8 @@
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
+<div class="form">
+
 <h1>Form</h1>
 <form action="#" th:object="${client}" th:action="${client.id} != null? @{|/clients/${client.id}/update|} : @{/clients/add}"
       th:method="${client.id} != null? PUT : POST">
@@ -69,6 +71,7 @@
 
 </form>
 
+</div>
 
 </body>
 </html>

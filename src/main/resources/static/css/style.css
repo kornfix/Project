@@ -1,33 +1,50 @@
 body{
     background-color : Azure;
+    font-family: "Farfetch Basis","Helvetica Neue",Arial,sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
 }
 
-h2 {
-    font-family: sans-serif;
-    font-size: 1.5em;
-    text-transform: uppercase;
+.topnav {
+  overflow: hidden;
+  background-color: #333;
 }
 
-strong {
-    font-weight: 700;
-    background-color: yellow;
+.nav-left {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
 }
 
-p {
-    font-color: red;
-    font-size: 12px;
-    font-family: sans-serif;
+.topnav a:hover {
+  background-color: #ddd;
+  border-bottom: 3px solid red;
 }
 
-.btn {
-  background-color: #8B0009;
+
+.topnav a.active {
+   background-color: #ddd;
+  border-bottom: 3px solid red;
+}
+
+.topnav-right {
+  float: right;
+}
+
+
+.btn-logout{
+  padding: 5px;
+  background-color: white;
+  border: 2px solid #e5e5e5;
   border-radius: 4px;
-  border-style: none;
   box-sizing: border-box;
-  color: #fff;
+  color: #666666;
   cursor: pointer;
   display: inline-block;
-  font-family: "Farfetch Basis","Helvetica Neue",Arial,sans-serif;
   font-size: 16px;
   font-weight: 700;
   line-height: 1.5;
@@ -40,9 +57,30 @@ p {
   padding: 9px 20px 8px;
   position: relative;
   text-align: center;
-  text-transform: none;
-  user-select: none;
-  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100%;
+}
+
+.btn {
+  background-color: #8B0009;
+  border-radius: 4px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 0;
+  max-width: none;
+  min-height: 44px;
+  min-width: 10px;
+  outline: none;
+  overflow: hidden;
+  padding: 9px 20px 8px;
+  position: relative;
+  text-align: center;
   touch-action: manipulation;
   width: 100%;
 }
@@ -50,4 +88,58 @@ p {
 .btn:hover,
 .button-31:focus {
   opacity: .75;
+}
+
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=password], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+div.form
+{
+    margin-top: 50px;
+    display: block;
+    text-align: center;
+}
+
+form
+{
+    background-color: #f2f2f2;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding: 10px 20px;
+}
+
+label{
+text-align:left;
+float:left;
+margin: 0px 1px
 }

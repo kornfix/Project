@@ -29,15 +29,12 @@ public class DefaultForecastPopulator implements Populator<ClientCampaign, Forec
         target.setCallDurationInSeconds(source.getCallDurationInSeconds());
         target.setNumberOfContactsDuringCampaign(source.getNumberOfContactsDuringCampaign());
         ClientCampaign previousCampaign = source.getClient().getClientCampaigns().stream()
-                .filter(e -> PropertyUtil.validateOldCampaign(e.getCampaign(), source.getCampaign()))
-                .sorted(Comparator.comparing(clientCampaign -> clientCampaign.getCampaign()
-                        .getCampaignEndDate())).findFirst().orElse(null);
+                .filter(e -> PropertyUtil.validateOldCampaign(e.getCampaign(), source.getCampaign())).min(Comparator.comparing(clientCampaign -> clientCampaign.getCampaign()
+                        .getCampaignEndDate())).orElse(null);
         target.setLastContactDate(source.getLastContactDate());
         if(previousCampaign!=null){
             target.setNumberOfContactsDuringPreviousCampaign(previousCampaign.getNumberOfContactsDuringCampaign());
             target.setLastContactDateFromPreviousCampaign(previousCampaign.getLastContactDate());
-            Forecast previousForecast = previousCampaign.getForecasts().stream()
-                    .sorted(Comparator.comparing(Forecast::getCreationTime)).findFirst().orElse(null);
             if(previousCampaign.getCampaignOutcome()!=null)
             {
                 target.setPreviousCampaignOutcome(previousCampaign.getCampaignOutcome());

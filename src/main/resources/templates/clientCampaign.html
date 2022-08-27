@@ -6,6 +6,10 @@
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
+<a th:href="@{/campaigns}">Kampanie</a> &#x2192
+<a th:href="@{|/campaigns/${clientCampaign.campaign.id}|}" th:text="${clientCampaign.campaign.title}"></a> &#x2192
+<span th:text="|Uczestnik ${clientCampaign.client.firstName} ${clientCampaign.client.lastName}|" ></span>
+
 <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Sign Out"/>

@@ -6,12 +6,18 @@
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
+<div>
+    <a th:href="@{/campaigns}">Kampanie</a> &#x2192
+    <a th:href="@{|/campaigns/${campaign.id}|}" th:text="${campaign.title}"></a>
+</div>
+
+
 <div th:if="${canAddClients}">
 <a  th:href="@{|/campaigns/${campaign.id}/participants/add|}"/>
-<button type="button">Stwórz nową kamapanię</button>
+<button type="button">Dodaj nowego uczestnika kampanii</button>
 </a>
 </div>
-<p th:unless="${canAddClients}">Wszyscy klienci banku uczestniczą w powyższej kampanii</p>
+<h1 th:unless="${canAddClients}">Wszyscy klienci banku uczestniczą w powyższej kampanii</h1>
 <div>
     <h1 th:text="|Uczestnicy kampanii ${campaign.title}|"></h1>
 <table>

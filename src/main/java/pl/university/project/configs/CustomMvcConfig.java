@@ -14,12 +14,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class CustomMvcConfig implements WebMvcConfigurer {
 
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/home").setViewName("home");
-        registry.addViewController("/").setViewName("home");
+        registry.addRedirectViewController("/","/campaigns");
+        registry.addViewController("/").setViewName("campaigns");
+        registry.addViewController("/campaigns/").setViewName("campaigns");
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/users").setViewName("users");
         registry.addViewController("/clients").setViewName("clients");
-        registry.addViewController("/campaigns/").setViewName("campaigns");
         registry.addViewController("/error").setViewName("error");
         registry.addViewController("/notFound").setViewName("notFound");
     }

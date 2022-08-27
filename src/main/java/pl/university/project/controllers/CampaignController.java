@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 
 @Controller
+//@RequestMapping(value={"", "/", "campaigns"})
 @RequestMapping("/campaigns")
 public class CampaignController {
 
