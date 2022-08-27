@@ -1,9 +1,10 @@
 body{
     background-color : Azure;
     font-family: "Farfetch Basis","Helvetica Neue",Arial,sans-serif;
-    font-size: 16px;
+    font-size: 50px;
     margin: 0;
     padding: 0;
+    overflow: scroll;
 }
 
 .topnav {
@@ -15,20 +16,19 @@ body{
   float: left;
   color: #f2f2f2;
   text-align: center;
-  padding: 14px 16px;
+  padding: 34px 26px;
   text-decoration: none;
-  font-size: 17px;
 }
 
 .topnav a:hover {
   background-color: #ddd;
-  border-bottom: 3px solid red;
+  color: black;
 }
 
 
 .topnav a.active {
-   background-color: #ddd;
-  border-bottom: 3px solid red;
+  background-color: #04AA6D;
+  color: white;
 }
 
 .topnav-right {
@@ -45,23 +45,24 @@ body{
   color: #666666;
   cursor: pointer;
   display: inline-block;
-  font-size: 16px;
+  font-size: 40px;
   font-weight: 700;
   line-height: 1.5;
-  margin: 0;
   max-width: none;
   min-height: 44px;
   min-width: 10px;
   outline: none;
   overflow: hidden;
-  padding: 9px 20px 8px;
+  padding: 9px 20px;
   position: relative;
   text-align: center;
   touch-action: manipulation;
-  width: 100%;
+  /*! width: 100%; */
+  margin-top: 24px;
+  margin-right: 20px;
 }
 
-.btn {
+.btn-delete {
   background-color: #8B0009;
   border-radius: 4px;
   border-style: none;
@@ -69,26 +70,29 @@ body{
   color: #fff;
   cursor: pointer;
   display: inline-block;
-  font-size: 16px;
+  font-size: 50px;
   font-weight: 700;
   line-height: 1.5;
   margin: 0;
   max-width: none;
   min-height: 44px;
   min-width: 10px;
-  outline: none;
-  overflow: hidden;
+   outline: none;
+   overflow: hidden;
   padding: 9px 20px 8px;
-  position: relative;
-  text-align: center;
+   position: relative;
+   text-align: center;
   touch-action: manipulation;
   width: 100%;
+  min-height: 130px;
 }
 
 .btn:hover,
 .button-31:focus {
   opacity: .75;
 }
+input[type='text'] { font-size: 24px; }
+input[type='password'] { font-size: 24px; }
 
 input[type=text], select {
   width: 100%;
@@ -110,15 +114,18 @@ input[type=password], select {
   box-sizing: border-box;
 }
 
-input[type=submit] {
+.btn {
   width: 100%;
   background-color: #4CAF50;
   color: white;
-  padding: 14px 20px;
+  padding: 23px 25px;
   margin: 8px 0;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 35px;
+  font-weight: 700;
+  min-height: 130px;
 }
 
 div.form
@@ -128,7 +135,7 @@ div.form
     text-align: center;
 }
 
-form
+form.form
 {
     background-color: #f2f2f2;
     display: inline-block;
@@ -138,8 +145,13 @@ form
     padding: 10px 20px;
 }
 
+form.logout{
+margin:0;
+padding:0;
+}
+
 label{
 text-align:left;
 float:left;
-margin: 0px 1px
+margin: 0px 1px;
 }

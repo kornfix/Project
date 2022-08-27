@@ -14,7 +14,7 @@
     Zostałeś wylogowany.
 </div>
 <div  class="form">
-    <form th:action="@{/login}" method="post">
+    <form class="form" th:action="@{/login}" method="post">
         <label class="label" for="fusername">Nazwa użytkownika</label>
         <br>
         <input id="fusername" type="text" name="username" placeholder="Nazwa użytkownika"/>
@@ -23,7 +23,7 @@
         <br>
         <input id="fpassword" type="password" name="password" placeholder="Hasło"/>
         <br>
-        <input type="submit" value="Zaloguj"/>
+        <input class="btn" type="submit" value="Zaloguj"/>
     </form>
 </div>
 </body>
