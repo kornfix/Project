@@ -10,6 +10,16 @@
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Sign Out"/>
 </form>
+<div class="topnav">
+    <a class="nav-left" th:href="@{/campaigns}">Kampanie</a>
+    <a class="nav-left active" th:href="@{/clients}">Klienci</a>
+    <div class="topnav-right">
+        <span class="nav-left" th:inline="text">[[${#httpServletRequest.remoteUser}]]</span>
+        <form class="nav-left logout" th:action="@{/logout}" method="post">
+            <input class="btn-logout" type="submit" value="Wyloguj"/>
+        </form>
+    </div>
+</div>
 <div th:object="${client}">
     <table>
         <tr>

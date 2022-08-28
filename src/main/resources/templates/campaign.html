@@ -42,5 +42,45 @@
         <button type="button">Edytuj</button>
     </a>
 </div>
+
+    <h1 th:text="|Uczestnicy kampanii ${campaign.title}|"></h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Klient </th>
+            <th>Czas trwania ostatniego kontaktu (w sekundach)</th>
+            <th>Liczba kontaktów</th>
+            <th>Data ostatniego kontaktu</th>
+            <th></div>
+                <h1 th:unless="${canAddClients}">Wszyscy klienci banku uczestniczą w powyższej kampanii</h1>
+                <div>
+            </th>
+        </tr>
+        </thead>
+        <tr th:each="clientCampaign: ${clientCampaigns}">
+            <td th:text="|${clientCampaign.client.firstName} ${clientCampaign.client.lastName}|">
+            <td th:text="${clientCampaign.callDurationInSeconds}">
+            <td th:text="${clientCampaign.client.lastName}">
+            <td th:text="${#dates.format(clientCampaign.lastContactDate, 'dd-MM-yyyy')}" >
+            <td>
+                <a th:href="@{|/campaigns/${clientCampaign.campaign.id}/participants/${clientCampaign.client.id}|}"/>
+                <button type="button">Zobacz szczegóły</button>
+                </a>
+            </td>
+            <td>
+                <a th:href="@{|/campaigns/${clientCampaign.campaign.id}/participants/${clientCampaign.client.id}/update|}"/>
+                <button type="button">Edytuj</button>
+                </a>
+            </td>
+            <td>
+                <form th:action="@{|/campaigns/${clientCampaign.clientCampaignId.campaignId}/participants/${clientCampaign.clientCampaignId.clientId}/delete|}"  th:method="delete">
+                    <button type="submit"
+                            th:data-confirm-delete="|Czy na pewno chcesz usunąć klienta ${clientCampaign.client.firstName} ${clientCampaign.client.lastName} z kampanii ${campaign.title}?|"
+                            onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false">Usuń</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>

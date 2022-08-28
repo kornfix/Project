@@ -11,6 +11,7 @@ import pl.university.project.services.DefaultService;
 
 import javax.annotation.Resource;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service("clientCampaignService")
@@ -32,6 +33,11 @@ public class DefaultClientCampaignService implements DefaultService<ClientCampai
     @Override
     public Collection<ClientCampaignData> getAllObjects() {
         return clientCampaignConverter.convertAll(clientCampaignRepository.findAll());
+    }
+
+    public List<ClientCampaign> getAllClientsCampaignsByCampaignID(Long campaignId){
+        return clientCampaignRepository.findAll().stream().filter(clientCampaign ->
+                clientCampaign.getClientCampaignId().getCampaignId().equals(campaignId)).collect(Collectors.toList());
     }
 
     public Collection<Long> getAllParticipantsIDs() {
@@ -74,9 +80,23 @@ public class DefaultClientCampaignService implements DefaultService<ClientCampai
         if (clientCampaign == null) {
             return null;
         }
-        clientCampaign.setNumberOfContactsDuringCampaign(clientCampaign.getNumberOfContactsDuringCampaign()+valueToAppend);
+        clientCampaign.setNumberOfContactsDuringCampaign(clientCampaign.getNumberOfContactsDuringCampaign() + valueToAppend);
         clientCampaignRepository.saveAndFlush(clientCampaign);
         return clientCampaign.getClientCampaignId();
+    }
+
+    public Collection<Long> getClientsIDsInCampaignByClientCampaignId(ClientCampaign clientCampaign) {
+        return getClientsIDsInCampaignByClientCampaignId(clientCampaign.getClientCampaignId());
+    }
+
+    public Collection<Long> getClientsIDsInCampaignByClientCampaignId(ClientCampaignId clientCampaignId) {
+        return getClientsIDsInCampaignByCampaignId(clientCampaignId.getCampaignId());
+    }
+
+    public Collection<Long> getClientsIDsInCampaignByCampaignId(Long campaignId) {
+        return getAllClientsCampaignsByCampaignID(campaignId).stream()
+                .map(clientCampaign -> clientCampaign.getClientCampaignId().getClientId())
+                .collect(Collectors.toList());
     }
 
     @Override

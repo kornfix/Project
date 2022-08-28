@@ -7,12 +7,14 @@ import pl.university.project.models.Client;
 import pl.university.project.odata.ClientData;
 import pl.university.project.repositories.ClientRepository;
 import pl.university.project.services.DefaultService;
+import pl.university.project.utils.PropertyUtil;
 
 import javax.annotation.Resource;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Service("clientService")
-public class DefaultClientService implements DefaultService<ClientData,Long> {
+public class DefaultClientService implements DefaultService<ClientData, Long> {
 
     @Resource
     private ClientReversConverter clientReversConverter;
@@ -55,6 +57,21 @@ public class DefaultClientService implements DefaultService<ClientData,Long> {
         clientReversConverter.convert(clientData, client);
         clientRepository.saveAndFlush(client);
         return client.getId();
+    }
+
+    public Collection<ClientData> filterOutClientsByIds(Collection<Long> campaignsClientIds) {
+        return getAllObjects().stream()
+                .filter(PropertyUtil::validateClient)
+                .filter(clientData -> PropertyUtil.clientNotWithIDs(clientData, campaignsClientIds))
+                .collect(Collectors.toList());
+    }
+
+    public Integer countAvailableClientsForCampaign(Collection<Long> campaignsClientIds) {
+        return filterOutClientsByIds(campaignsClientIds).size();
+    }
+
+    public boolean hasAnyAvailableClientsForCampaign(Collection<Long> campaignsClientIds) {
+        return countAvailableClientsForCampaign(campaignsClientIds)>0;
     }
 
     @Override

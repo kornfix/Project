@@ -6,17 +6,24 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.university.project.odata.CampaignData;
 import pl.university.project.services.impl.DefaultCampaignService;
+import pl.university.project.services.impl.DefaultClientCampaignService;
+import pl.university.project.services.impl.DefaultClientService;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
 @Controller
-//@RequestMapping(value={"", "/", "campaigns"})
 @RequestMapping("/campaigns")
 public class CampaignController {
 
     @Resource
     private DefaultCampaignService defaultCampaignService;
+
+    @Resource
+    private DefaultClientService defaultClientService;
+
+    @Resource
+    private DefaultClientCampaignService defaultClientCampaignService;
 
     @GetMapping
     public String getAlCampaigns(Model model) {
@@ -30,6 +37,10 @@ public class CampaignController {
         if (campaignData == null || campaignData.getId() == null) {
             return "notFound";
         }
+        model.addAttribute("canAddClients", defaultClientService.hasAnyAvailableClientsForCampaign(
+                defaultClientCampaignService.getClientsIDsInCampaignByCampaignId(campaignId)));
+        model.addAttribute("clientCampaigns", defaultClientCampaignService
+                .getAllClientsCampaignsByCampaignID(campaignId));
         model.addAttribute("campaign", defaultCampaignService.getObjectById(campaignId));
         return "campaign";
     }

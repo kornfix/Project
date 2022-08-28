@@ -16,7 +16,6 @@ import pl.university.project.utils.PropertyUtil;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/campaigns/{campaignId}/participants")
@@ -33,10 +32,11 @@ public class ClientCampaignController {
 
     @GetMapping
     public String getAlClientCampaigns(@PathVariable Long campaignId, Model model) {
-
-        model.addAttribute("canAddClients", getAvailableClientForCampaign().size() != 0);
+        model.addAttribute("canAddClients", defaultClientService.hasAnyAvailableClientsForCampaign(
+                defaultClientCampaignService.getClientsIDsInCampaignByCampaignId(campaignId)));
         model.addAttribute("campaign", defaultCampaignService.getObjectById(campaignId));
-        model.addAttribute("clientCampaigns", defaultClientCampaignService.getAllObjects());
+        model.addAttribute("clientCampaigns", defaultClientCampaignService
+                .getAllClientsCampaignsByCampaignID(campaignId));
         return "clientCampaigns";
     }
 
@@ -59,15 +59,12 @@ public class ClientCampaignController {
         clientCampaignId.setCampaignId(thisCampaignData.getId());
         model.addAttribute("outcomes", PropertyUtil.getOutcomesCategories());
         model.addAttribute("referer", referer);
-        Collection<ClientData> avaiableClients = getAvailableClientForCampaign();
-        if (avaiableClients.size() == 0) {
-//            model.addAttribute("canAddClients", Boolean.FALSE);
+        Collection<ClientData> availableClients = defaultClientService.filterOutClientsByIds(defaultClientCampaignService
+                .getClientsIDsInCampaignByCampaignId(campaignId));
+        if (availableClients.isEmpty()) {
             return "redirect:/campaigns/" + campaignId + "/participants";
-
         }
-        setCampaignClients(model, avaiableClients);
-//        model.addAttribute("oldCampaigns", defaultCampaignService.getAllObjects().stream()
-//                .filter( campaignData -> PropertyUtil.validateOldCampaign(campaignData,thisCampaignData)).collect(Collectors.toList()));
+        setCampaignClients(model, availableClients);
         ClientCampaignData clientCampaignData = new ClientCampaignData();
         clientCampaignData.setCampaign(thisCampaignData);
         clientCampaignData.setClientCampaignId(clientCampaignId);
@@ -82,7 +79,7 @@ public class ClientCampaignController {
                                     BindingResult result, Model model, @ModelAttribute("referer") String referer) {
         clientCampaignData.getClientCampaignId().setCampaignId(campaignId);
         clientCampaignData.setCampaign(defaultCampaignService.getObjectById(campaignId));
-        setCampaignClients(model);
+        setCampaignClients(model, campaignId);
         ClientData clientData = defaultClientService.getObjectById(clientCampaignData.getClientCampaignId().getClientId());
         clientCampaignData.setClient(clientData);
         model.addAttribute("clientCampaign", clientCampaignData);
@@ -102,9 +99,7 @@ public class ClientCampaignController {
         CampaignData thisCampaignData = defaultCampaignService.getObjectById(campaignId);
         model.addAttribute("outcomes", PropertyUtil.getOutcomesCategories());
         model.addAttribute("referer", referer);
-        setCampaignClients(model);
-//        model.addAttribute("oldCampaigns", defaultCampaignService.getAllObjects().stream()
-//                .filter( campaignData -> PropertyUtil.validateOldCampaign(campaignData,thisCampaignData)).collect(Collectors.toList()));
+        setCampaignClients(model, campaignId);
         ClientCampaignId clientCampaignId = new ClientCampaignId(campaignId, clientId);
         ClientCampaignData clientCampaignData = defaultClientCampaignService.getObjectById(clientCampaignId);
         if (clientCampaignData == null) {
@@ -118,7 +113,7 @@ public class ClientCampaignController {
     public String updateClientCampaign(@PathVariable Long campaignId, @PathVariable Long clientId,
                                        @Valid @ModelAttribute("clientCampaign") ClientCampaignData clientCampaignData
             , BindingResult result, Model model, @ModelAttribute("referer") String referer) {
-        setCampaignClients(model);
+        setCampaignClients(model, campaignId);
         clientCampaignData.setClientCampaignId(new ClientCampaignId(campaignId, clientId));
         if (result.hasErrors()) {
             model.addAttribute("outcomes", PropertyUtil.getOutcomesCategories());
@@ -143,19 +138,13 @@ public class ClientCampaignController {
         return "redirect:/campaigns/" + campaignId + "/participants";
     }
 
-    private Collection<ClientData> getAvailableClientForCampaign() {
-        Collection<Long> campaignsClientIds = defaultClientCampaignService.getAllParticipantsIDs();
-        return defaultClientService.getAllObjects().stream()
-                .filter(PropertyUtil::validateClient)
-                .filter(clientData -> PropertyUtil.clientNotWithIDs(clientData, campaignsClientIds))
-                .collect(Collectors.toList());
-    }
 
     private void setCampaignClients(Model model, Collection<ClientData> clientDataCollection) {
         model.addAttribute("clients", clientDataCollection);
     }
 
-    private void setCampaignClients(Model model) {
-        setCampaignClients(model, getAvailableClientForCampaign());
+    private void setCampaignClients(Model model, Long campaignId) {
+        setCampaignClients(model, defaultClientService.filterOutClientsByIds(
+                defaultClientCampaignService.getClientsIDsInCampaignByCampaignId(campaignId)));
     }
 }
