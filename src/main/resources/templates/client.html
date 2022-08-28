@@ -25,62 +25,63 @@
 </div>
 <div class="content">
 <div class="form" th:object="${client}">
-    <h1>Informacje o kampanii</h1>
-    <table class="form">
+    <div class="information">
+    <h1>Informacje o kliencie</h1>
+    <table class="bottom">
         <tr>
             <td class="left">Imię</td>
-            <td class="center" th:text="*{firstName}"></td>
+            <td class="left" th:text="*{firstName}"></td>
         </tr>
         <tr>
             <td class="left">Nazwisko</td>
-            <td class="center" th:text="*{lastName}"></td>
+            <td class="left" th:text="*{lastName}"></td>
         </tr>
         <tr>
             <td class="left">Wiek</td>
-            <td class="center" th:text="|*{age} lat|"></td>
+            <td class="left" th:text="|*{age} lat|"></td>
         </tr>
         <tr>
             <td class="left">Numer telefonu</td>
-            <td class="center" th:text="*{phoneNumber}"></td>
+            <td class="left" th:text="*{phoneNumber}"></td>
         </tr>
         <tr>
             <td class="left">Rodzaj telefonu</td>
-            <td class="center" th:text="*{contactType}=='Nie wiadomo'? 'Nie podano':*{contactType}"></td>
+            <td class="left" th:text="*{contactType}=='Nie wiadomo'? 'Nie podano':*{contactType}"></td>
         </tr>
         <tr>
             <td class="left">Zawód:</td>
-            <td class="center" th:text="*{job}=='Nie wiadomo'? 'Nie podano':*{job}"></td>
+            <td class="left" th:text="*{job}=='Nie wiadomo'? 'Nie podano':*{job}"></td>
         </tr>
         <tr>
             <td class="left">Poziom wykształcenia:</td>
-            <td class="center" th:text="*{educationLevel}=='Nie wiadomo'? 'Nie podano':*{educationLevel}"></td>
+            <td class="left" th:text="*{educationLevel}=='Nie wiadomo'? 'Nie podano':*{educationLevel}"></td>
         </tr>
         <tr>
             <td class="left">Status cywilny:</td>
-            <td class="center" th:text="*{martialStatus}"></td>
+            <td class="left" th:text="*{martialStatus}"></td>
         </tr>
         <tr>
             <td class="left">Saldo:</td>
-            <td class="center" th:text="*{balance}"></td>
+            <td class="left" th:text="*{balance}"></td>
         </tr>
         <tr>
             <td class="left">Zalega ze spłatami:</td>
-            <td class="center"><input type="checkbox"  disabled="true" th:checked="*{defaultCreditStatus}" /></td>
+            <td class="left"><input type="checkbox"  disabled="true" th:checked="*{defaultCreditStatus}" /></td>
         </tr>
         <tr>
             <td class="left">Posiada kredyt hipoteczny:</td>
-            <td class="center"><input type="checkbox"  disabled="true" th:checked="*{hasMortgage}" /></td>
+            <td class="left"><input type="checkbox"  disabled="true" th:checked="*{hasMortgage}" /></td>
         </tr>
         <tr>
             <td class="left">Posiada kredyt konsumpcyjny:</td>
-            <td class="center"><input type="checkbox"  disabled="true" th:checked="*{hasConsumerCredit}" /></td>
+            <td class="left"><input type="checkbox"  disabled="true" th:checked="*{hasConsumerCredit}" /></td>
         </tr>
     </table>
     </table>
     <table th:unless="${#lists.isEmpty(campaigns)}">
         <thead>
         <tr>
-            <th class="header">Tytuł kampanii</th>
+            <th class="header">Uczęstnik kampanii</th>
             <th class="header" colspan="2">Prawdopodobieństwo założeia lokaty</th>
         </tr>
         </thead>
@@ -94,6 +95,7 @@
             </td>
         </tr>
     </table>
+    </div>
 </div>
 </div>
 <footer>
