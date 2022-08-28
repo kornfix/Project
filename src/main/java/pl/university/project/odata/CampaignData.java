@@ -25,7 +25,7 @@ public class CampaignData {
     private Timestamp creationTime;
     private Date campaignStartDate;
     private Date campaignEndDate;
-
+    private String forecast;
 
     private Set<ClientCampaignData> campaigns = new HashSet<>();
 }

@@ -3,7 +3,6 @@ package pl.university.project.models;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -12,7 +11,6 @@ import java.sql.Timestamp;
 @Entity(name = "forecasts")
 @Getter
 @Setter
-@ToString
 @RequiredArgsConstructor
 public class Forecast {
 

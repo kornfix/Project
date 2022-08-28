@@ -3,9 +3,14 @@ package pl.university.project.utils;
 import pl.university.project.models.Campaign;
 import pl.university.project.odata.ClientData;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class PropertyUtil {
 
@@ -76,11 +81,11 @@ public final class PropertyUtil {
 
     public static boolean validateClient(ClientData clientData) {
         return clientData != null && clientData.getId() != null
-                && clientData.getFirstName() != null && clientData.getLastName()!=null;
+                && clientData.getFirstName() != null && clientData.getLastName() != null;
     }
 
     public static boolean clientNotWithIDs(ClientData clientData, Collection<Long> exceptIDs) {
-        return exceptIDs.stream().allMatch( id -> clientNotWithID(clientData,id));
+        return exceptIDs.stream().allMatch(id -> clientNotWithID(clientData, id));
     }
 
     public static boolean clientNotWithID(ClientData clientData, Long exceptIDs) {
@@ -88,10 +93,9 @@ public final class PropertyUtil {
     }
 
 
-
     public static boolean validateCampaign(Campaign campaign) {
         return campaign != null && campaign.getId() != null
-                && campaign.getTitle() != null && campaign.getCreationTime()!=null;
+                && campaign.getTitle() != null && campaign.getCreationTime() != null;
     }
 
     public static boolean validateOldCampaign(Campaign comparedCampaign, Campaign thisCampaign) {
@@ -99,4 +103,49 @@ public final class PropertyUtil {
                 comparedCampaign.getCampaignEndDate().before(thisCampaign.getCampaignEndDate());
     }
 
+
+    private static final Pattern periodPattern = Pattern.compile("([0-9]+)([dhms])");
+
+    public static Long parsePeriod(String period) {
+        if (period == null) return null;
+        period = period.toLowerCase(Locale.ENGLISH);
+        Matcher matcher = periodPattern.matcher(period);
+        Instant instant = Instant.EPOCH;
+        while (matcher.find()) {
+            int num = Integer.parseInt(matcher.group(1));
+            String typ = matcher.group(2);
+            switch (typ) {
+                case "d":
+                    instant = instant.plus(Duration.ofDays(num));
+                    break;
+                case "h":
+                    instant = instant.plus(Duration.ofHours(num));
+                    break;
+                case "m":
+                    instant = instant.plus(Duration.ofMinutes(num));
+                    break;
+                case "s":
+                    instant = instant.plus(Duration.ofSeconds(num));
+                    break;
+            }
+        }
+        return instant.toEpochMilli() / 1000L;
+    }
+
+    public static String getDurationStringFormat(Long allSeconds) {
+        String result = "";
+        Long hours = allSeconds / 3600;
+        if (hours > 0) {
+            result += String.format("%dh ", hours);
+        }
+        Long minutes = (allSeconds % 3600) / 60;
+        if (minutes > 0) {
+            result += String.format("%dm ", minutes);
+        }
+        Long seconds = allSeconds % 60;
+        if (seconds > 0) {
+            result += String.format("%ds", seconds);
+        }
+        return result;
+    }
 }

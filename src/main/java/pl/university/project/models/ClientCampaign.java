@@ -3,7 +3,6 @@ package pl.university.project.models;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -14,7 +13,6 @@ import java.util.Set;
 @Entity(name = "clientCampaigns")
 @Getter
 @Setter
-@ToString
 @RequiredArgsConstructor
 public class ClientCampaign {
 

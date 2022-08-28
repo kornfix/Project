@@ -6,65 +6,89 @@
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
-<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
 <div class="topnav">
     <a class="nav-left" th:href="@{/campaigns}">Kampanie</a>
     <a class="nav-left active" th:href="@{/clients}">Klienci</a>
     <div class="topnav-right">
+        <form class="nav-left logout" th:action="@{|/clients/${client.id}/update|}" method="get">
+            <input class="btn-logout" type="submit" value="Edytuj użytkownika"/>
+        </form>
         <span class="nav-left" th:inline="text">[[${#httpServletRequest.remoteUser}]]</span>
         <form class="nav-left logout" th:action="@{/logout}" method="post">
             <input class="btn-logout" type="submit" value="Wyloguj"/>
         </form>
     </div>
 </div>
-<div th:object="${client}">
-    <table>
+
+<div class="form" th:object="${client}">
+    <table class="form">
         <tr>
-            <td>Imię</td><td th:text="*{firstName}"></td>
+            <td class="left">Imię</td>
+            <td class="center" th:text="*{firstName}"></td>
         </tr>
         <tr>
-            <td>Nazwisko</td><td th:text="*{lastName}"></td>
+            <td class="left">Nazwisko</td>
+            <td class="center" th:text="*{lastName}"></td>
         </tr>
         <tr>
-            <td>Wiek</td><td th:text="*{age}"></td>
+            <td class="left">Wiek</td>
+            <td class="center" th:text="|*{age} lat|"></td>
         </tr>
         <tr>
-            <td>Numer telefonu</td><td th:text="*{phoneNumber}"></td>
+            <td class="left">Numer telefonu</td>
+            <td class="center" th:text="*{phoneNumber}"></td>
         </tr>
         <tr>
-            <td>Rodzaj telefonu</td><td th:text="*{contactType}=='Nie wiadomo'? 'Nie podano':*{contactType}"></td>
+            <td class="left">Rodzaj telefonu</td>
+            <td class="center" th:text="*{contactType}=='Nie wiadomo'? 'Nie podano':*{contactType}"></td>
         </tr>
         <tr>
-            <td>Zawód:</td><td th:text="*{job}=='Nie wiadomo'? 'Nie podano':*{job}"></td>
+            <td class="left">Zawód:</td>
+            <td class="center" th:text="*{job}=='Nie wiadomo'? 'Nie podano':*{job}"></td>
         </tr>
         <tr>
-            <td>Poziom wykształcenia:</td><td th:text="*{educationLevel}=='Nie wiadomo'? 'Nie podano':*{educationLevel}"></td>
+            <td class="left">Poziom wykształcenia:</td>
+            <td class="center" th:text="*{educationLevel}=='Nie wiadomo'? 'Nie podano':*{educationLevel}"></td>
         </tr>
         <tr>
-            <td>Status cywilny:</td><td th:text="*{martialStatus}"></td>
+            <td class="left">Status cywilny:</td>
+            <td class="center" th:text="*{martialStatus}"></td>
         </tr>
         <tr>
-            <td>Saldo:</td><td th:text="*{balance}"></td>
+            <td class="left">Saldo:</td>
+            <td class="center" th:text="*{balance}"></td>
         </tr>
         <tr>
-            <td>Zalega ze spłatami:</td><td><input type="checkbox"  disabled="true"
-                                                   th:checked="*{defaultCreditStatus}" /></td>
+            <td class="left">Zalega ze spłatami:</td>
+            <td class="center"><input type="checkbox"  disabled="true" th:checked="*{defaultCreditStatus}" /></td>
         </tr>
         <tr>
-            <td>Posiada kredyt hipoteczny:</td><td><input type="checkbox"  disabled="true"
-                                                          th:checked="*{hasMortgage}" /></td>
+            <td class="left">Posiada kredyt hipoteczny:</td>
+            <td class="center"><input type="checkbox"  disabled="true" th:checked="*{hasMortgage}" /></td>
         </tr>
         <tr>
-            <td>Posiada kredyt konsumpcyjny:</td><td><input type="checkbox"  disabled="true"
-                                                            th:checked="*{hasConsumerCredit}" /></td>
+            <td class="left">Posiada kredyt konsumpcyjny:</td>
+            <td class="center"><input type="checkbox"  disabled="true" th:checked="*{hasConsumerCredit}" /></td>
         </tr>
     </table>
-    <a th:href="@{|/clients/*{id}/update|}"/>
-        <button type="button">Edytuj</button>
-    </a>
+    </table>
+    <table th:unless="${#lists.isEmpty(campaigns)}">
+        <thead>
+        <tr>
+            <th class="header">Tytuł kampanii</th>
+            <th class="header" colspan="2">Prawdopodobieństwo założeia lokaty</th>
+        </tr>
+        </thead>
+        <tr th:each="campaign: ${campaigns}">
+            <td class="left" th:text="${campaign.title}">
+            <td class="center" th:text="${campaign.forecast}">
+            <td>
+                <a th:href="@{|/campaigns/${campaign.id}/participants/${client.id}|}"/>
+                <button class="btn" type="button">Zobacz szczegóły</button>
+                </a>
+            </td>
+        </tr>
+    </table>
 </div>
 </body>
 </html>

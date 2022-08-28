@@ -6,71 +6,116 @@
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
+<div class="topnav">
+    <a class="nav-left" th:href="@{/campaigns}">Kampanie</a>
+    <a class="nav-left active" th:href="@{/clients}">Klienci</a>
+    <div class="topnav-right">
+        <span class="nav-left" th:inline="text">[[${#httpServletRequest.remoteUser}]]</span>
+        <form class="nav-left logout" th:action="@{/logout}" method="post">
+            <input class="btn-logout" type="submit" value="Wyloguj"/>
+        </form>
+    </div>
+</div>
 <div class="form">
-
-<h1>Form</h1>
-<form action="#" th:object="${client}" th:action="${client.id} != null? @{|/clients/${client.id}/update|} : @{/clients/add}"
+    <form class="form" action="#" th:object="${client}" th:action="${client.id} != null? @{|/clients/${client.id}/update|} : @{/clients/add}"
       th:method="${client.id} != null? PUT : POST">
-    <input type="hidden" th:value="${referer}" name="referer"/>
-    <p>Imię: <input type="text" th:field="*{firstName}" /></p>
-    <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"/>
-    <p>Nazwisko: <input type="text" th:field="*{lastName}" /></p>
-    <p  th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"/>
-    <p>Wiek: <input type="number" th:field="*{age}" min="11" max="150"></p>
-    <p  th:if="${#fields.hasErrors('age')}">Wiek nie może być pusty oraz musi być większy od 18!</p>
-    <p>Numer telefonu: <input type="text" th:field="*{phoneNumber}" /></p>
-    <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"/>
-    <p>Rodzaj telefonu:
+        <h1 th:text="${client.id} == null? |Dodaj klienta| : |Edytuj klienta|"></h1>
+        <input type="hidden" th:value="${referer}" name="referer"/>
+        <p>Imię: </p>
+        <br>
+        <input type="text" th:field="*{firstName}" />
+        <br th:if="${#fields.hasErrors('firstName')}">
+        <div th:if="${#fields.hasErrors('firstName')}" class="alert">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <p  th:errors="*{firstName}"/>
+        </div>
+        <p>Nazwisko: </p>
+        <br>
+        <input type="text" th:field="*{lastName}" />
+        <br th:if="${#fields.hasErrors('lastName')}">
+        <div th:if="${#fields.hasErrors('lastName')}" class="alert">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <p  th:errors="*{lastName}"/>
+        </div>
+        <p>Wiek: </p>
+        <br>
+        <input type="number" th:field="*{age}" min="11" max="150">
+        <br th:if="${#fields.hasErrors('age')}">
+        <div th:if="${#fields.hasErrors('age')}" class="alert">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <p>Wiek nie może być pusty oraz musi być większy od 18!</p>
+        </div>
+        <p>Saldo: </p>
+        <br>
+        <input type="number" th:field="*{balance}" step="0.01"/>
+        <div th:if="${#fields.hasErrors('balance')}" class="alert">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <p>Saldo klienta nie może być puste!</p>
+        </div>
+        <p>Numer telefonu:</p>
+        <br>
+        <input type="text" th:field="*{phoneNumber}" />
+        <br th:if="${#fields.hasErrors('phoneNumber')}">
+        <div th:if="${#fields.hasErrors('phoneNumber')}" class="alert">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <p  th:errors="*{phoneNumber}"/>
+        </div>
+        <p>Rodzaj telefonu: </p>
+        <br>
         <select th:field="*{contactType}">
             <option th:each="option : ${contactTypes}" th:value="${option}" th:text="${option}"
                     th:selected="(${option} == *{contactType})">
             </option>
         </select>
-    </p>
-    <p  th:if="${#fields.hasErrors('contactType')}" th:errors="*{contactType}"/>
-    <p>Zawód:
+        <br>
+        <p>Zawód:</p>
+        <br>
         <select th:field="*{job}">
             <option th:each="option : ${jobs}" th:value="${option}" th:text="${option}"
                     th:selected="(${option} == *{job})">
             </option>
         </select>
-    </p>
-    <p>Poziom wykształcenia:
+        <br>
+        <p>Poziom wykształcenia:</p>
+        <br>
         <select th:field="*{educationLevel}">
             <option th:each="option : ${educationLevels}" th:value="${option}" th:text="${option}"
                     th:selected="(${option} == *{educationLevel})">
             </option>
         </select>
-    </p>
-    <p  th:if="${#fields.hasErrors('educationLevel')}" th:errors="*{educationLevel}"/>
-    <p>Status cywilny:
+        <br>
+        <p>Status cywilny:</p>
+        <br>
         <select th:field="*{martialStatus}">
             <option th:each="option : ${martialStatuses}" th:value="${option}" th:text="${option}"
                     th:selected="(${option} == *{martialStatus})">
             </option>
         </select>
-    </p>
-    <p  th:if="${#fields.hasErrors('martialStatus')}" th:errors="*{martialStatus}"/>
-    <p>Saldo: <input type="number" th:field="*{balance}" step="0.01"></p>
-    <p  th:if="${#fields.hasErrors('balance')}">Saldo klienta nie może być puste!</p>
-    <p>Zalega ze spłatami: <input type="checkbox"  th:field="*{defaultCreditStatus}"
-                                  th:checked="*{defaultCreditStatus}" /></p>
-    <p th:if="${#fields.hasErrors('defaultCreditStatus')}" th:errors="*{defaultCreditStatus}"/>
-    <p>Posiada kredyt hipoteczny: <input type="checkbox"  th:field="*{hasMortgage}"
-                                         th:checked="*{hasMortgage}" /></p>
-    <p th:if="${#fields.hasErrors('hasMortgage')}" th:errors="*{hasMortgage}"/>
-    <p>Posiada kredyt konsumpcyjny: <input type="checkbox"  th:field="*{hasConsumerCredit}"
-                                           th:checked="*{hasConsumerCredit}" /></p>
-    <p th:if="${#fields.hasErrors('hasConsumerCredit')}" th:errors="*{hasConsumerCredit}"/>
-    <p>
-        <input type="submit" value="Zapisz" />
-        <a th:href="${referer}!=null? ${referer}:'/'"/>
-        <button type="button">Anuluj</button>
-        </a>
-    </p>
+        <br>
 
+        <br>
+        <table>
+            <tr>
+                <td class="left"><p class="nowrap">Zalega ze spłatami:</p></td>
+                <td class="center"><input type="checkbox"  th:field="*{defaultCreditStatus}" th:checked="*{defaultCreditStatus}" /></td>
+            </tr>
+            <tr>
+                <td class="left"><p class="nowrap">Posiada kredyt hipoteczny:</p></td>
+                <td class="center"><input type="checkbox"  th:field="*{hasMortgage}" th:checked="*{hasMortgage}" /></td>
+            </tr>
+            <tr>
+                <td class="left"><p class="nowrap">Posiada kredyt konsumpcyjny:</p></td>
+                <td class="center"><input type="checkbox"  th:field="*{hasConsumerCredit}" th:checked="*{hasConsumerCredit}" /></td>
+            </tr>
+        </table>
+        <br>
+        <p class="center">
+            <input  class="btn-save" type="submit" value="Zapisz" />
+            <a th:href="${referer}!=null? ${referer}:'/'"/>
+            <button  class="btn-logout" type="button">Anuluj</button>
+            </a>
+        </p>
 </form>
-
 </div>
 
 </body>

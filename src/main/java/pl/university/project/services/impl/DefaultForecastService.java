@@ -1,6 +1,5 @@
 package pl.university.project.services.impl;
 
-import org.pmml4s.model.Model;
 import org.springframework.stereotype.Service;
 import pl.university.project.models.ClientCampaign;
 import pl.university.project.models.Forecast;
@@ -10,10 +9,7 @@ import pl.university.project.repositories.ForecastRepository;
 import pl.university.project.utils.ForecastUtil;
 
 import javax.annotation.Resource;
-import java.net.URL;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
 @Service("forecastService")
 public class DefaultForecastService {
@@ -33,6 +29,7 @@ public class DefaultForecastService {
         modelValuesPopulator.populate(forecast,modelValues);
         forecast.setForecastProbability(ForecastUtil.getProbability(modelValues));
         forecast.setForecastOutcome(ForecastUtil.getPrediction(modelValues));
+        forecast.setClientCampaign(clientCampaign);
         forecastRepository.saveAndFlush(forecast);
     }
 

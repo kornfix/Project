@@ -5,6 +5,7 @@ import pl.university.project.converters.impl.ClientReversConverter;
 import pl.university.project.models.ClientCampaign;
 import pl.university.project.odata.ClientCampaignData;
 import pl.university.project.populators.Populator;
+import pl.university.project.utils.PropertyUtil;
 
 import javax.annotation.Resource;
 
@@ -28,7 +29,7 @@ public class DefaultClientCampaignReversPopulator implements Populator<ClientCam
         if (source.getCampaignOutcome() != null) {
             target.setCampaignOutcome(source.getCampaignOutcome());
         }
-        target.setCallDurationInSeconds(source.getCallDurationInSeconds());
+        target.setCallDurationInSeconds(PropertyUtil.parsePeriod(source.getCallDurationInSeconds()));
         target.setLastContactDate(source.getLastContactDate());
         target.setNumberOfContactsDuringCampaign(source.getNumberOfContactsDuringCampaign());
     }

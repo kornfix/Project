@@ -19,11 +19,20 @@ table  {
 }
 
 th.header {
-  padding: 20px;
+  /*! padding: 0px; */
   text-align: center;
   background-color: #04AA6D;
   color: white;
 }
+
+td.left{
+  text-align: left;
+}
+
+td.center{
+  text-align: center;
+}
+
 
 
 tr:nth-child(even){background-color: #f2f2f2;}
@@ -120,6 +129,23 @@ input[type=text], select {
   box-sizing: border-box;
 }
 
+input[type=number], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 24px;
+}
+
+input[type=checkbox] {
+            transform : scale(3);
+            vertical-align: 13px;
+            margin-left: 13px;
+}
+
 input[type=password], select {
   width: 100%;
   padding: 12px 20px;
@@ -128,6 +154,7 @@ input[type=password], select {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  width: 100%;
 }
 
 .btn {
@@ -135,7 +162,6 @@ input[type=password], select {
   background-color: #4CAF50;
   color: white;
   padding: 23px 25px;
-  /*! margin: 8px 0; */
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -159,7 +185,7 @@ form.form
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-    padding: 10px 20px;
+    padding: 25px 50px;
 }
 
 form.logout{
@@ -167,8 +193,80 @@ margin:0;
 padding:0;
 }
 
-label{
+label, p{
 text-align:left;
 float:left;
 margin: 0px 1px;
+font-size: 30px;
+padding: 5px 0px;
+font-size: ;
+}
+
+.center {
+  text-align: center;
+  width: 100%;
+ }
+
+
+.btn-save{
+  width: 250px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 23px 25px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 35px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.5;
+  max-width: none;
+  min-height: 44px;
+  min-width: 10px;
+  outline: none;
+  overflow: hidden;
+  padding: 9px 20px;
+  position: relative;
+  text-align: center;
+  touch-action: manipulation;
+  margin-top: 24px;
+  margin-right: 20px;
+  display: inline-block;
+}
+
+.alert {
+  padding: 20px;
+  background-color: #f44336;
+  color: white;
+  display: block ruby;
+  height: 100%;
+  font-weight: 700;
+  overflow: auto;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+
+.nowrap{
+    white-space: nowrap;
+}
+
+
+.width{
+    width: 100%;
 }

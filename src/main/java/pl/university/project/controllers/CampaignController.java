@@ -38,7 +38,7 @@ public class CampaignController {
             return "notFound";
         }
         model.addAttribute("canAddClients", defaultClientService.hasAnyAvailableClientsForCampaign(
-                defaultClientCampaignService.getClientsIDsInCampaignByCampaignId(campaignId)));
+                defaultCampaignService.getClientIsForCampaignId(campaignId)));
         model.addAttribute("clientCampaigns", defaultClientCampaignService
                 .getAllClientsCampaignsByCampaignID(campaignId));
         model.addAttribute("campaign", defaultCampaignService.getObjectById(campaignId));

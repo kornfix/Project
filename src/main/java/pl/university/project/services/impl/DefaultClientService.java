@@ -1,16 +1,20 @@
 package pl.university.project.services.impl;
 
 import org.springframework.stereotype.Service;
+import pl.university.project.converters.impl.CampaignForecastConverter;
 import pl.university.project.converters.impl.ClientConverter;
 import pl.university.project.converters.impl.ClientReversConverter;
 import pl.university.project.models.Client;
+import pl.university.project.odata.CampaignData;
 import pl.university.project.odata.ClientData;
 import pl.university.project.repositories.ClientRepository;
 import pl.university.project.services.DefaultService;
 import pl.university.project.utils.PropertyUtil;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 @Service("clientService")
@@ -24,6 +28,9 @@ public class DefaultClientService implements DefaultService<ClientData, Long> {
 
     @Resource
     private ClientRepository clientRepository;
+
+    @Resource
+    private CampaignForecastConverter campaignForecastConverter;
 
     @Override
     public Collection<ClientData> getAllObjects() {
@@ -72,6 +79,14 @@ public class DefaultClientService implements DefaultService<ClientData, Long> {
 
     public boolean hasAnyAvailableClientsForCampaign(Collection<Long> campaignsClientIds) {
         return countAvailableClientsForCampaign(campaignsClientIds)>0;
+    }
+
+    public Collection<CampaignData> getCampaignIdForClientId(Long id) {
+        Client client = getClientById(id);
+        if (client == null) {
+            return Collections.emptyList();
+        }
+        return campaignForecastConverter.convertAll(new ArrayList<>(client.getClientCampaigns()));
     }
 
     @Override

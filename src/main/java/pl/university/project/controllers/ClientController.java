@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.university.project.odata.ClientData;
+import pl.university.project.services.impl.DefaultCampaignService;
 import pl.university.project.services.impl.DefaultClientService;
 
 import javax.annotation.Resource;
@@ -19,6 +20,9 @@ public class ClientController {
     @Resource
     private DefaultClientService defaultClientService;
 
+    @Resource
+    private DefaultCampaignService defaultCampaignService;
+
     @GetMapping
     public String getAlClients(Model model) {
         model.addAttribute("clients", defaultClientService.getAllObjects());
@@ -31,6 +35,7 @@ public class ClientController {
         if (clientData == null || clientData.getId() == null) {
             return "notFound";
         }
+        model.addAttribute("campaigns", defaultClientService.getCampaignIdForClientId(clientId));
         model.addAttribute("client", defaultClientService.getObjectById(clientId));
         return "client";
     }

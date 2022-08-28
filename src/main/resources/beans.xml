@@ -111,4 +111,18 @@
         </property>
     </bean>
 
+
+    <alias name="defaultCampaignForecastPopulator" alias="campaignForecastPopulator"/>
+    <bean id="defaultCampaignForecastPopulator" class="pl.university.project.populators.impl.DefaultCampaignForecastPopulator"/>
+
+    <alias name="defaultCampaignForecastConverter" alias="campaignForecastConverter"/>
+    <bean id="defaultCampaignForecastConverter"
+          class="pl.university.project.converters.impl.CampaignForecastConverter">
+        <property name="populators">
+            <list value-type="pl.university.project.populators.Populator">
+                <ref bean="campaignForecastPopulator"/>
+            </list>
+        </property>
+    </bean>
+
 </beans>

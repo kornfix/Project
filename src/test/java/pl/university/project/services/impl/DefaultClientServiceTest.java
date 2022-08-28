@@ -10,9 +10,15 @@ import pl.university.project.converters.impl.ClientConverter;
 import pl.university.project.models.Client;
 import pl.university.project.odata.ClientData;
 import pl.university.project.repositories.ClientRepository;
+import pl.university.project.utils.PropertyUtil;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -66,5 +72,31 @@ class DefaultClientServiceTest {
 
         assertNotNull(result);
         assertEquals(clientData.getId(),result);
+    }
+
+
+    @Test
+    void aaa() throws ParseException {
+        String test = "00d 00m 20s";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd'd' mm'm' ss's'");
+        Date reference = simpleDateFormat.parse("00d 00m 00s");
+        Date date = simpleDateFormat.parse(test);
+        long seconds = (date.getTime() - reference.getTime()) / 1000L;
+
+//        PeriodFormatter formatter = new PeriodFormatterBuilder()
+//                .appendDays().appendSuffix("d").appendSeparatorIfFieldsAfter(" ")
+//                .appendHours().appendSuffix("h").appendSeparatorIfFieldsAfter(" ")
+//                .appendMinutes().appendSuffix("m").appendSeparatorIfFieldsAfter(" ")
+//                .appendMinutes().appendSuffix("s")
+//                .toFormatter();
+//
+//        Period p = formatter.parsePeriod("2d 5h 30s");
+//        p.getSeconds();
+
+        ;
+        Duration d = Duration.ofSeconds(PropertyUtil.parsePeriod("30m 30s"));
+        TimeUnit.SECONDS.toHours(PropertyUtil.parsePeriod("30m 30s"));
+
+//        String timeInHHMMSS = DurationFormatUtils.formatDuration(*1000, "HH'h' MM'm' ss's'", true);
     }
 }

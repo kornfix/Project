@@ -19,7 +19,7 @@ public final class ForecastUtil {
                 .toArray();
 
         Object[] result = model.predict(valuesMap);
-        return (Double) result[0];
+        return (Double) result[1];
     }
 
     public static String getPrediction(Map<String, Double> values) {
@@ -28,7 +28,7 @@ public final class ForecastUtil {
                 .toArray();
 
         Object[] result =  model.predict(valuesMap);
-        return  Double.compare((Double) result[0], (Double) result[1])>0? "Założy lokatę" : "Niezałoży lokaty";
+        return  Double.compare((Double) result[1], (Double) result[0])>0? "Założy lokatę" : "Niezałoży lokaty";
     }
 
 }

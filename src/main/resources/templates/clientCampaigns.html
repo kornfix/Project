@@ -33,7 +33,7 @@
 <tr th:each="clientCampaign: ${clientCampaigns}">
     <td th:text="|${clientCampaign.client.firstName} ${clientCampaign.client.lastName}|">
     <td th:text="${clientCampaign.callDurationInSeconds}">
-    <td th:text="${clientCampaign.client.lastName}">
+    <td th:text="${clientCampaign.numberOfContactsDuringCampaign}">
     <td th:text="${#dates.format(clientCampaign.lastContactDate, 'dd-MM-yyyy')}" >
     <td>
     <a th:href="@{|/campaigns/${clientCampaign.campaign.id}/participants/${clientCampaign.client.id}|}"/>

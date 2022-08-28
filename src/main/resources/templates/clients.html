@@ -38,7 +38,7 @@
 <tr th:each="client: ${clients}">
     <td th:text="${client.firstName}">
     <td th:text="${client.lastName}">
-    <td th:text="${client.age}">
+    <td th:text="|${client.age} lat|">
     <td th:text="${client.phoneNumber}">
     <td th:text="${client.job}=='Nie wiadomo'? 'Nie podano':${client.job}">
     <td th:text="${client.educationLevel}=='Nie wiadomo'? 'Nie podano':${client.educationLevel}">
@@ -61,7 +61,5 @@
     </form>
     </td>
 </tr>
-</table>
-</div>
 </body>
 </html>

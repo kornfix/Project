@@ -33,7 +33,7 @@ public class ClientCampaignController {
     @GetMapping
     public String getAlClientCampaigns(@PathVariable Long campaignId, Model model) {
         model.addAttribute("canAddClients", defaultClientService.hasAnyAvailableClientsForCampaign(
-                defaultClientCampaignService.getClientsIDsInCampaignByCampaignId(campaignId)));
+               defaultCampaignService.getClientIsForCampaignId(campaignId)));
         model.addAttribute("campaign", defaultCampaignService.getObjectById(campaignId));
         model.addAttribute("clientCampaigns", defaultClientCampaignService
                 .getAllClientsCampaignsByCampaignID(campaignId));
@@ -59,8 +59,8 @@ public class ClientCampaignController {
         clientCampaignId.setCampaignId(thisCampaignData.getId());
         model.addAttribute("outcomes", PropertyUtil.getOutcomesCategories());
         model.addAttribute("referer", referer);
-        Collection<ClientData> availableClients = defaultClientService.filterOutClientsByIds(defaultClientCampaignService
-                .getClientsIDsInCampaignByCampaignId(campaignId));
+        Collection<ClientData> availableClients = defaultClientService.filterOutClientsByIds(defaultCampaignService
+                .getClientIsForCampaignId(campaignId));
         if (availableClients.isEmpty()) {
             return "redirect:/campaigns/" + campaignId + "/participants";
         }
@@ -145,6 +145,6 @@ public class ClientCampaignController {
 
     private void setCampaignClients(Model model, Long campaignId) {
         setCampaignClients(model, defaultClientService.filterOutClientsByIds(
-                defaultClientCampaignService.getClientsIDsInCampaignByCampaignId(campaignId)));
+               defaultCampaignService.getClientIsForCampaignId(campaignId)));
     }
 }

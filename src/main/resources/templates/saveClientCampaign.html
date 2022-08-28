@@ -19,8 +19,8 @@
         </select>
     </p>
     <p  th:if="${#fields.hasErrors('client')}" th:errors="*{client}"/>
-    <p>Czas trwania ostatniego kontaktu (w sekundach): <input type="number" th:field="*{callDurationInSeconds}" min="0"/></p>
-    <p  th:if="${#fields.hasErrors('callDurationInSeconds')}">Czas trwania ostatniego kontaktu nie może być pusty, ani mniejszy od zera!</p>
+    <p>Czas trwania ostatniego kontaktu (w sekundach): <input type="text" th:field="*{callDurationInSeconds}" /></p>
+    <p th:if="${#fields.hasErrors('callDurationInSeconds')}" th:errors="*{callDurationInSeconds}"/>
     <p>Liczba kontaktów podczas kampanii: <input type="number" th:field="*{numberOfContactsDuringCampaign}"  min="0"/></p>
     <p  th:if="${#fields.hasErrors('numberOfContactsDuringCampaign')}">Liczba kontaktów nie może być pusta, ani mniejsza od zera!</p>
     <p>Data ostatniego kontaktu: <input type="date" th:field="*{lastContactDate}" /></p>

@@ -10,6 +10,8 @@ import pl.university.project.services.DefaultService;
 
 import javax.annotation.Resource;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.stream.Collectors;
 
 @Service("campaignService")
 public class DefaultCampaignService implements DefaultService<CampaignData,Long> {
@@ -45,6 +47,17 @@ public class DefaultCampaignService implements DefaultService<CampaignData,Long>
         Campaign campaign = campaignRepository.saveAndFlush(campaignReversConverter.convert(campaignData));
         return campaign.getId();
     }
+
+
+    public Collection<Long> getClientIsForCampaignId(Long id) {
+        Campaign campaign = getCampaignById(id);
+        if (campaign == null) {
+            return Collections.emptyList();
+        }
+        return campaign.getClientCampaigns().stream()
+                .map(clientCampaign -> clientCampaign.getClient().getId()).collect(Collectors.toList());
+    }
+
 
     @Override
     public Long updateObject(CampaignData campaignData) {
