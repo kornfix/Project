@@ -10,17 +10,25 @@
     <a class="nav-left active" th:href="@{/campaigns}">Kampanie</a>
     <a class="nav-left" th:href="@{/clients}">Klienci</a>
     <div class="topnav-right">
+        <form class="nav-left logout" th:action="@{|/campaigns/${campaign.id}/participants/add|}" method="get">
+            <input class="btn-logout" type="submit" value="Dodaj uczestnika"/>
+        </form>
+        <form class="nav-left logout" th:action="@{|/campaigns/${campaign.id}/update|}" method="get">
+            <input class="btn-logout" type="submit" value="Edytuj kampanię"/>
+        </form>
         <span class="nav-left" th:inline="text">[[${#httpServletRequest.remoteUser}]]</span>
         <form class="nav-left logout" th:action="@{/logout}" method="post">
             <input class="btn-logout" type="submit" value="Wyloguj"/>
         </form>
     </div>
 </div>
-<div class="topnav">
-    <a th:href="@{/campaigns}">Kampanie</a> &#x2192
+<div class="sub-topnav">
+    <a class="breadcrumb" th:href="@{/campaigns}">Kampanie</a>  &#x2192
     <span th:text="${campaign.title}"></span>
 </div>
-<div th:object="${campaign}">
+<div class="content">
+<div class="form" th:object="${campaign}">
+    <h1>Informacje o kampanii</h1>
     <table>
         <tr>
             <td>Tytuł:</td><td th:text="*{title}"></td>
@@ -38,11 +46,8 @@
             <td>Opis:</td><td th:text="*{description}"></td>
         </tr>
     </table>
-    <a th:href="@{|/campaigns/*{id}/update|}"/>
-        <button type="button">Edytuj</button>
-    </a>
 </div>
-
+<div th:unless="${#lists.isEmpty(clientCampaigns)}">
     <h1 th:text="|Uczestnicy kampanii ${campaign.title}|"></h1>
     <table>
         <thead>
@@ -82,5 +87,10 @@
         </tr>
     </table>
 </div>
+</div>
+</div>
+<footer>
+    &copy;2022 Wszystkie prawa zastrzezone
+</footer>
 </body>
 </html>

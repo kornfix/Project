@@ -6,41 +6,70 @@
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
-<form action="#" th:object="${clientCampaign}" th:action="${clientCampaign.clientCampaignId.clientId} != null?
+<div class="content">
+<div class="form">
+<form class="form" action="#" th:object="${clientCampaign}" th:action="${clientCampaign.clientCampaignId.clientId} != null?
 @{|/campaigns/${clientCampaign.clientCampaignId.campaignId}/participants/${clientCampaign.clientCampaignId.clientId}/update|} :
 @{|/campaigns/${clientCampaign.clientCampaignId.campaignId}/participants/add|}"
       th:method="${clientCampaign.clientCampaignId.clientId} != null? PUT : POST">
-    <h1 th:text="*{client}==null? |Dodaj uczestnika do kampanii '*{campaign.title}'| :
- |Edytuj uczestnika kampanii '*{client.firstName} *{client.lastName}' w kampanii '*{campaign.title}'|" ></h1>
-    <p th:if="*{clientCampaignId.clientId}==null">Wybierz klienta:
+    <h2 th:text="*{client}==null? |Dodaj uczestnika |   :|Edytuj uczestnika |" ></h2>
+    <h2 th:text="*{client}==null? |do kampanii|         :|'*{client.firstName} *{client.lastName}' |" ></h2>
+    <h2 th:text="*{client}==null? |'*{campaign.title}'| :|w kampanii '*{campaign.title}'|" ></h2>
+    <div th:if="*{clientCampaignId.clientId}==null">
+        <p >Wybierz klienta:</p>
+        <br>
         <select th:field="*{clientCampaignId.clientId}">
             <option th:each="option : ${clients}" th:value="${option.id}" th:text="|${option.firstName} ${option.lastName}|">
             </option>
         </select>
-    </p>
-    <p  th:if="${#fields.hasErrors('client')}" th:errors="*{client}"/>
-    <p>Czas trwania ostatniego kontaktu (w sekundach): <input type="text" th:field="*{callDurationInSeconds}" /></p>
-    <p th:if="${#fields.hasErrors('callDurationInSeconds')}" th:errors="*{callDurationInSeconds}"/>
-    <p>Liczba kontaktów podczas kampanii: <input type="number" th:field="*{numberOfContactsDuringCampaign}"  min="0"/></p>
-    <p  th:if="${#fields.hasErrors('numberOfContactsDuringCampaign')}">Liczba kontaktów nie może być pusta, ani mniejsza od zera!</p>
-    <p>Data ostatniego kontaktu: <input type="date" th:field="*{lastContactDate}" /></p>
-    <p  th:if="${#fields.hasErrors('lastContactDate')}">Data ostatniego kontaktu nie może być pusta!</p>
-    <p th:if="*{clientCampaignId.clientId}!=null">Ustaw wynik kampanii:
+    </div>
+<!--    <p  th:if="${#fields.hasErrors('client')}" th:errors="*{client}"/>-->
+    <p>Czas trwania ostatniego kontaktu (w sekundach):</p>
+    <br>
+    <input type="text" th:field="*{callDurationInSeconds}" placeholder="np. 1h 30m 30s" />
+    <br th:if="${#fields.hasErrors('callDurationInSeconds')}">
+    <div th:if="${#fields.hasErrors('callDurationInSeconds')}" class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <p  th:errors="*{callDurationInSeconds}"/>
+    </div>
+    <p>Liczba kontaktów podczas kampanii:</p>
+    <br>
+    <input type="number" th:field="*{numberOfContactsDuringCampaign}"  min="0"/>
+    <br th:if="${#fields.hasErrors('numberOfContactsDuringCampaign')}">
+    <div th:if="${#fields.hasErrors('numberOfContactsDuringCampaign')}" class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <p>Liczba kontaktów nie może być pusta, ani mniejsza od zera!</p>
+    </div>
+    <p>Data ostatniego kontaktu:</p>
+    <br>
+    <input type="date" th:field="*{lastContactDate}" />
+    <br th:if="${#fields.hasErrors('lastContactDate')}">
+    <div th:if="${#fields.hasErrors('lastContactDate')}" class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <p>Data ostatniego kontaktu nie może być pusta!</p>
+    </div>
+    <br>
+    <div th:if="*{clientCampaignId.clientId}!=null">
+        <p >Ustaw wynik kampanii:</p>
         <select th:field="*{campaignOutcome}">
             <option th:each="option : ${outcomes}" th:value="${option}" th:text="${option}"
                     th:selected="(${option} == *{campaignOutcome})">
             </option>
         </select>
-    </p>
-    <p>
-        <input type="submit" value="Zapisz" />
+    </div>
+    <br>
+    <p class="center">
+        <input  class="btn-save" type="submit" value="Zapisz" />
         <a th:href="${referer}!=null? ${referer}:'/'"/>
-        <button type="button">Anuluj</button>
+            <button  class="btn-logout" type="button">Anuluj</button>
         </a>
     </p>
 
 </form>
-
-
+</div>
+</div>
+<footer>
+    &copy;2022 Wszystkie prawa zastrzezone
+</footer>
 </body>
 </html>

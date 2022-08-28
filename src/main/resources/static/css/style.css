@@ -5,11 +5,37 @@ body{
     margin: 0;
     padding: 0;
     overflow: scroll;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.content{
+    margin: 0px 20px 30px;
+}
+
+footer{
+    margin-top: auto;
+    background-color: #333;
+    padding: 25px;
+    color: white;
 }
 
 .topnav {
   overflow: hidden;
   background-color: #333;
+}
+
+.sub-topnav {
+  overflow: hidden;
+  background-color: #3133;
+  padding: 20px
+}
+
+.breadcrumb {
+  color: green;
+  text-decoration: none;
+  margin-left: 20px;
 }
 
 table  {
@@ -19,7 +45,7 @@ table  {
 }
 
 th.header {
-  /*! padding: 0px; */
+  padding: 0px 25px;
   text-align: center;
   background-color: #04AA6D;
   color: white;
@@ -29,7 +55,7 @@ td.left{
   text-align: left;
 }
 
-td.center{
+td{
   text-align: center;
 }
 
@@ -129,15 +155,17 @@ input[type=text], select {
   box-sizing: border-box;
 }
 
-input[type=number], select {
+input[type="number"], input[type="date"], textarea, select {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
-  display: inline-block;
+  /*! display: inline-block; */
   border: 1px solid #ccc;
   border-radius: 4px;
-  box-sizing: border-box;
+  /*! box-sizing: border-box; */
   font-size: 24px;
+  box-sizing: border-box;
+  display: block;
 }
 
 input[type=checkbox] {
@@ -202,9 +230,14 @@ padding: 5px 0px;
 font-size: ;
 }
 
-.center {
+p.center {
   text-align: center;
-  width: 100%;
+  width: 100%
+ }
+
+ .table-left {
+   margin-left: unset;
+   margin-right: unset;
  }
 
 

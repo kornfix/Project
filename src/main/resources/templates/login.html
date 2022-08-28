@@ -13,6 +13,7 @@
 <div th:if="${param.logout}">
     Zostałeś wylogowany.
 </div>
+<div class="content">
 <div  class="form">
     <form class="form" th:action="@{/login}" method="post">
         <label class="label" for="fusername">Nazwa użytkownika</label>
@@ -26,5 +27,9 @@
         <input class="btn" type="submit" value="Zaloguj"/>
     </form>
 </div>
+</div>
+<footer>
+    &copy;2022 Wszystkie prawa zastrzezone
+</footer>
 </body>
 </html>

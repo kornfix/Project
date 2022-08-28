@@ -6,19 +6,23 @@
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
-
 <div class="topnav">
     <a class="nav-left" th:href="@{/campaigns}">Kampanie</a>
     <a class="nav-left active" th:href="@{/clients}">Klienci</a>
     <div class="topnav-right">
+        <form class="nav-left logout" th:action="@{|/clients/add|}" method="get">
+            <input class="btn-logout" type="submit" value="Dodaj nowego klienta"/>
+        </form>
+
         <span class="nav-left" th:inline="text">[[${#httpServletRequest.remoteUser}]]</span>
         <form class="nav-left logout" th:action="@{/logout}" method="post">
             <input class="btn-logout" type="submit" value="Wyloguj"/>
         </form>
     </div>
 </div>
+<div class="content">
 <div>
-<table>
+<table th:unless="${#lists.isEmpty(clients)}">
     <thead>
     <tr>
         <th class="header">Imie</th>
@@ -28,11 +32,7 @@
         <th class="header">Zawód</th>
         <th class="header">Poziom wykształenia</th>
         <th class="header">Saldo</th>
-        <th colspan="3">
-            <a th:href="@{|/clients/add|}"/>
-            <button class="btn" type="button">Dodaj nowego klienta</button>
-            </a>
-        </th>
+        <th colspan="3">Opcje</th>
     </tr>
     </thead>
 <tr th:each="client: ${clients}">
@@ -61,5 +61,11 @@
     </form>
     </td>
 </tr>
+</table>
+</div>
+</div>
+    <footer>
+        &copy;2022 Wszystkie prawa zastrzezone
+    </footer>
 </body>
 </html>

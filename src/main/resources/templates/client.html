@@ -10,17 +10,20 @@
     <a class="nav-left" th:href="@{/campaigns}">Kampanie</a>
     <a class="nav-left active" th:href="@{/clients}">Klienci</a>
     <div class="topnav-right">
-        <form class="nav-left logout" th:action="@{|/clients/${client.id}/update|}" method="get">
-            <input class="btn-logout" type="submit" value="Edytuj użytkownika"/>
-        </form>
+
         <span class="nav-left" th:inline="text">[[${#httpServletRequest.remoteUser}]]</span>
         <form class="nav-left logout" th:action="@{/logout}" method="post">
             <input class="btn-logout" type="submit" value="Wyloguj"/>
         </form>
     </div>
 </div>
-
+<div class="sub-topnav">
+    <a class="breadcrumb" th:href="@{/clients}">Klienci</a>  &#x2192
+    <span th:text="|${client.firstName} ${client.lastName}|"></span>
+</div>
+<div class="content">
 <div class="form" th:object="${client}">
+    <h1>Informacje o kampanii</h1>
     <table class="form">
         <tr>
             <td class="left">Imię</td>
@@ -90,5 +93,9 @@
         </tr>
     </table>
 </div>
+</div>
+<footer>
+    &copy;2022 Wszystkie prawa zastrzezone
+</footer>
 </body>
 </html>

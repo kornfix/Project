@@ -16,6 +16,13 @@
         </form>
     </div>
 </div>
+<div class="sub-topnav">
+    <a class="breadcrumb" th:href="@{/clients}">Klienci</a>  &#x2192
+    <a th:if="${client.id} != null" class="breadcrumb" th:href=" @{|/clients/${client.id}|}"
+       th:text="|${client.firstName} ${client.lastName}|"></a>
+    <span th:unless="${client.id} != null" th:text="|Dodawanie klienta|"></span>
+</div>
+<div class="content">
 <div class="form">
     <form class="form" action="#" th:object="${client}" th:action="${client.id} != null? @{|/clients/${client.id}/update|} : @{/clients/add}"
       th:method="${client.id} != null? PUT : POST">
@@ -92,9 +99,7 @@
             </option>
         </select>
         <br>
-
-        <br>
-        <table>
+        <table class="table-left">
             <tr>
                 <td class="left"><p class="nowrap">Zalega ze spłatami:</p></td>
                 <td class="center"><input type="checkbox"  th:field="*{defaultCreditStatus}" th:checked="*{defaultCreditStatus}" /></td>
@@ -112,11 +117,14 @@
         <p class="center">
             <input  class="btn-save" type="submit" value="Zapisz" />
             <a th:href="${referer}!=null? ${referer}:'/'"/>
-            <button  class="btn-logout" type="button">Anuluj</button>
+                <button  class="btn-logout" type="button">Anuluj</button>
             </a>
         </p>
 </form>
 </div>
-
+</div>
+<footer>
+    &copy;2022 Wszystkie prawa zastrzezone
+</footer>
 </body>
 </html>
