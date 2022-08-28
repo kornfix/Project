@@ -30,15 +30,15 @@ public class ClientCampaignController {
     @Resource
     private DefaultCampaignService defaultCampaignService;
 
-    @GetMapping
-    public String getAlClientCampaigns(@PathVariable Long campaignId, Model model) {
-        model.addAttribute("canAddClients", defaultClientService.hasAnyAvailableClientsForCampaign(
-               defaultCampaignService.getClientIsForCampaignId(campaignId)));
-        model.addAttribute("campaign", defaultCampaignService.getObjectById(campaignId));
-        model.addAttribute("clientCampaigns", defaultClientCampaignService
-                .getAllClientsCampaignsByCampaignID(campaignId));
-        return "clientCampaigns";
-    }
+//    @GetMapping
+//    public String getAlClientCampaigns(@PathVariable Long campaignId, Model model) {
+//        model.addAttribute("canAddClients", defaultClientService.hasAnyAvailableClientsForCampaign(
+//               defaultCampaignService.getClientIsForCampaignId(campaignId)));
+//        model.addAttribute("campaign", defaultCampaignService.getObjectById(campaignId));
+//        model.addAttribute("clientCampaigns", defaultClientCampaignService
+//                .getAllClientsCampaignsByCampaignID(campaignId));
+//        return "clientCampaigns";
+//    }
 
     @GetMapping("/{clientId}")
     public String getClientCampaignById(@PathVariable Long campaignId, @PathVariable Long clientId, Model model) {
@@ -62,7 +62,7 @@ public class ClientCampaignController {
         Collection<ClientData> availableClients = defaultClientService.filterOutClientsByIds(defaultCampaignService
                 .getClientIsForCampaignId(campaignId));
         if (availableClients.isEmpty()) {
-            return "redirect:/campaigns/" + campaignId + "/participants";
+            return "redirect:/campaigns/" + campaignId;
         }
         setCampaignClients(model, availableClients);
         ClientCampaignData clientCampaignData = new ClientCampaignData();
@@ -135,7 +135,7 @@ public class ClientCampaignController {
     @DeleteMapping("/{clientId}/delete")
     public String deleteClientCampaign(@PathVariable Long campaignId, @PathVariable Long clientId) {
         defaultClientCampaignService.deleteObject(new ClientCampaignId(campaignId, clientId));
-        return "redirect:/campaigns/" + campaignId + "/participants";
+        return "redirect:/campaigns/" + campaignId;
     }
 
 

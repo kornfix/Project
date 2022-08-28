@@ -6,15 +6,36 @@
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
+<div class="top-nav">
+    <a class="nav-left active" th:href="@{/campaigns}">Kampanie</a>
+    <a class="nav-left" th:href="@{/clients}">Klienci</a>
+    <div class="top-nav-right">
+        <span class="nav-left" th:inline="text">[[${#httpServletRequest.remoteUser}]]</span>
+        <form class="nav-left logout" th:action="@{/logout}" method="post">
+            <input class="btn-logout" type="submit" value="Wyloguj"/>
+        </form>
+    </div>
+</div>
+<div class="breadcrumbs">
+    <a class="breadcrumb" th:href="@{/campaigns}">Kampanie</a>   &#x2192
+    <a class="breadcrumb" th:if="${clientCampaign.clientCampaignId.campaignId} != null"
+       th:href=" @{|/campaigns/${clientCampaign.clientCampaignId.campaignId}|}"
+       th:text="|${clientCampaign.campaign.title}|"></a>   &#x2192
+    <a class="breadcrumb"  th:if="${clientCampaign.clientCampaignId.clientId} != null"
+       th:href="@{|/campaigns/${clientCampaign.clientCampaignId.campaignId}/participants/${clientCampaign.clientCampaignId.clientId}|}"
+       th:text="|${clientCampaign.client.firstName} ${clientCampaign.client.lastName}|"></a>
+    <span th:unless="${clientCampaign.clientCampaignId.clientId} != null" th:text="|Dodawanie uczęstnika|"></span>
+</div>
 <div class="content">
 <div class="form">
 <form class="form" action="#" th:object="${clientCampaign}" th:action="${clientCampaign.clientCampaignId.clientId} != null?
 @{|/campaigns/${clientCampaign.clientCampaignId.campaignId}/participants/${clientCampaign.clientCampaignId.clientId}/update|} :
 @{|/campaigns/${clientCampaign.clientCampaignId.campaignId}/participants/add|}"
       th:method="${clientCampaign.clientCampaignId.clientId} != null? PUT : POST">
-    <h2 th:text="*{client}==null? |Dodaj uczestnika |   :|Edytuj uczestnika |" ></h2>
-    <h2 th:text="*{client}==null? |do kampanii|         :|'*{client.firstName} *{client.lastName}' |" ></h2>
-    <h2 th:text="*{client}==null? |'*{campaign.title}'| :|w kampanii '*{campaign.title}'|" ></h2>
+    <h4 class="top-header"  th:text="|Kampania *{campaign.title}|"></h4>
+    <h2 th:text="*{client}==null? |Dodawanie nowego|   :|Edycja uczestnika |" ></h2>
+    <h2 th:text="*{client}==null? |uczestnika|      :|*{client.firstName} *{client.lastName}|" ></h2>
+    <br>
     <div th:if="*{clientCampaignId.clientId}==null">
         <p >Wybierz klienta:</p>
         <br>
@@ -24,7 +45,7 @@
         </select>
     </div>
 <!--    <p  th:if="${#fields.hasErrors('client')}" th:errors="*{client}"/>-->
-    <p>Czas trwania ostatniego kontaktu (w sekundach):</p>
+    <p>Czas trwania ostatniego kontaktu:</p>
     <br>
     <input type="text" th:field="*{callDurationInSeconds}" placeholder="np. 1h 30m 30s" />
     <br th:if="${#fields.hasErrors('callDurationInSeconds')}">

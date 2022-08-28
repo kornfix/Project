@@ -13,6 +13,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class CustomMvcConfig implements WebMvcConfigurer {
 
+    private static final String NOT_FOUND_URL = "/notFound";
+
+    private static final String ERROR_URL = "/error";
+
+    @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addRedirectViewController("/","/campaigns");
         registry.addViewController("/").setViewName("campaigns");
@@ -20,23 +25,23 @@ public class CustomMvcConfig implements WebMvcConfigurer {
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/users").setViewName("users");
         registry.addViewController("/clients").setViewName("clients");
-        registry.addViewController("/error").setViewName("error");
-        registry.addViewController("/notFound").setViewName("notFound");
+        registry.addViewController(ERROR_URL).setViewName("error");
+        registry.addViewController(NOT_FOUND_URL).setViewName("notFound");
     }
 
     @Bean
     public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> containerCustomizer() {
         return container -> {
-//            container.addErrorPages(new ErrorPage(HttpStatus.BAD_REQUEST,
-//                    "/error"));
+            container.addErrorPages(new ErrorPage(HttpStatus.BAD_REQUEST,
+                    ERROR_URL));
             container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR,
-                    "/error"));
+                    ERROR_URL));
             container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND,
-                    "/notFound"));
+                    NOT_FOUND_URL));
             container.addErrorPages(new ErrorPage(HttpStatus.METHOD_NOT_ALLOWED,
-                    "/notFound"));
+                    NOT_FOUND_URL));
             container.addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN,
-                    "/notFound"));
+                    NOT_FOUND_URL));
         };
     }
 

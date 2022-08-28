@@ -6,10 +6,10 @@
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
-<div class="topnav">
+<div class="top-nav">
     <a class="nav-left" th:href="@{/campaigns}">Kampanie</a>
     <a class="nav-left active" th:href="@{/clients}">Klienci</a>
-    <div class="topnav-right">
+    <div class="top-nav-right">
         <form class="nav-left logout" th:action="@{|/clients/add|}" method="get">
             <input class="btn-logout" type="submit" value="Dodaj nowego klienta"/>
         </form>

@@ -6,15 +6,31 @@
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
-<a th:href="@{/campaigns}">Kampanie</a>  &#x2192
-<a th:href="@{|/campaigns/${clientCampaign.campaign.id}|}" th:text="${clientCampaign.campaign.title}"></a>  &#x2192
-<span th:text="|Uczestnik ${clientCampaign.client.firstName} ${clientCampaign.client.lastName}|" ></span>
-
-<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
-<div th:object="${clientCampaign}">
+<div class="top-nav">
+    <a class="nav-left active" th:href="@{/campaigns}">Kampanie</a>
+    <a class="nav-left" th:href="@{/clients}">Klienci</a>
+    <div class="top-nav-right">
+        <form class="nav-left logout"
+              th:action="@{|/campaigns/${clientCampaign.clientCampaignId.campaignId}/participants/${clientCampaign.clientCampaignId.clientId}/update|}"
+              method="get">
+            <input class="btn-logout" type="submit" value="Edytuj uczestnika"/>
+        </form>
+        <span class="nav-left" th:inline="text">[[${#httpServletRequest.remoteUser}]]</span>
+        <form class="nav-left logout" th:action="@{/logout}" method="post">
+            <input class="btn-logout" type="submit" value="Wyloguj"/>
+        </form>
+    </div>
+</div>
+<div class="breadcrumbs">
+    <a class="breadcrumb" th:href="@{/campaigns}">Kampanie</a>   &#x2192
+    <a class="breadcrumb" th:if="${clientCampaign.clientCampaignId.campaignId} != null"
+        th:href=" @{|/campaigns/${clientCampaign.clientCampaignId.campaignId}|}"
+       th:text="|${clientCampaign.campaign.title}|"></a>   &#x2192
+    <span th:text="|${clientCampaign.client.firstName} ${clientCampaign.client.lastName}|"></span>
+</div>
+<div class="content">
+    <div class="form"th:object="${clientCampaign}">
+    <h1>Informacje o uczęstniku kampanii</h1>
     <table>
         <tr>
             <td>Imię</td><td th:text="*{client.firstName}"></td>
@@ -23,10 +39,10 @@
             <td>Nazwisko</td><td th:text="*{client.lastName}"></td>
         </tr>
         <tr>
-            <td>Najnowsza kampania</td><td th:text="*{campaign.title}"></td>
+            <td>Nazwa ampanii</td><td th:text="*{campaign.title}"></td>
         </tr>
         <tr>
-            <td>Czas trwania ostatniego kontaktu (w sekundach)</td><td th:text="*{callDurationInSeconds}"></td>
+            <td>Czas trwania ostatniego kontaktu</td><td th:text="*{callDurationInSeconds}"></td>
         </tr>
         <tr>
             <td>Liczba kontaktów:</td><td th:text="*{numberOfContactsDuringCampaign}"></td>
@@ -35,9 +51,7 @@
             <td>Data ostatniego kontaktu:</td><td th:text="*{lastContactDate}"></td>
         </tr>
     </table>
-    <a th:href="@{|/campaigns/*{clientCampaignId.campaignId}/participants/*{clientCampaignId.clientId}/update|}"/>
-        <button type="button">Edytuj</button>
-    </a>
+</div>
 </div>
     <footer>
         &copy;2022 Wszystkie prawa zastrzezone

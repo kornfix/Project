@@ -6,17 +6,17 @@
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
-<div class="topnav">
+<div class="top-nav">
     <a class="nav-left" th:href="@{/campaigns}">Kampanie</a>
     <a class="nav-left active" th:href="@{/clients}">Klienci</a>
-    <div class="topnav-right">
+    <div class="top-nav-right">
         <span class="nav-left" th:inline="text">[[${#httpServletRequest.remoteUser}]]</span>
         <form class="nav-left logout" th:action="@{/logout}" method="post">
             <input class="btn-logout" type="submit" value="Wyloguj"/>
         </form>
     </div>
 </div>
-<div class="sub-topnav">
+<div class="breadcrumbs">
     <a class="breadcrumb" th:href="@{/clients}">Klienci</a>  &#x2192
     <a th:if="${client.id} != null" class="breadcrumb" th:href=" @{|/clients/${client.id}|}"
        th:text="|${client.firstName} ${client.lastName}|"></a>
@@ -26,7 +26,8 @@
 <div class="form">
     <form class="form" action="#" th:object="${client}" th:action="${client.id} != null? @{|/clients/${client.id}/update|} : @{/clients/add}"
       th:method="${client.id} != null? PUT : POST">
-        <h1 th:text="${client.id} == null? |Dodaj klienta| : |Edytuj klienta|"></h1>
+        <h2 th:text="${client.id} == null? |Dodawanie nowego| : |Edycja klienta|"></h2>
+        <h2 th:text="${client.id} == null? |klienta|"></h2>
         <input type="hidden" th:value="${referer}" name="referer"/>
         <p>Imię: </p>
         <br>

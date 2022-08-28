@@ -6,10 +6,10 @@
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
-<div class="topnav">
+<div class="top-nav">
     <a class="nav-left active" th:href="@{/campaigns}">Kampanie</a>
     <a class="nav-left" th:href="@{/clients}">Klienci</a>
-    <div class="topnav-right">
+    <div class="top-nav-right">
         <form class="nav-left logout" th:action="@{|/campaigns/${campaign.id}/update|}" method="get">
             <input class="btn-logout" type="submit" value="Edytuj kampanię"/>
         </form>
@@ -19,7 +19,7 @@
         </form>
     </div>
 </div>
-<div class="sub-topnav">
+<div class="breadcrumbs">
     <a class="breadcrumb" th:href="@{/campaigns}">Kampanie</a>  &#x2192
     <a th:if="${campaign.id} != null" class="breadcrumb" th:href=" @{|/campaigns/${campaign.id}|}"
        th:text="|${campaign.title}|"></a>
@@ -29,8 +29,8 @@
 <div class="form">
 <form class="form"  action="#" th:object="${campaign}" th:action="${campaign.id} != null? @{|/campaigns/${campaign.id}/update|} : @{/campaigns/add}"
       th:method="${campaign.id} != null? PUT : POST">
-    <h2 th:text="${campaign.id} == null? |Stwórz nową| : |Edytuj kampanię|"></h2>
-    <h2 th:text="${campaign.id} == null? |kampanię|"></h2>
+    <h2 th:text="${campaign.id} == null? |Tworzenie nowej| : |Edycja kampanii|"></h2>
+    <h2 th:text="${campaign.id} == null? |kampanii|"></h2>
     <input type="hidden" th:value="${referer}" name="referer"/>
     <p>Imię: </p>
     <br>
