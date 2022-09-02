@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Save user page</title>
@@ -9,7 +10,9 @@
 <div class="top-nav">
     <a class="nav-left" th:href="@{/campaigns}">Kampanie</a>
     <a class="nav-left" th:href="@{/clients}">Klienci</a>
-    <a class="nav-left active" th:href="@{/admin/users}">Użytkownicy</a>
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <a class="nav-left" th:href="@{/admin/users}">Użytkownicy</a>
+    </div>
     <div class="top-nav-right">
         <span class="nav-left" th:inline="text">[[${#httpServletRequest.remoteUser}]]</span>
         <form class="nav-left logout" th:action="@{/logout}" method="post">

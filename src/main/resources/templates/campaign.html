@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>User site</title>
@@ -9,12 +10,15 @@
 <div class="top-nav">
     <a class="nav-left active" th:href="@{/campaigns}">Kampanie</a>
     <a class="nav-left" th:href="@{/clients}">Klienci</a>
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <a class="nav-left" th:href="@{/admin/users}">Użytkownicy</a>
+    </div>
     <div class="top-nav-right">
         <form  class="nav-left logout" th:if="${canAddClients}"
                th:action="@{|/campaigns/${campaign.id}/participants/add|}" method="get">
             <input class="btn-logout" type="submit" value="Dodaj uczestnika"/>
         </form>
-        <span class="nav-left" th:unless="${canAddClients}">Wszyscy klienci uczestniczą w kampanii</span>
+        <span class="nav-left smaller-label" th:unless="${canAddClients}">Wszyscy klienci biorą udział w kampanii</span>
         <form class="nav-left logout" th:action="@{|/campaigns/${campaign.id}/update|}" method="get">
             <input class="btn-logout" type="submit" value="Edytuj kampanię"/>
         </form>

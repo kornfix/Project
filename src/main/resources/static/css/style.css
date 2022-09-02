@@ -383,3 +383,8 @@ form.error {
   text-align: center;
   padding: 25px 50px;
 }
+
+.smaller-label {
+  font-size: 30px;
+  margin-top: 15px;
+}

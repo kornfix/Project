@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>User site</title>
@@ -9,6 +10,9 @@
 <div class="top-nav">
     <a class="nav-left active" th:href="@{/campaigns}">Kampanie</a>
     <a class="nav-left" th:href="@{/clients}">Klienci</a>
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <a class="nav-left" th:href="@{/admin/users}">Użytkownicy</a>
+    </div>
     <div class="top-nav-right">
         <form class="nav-left logout"
               th:action="@{|/campaigns/${clientCampaign.clientCampaignId.campaignId}/participants/${clientCampaign.clientCampaignId.clientId}/update|}"

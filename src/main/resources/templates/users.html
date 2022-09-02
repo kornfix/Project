@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>User site</title>
@@ -9,12 +10,13 @@
 <div class="top-nav">
     <a class="nav-left" th:href="@{/campaigns}">Kampanie</a>
     <a class="nav-left" th:href="@{/clients}">Klienci</a>
-    <a class="nav-left active" th:href="@{/admin/users}">Użytkownicy</a>
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <a class="nav-left active" th:href="@{/admin/users}">Użytkownicy</a>
+    </div>
     <div class="top-nav-right">
         <form class="nav-left logout" th:action="@{|/admin/users/add|}" method="get">
             <input class="btn-logout" type="submit" value="Stwórz nowego użytkownika"/>
         </form>
-        <span class="nav-left" th:inline="text">[[${#httpServletRequest.remoteUser}]]</span>
         <form class="nav-left logout" th:action="@{/logout}" method="post">
             <input class="btn-logout" type="submit" value="Wyloguj"/>
         </form>
@@ -25,8 +27,7 @@
     <tr>
         <th class="header">Nazwa użytkownika</th>
         <th class="header">Rola</th>
-        <th class="header">Aktywny</th>
-        <th colspan="3">Opcje</th>
+        <th colspan="2">Opcje</th>
     </tr>
     </thead>
     <tr th:each="user: ${users}">
