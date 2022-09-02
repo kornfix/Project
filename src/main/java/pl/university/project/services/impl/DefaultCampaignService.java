@@ -36,7 +36,7 @@ public class DefaultCampaignService implements DefaultService<CampaignData,Long>
         if (campaign == null) {
             return null;
         }
-        return campaignConverter.convert(getCampaignById(id));
+        return campaignConverter.convert(campaign);
     }
 
     @Override

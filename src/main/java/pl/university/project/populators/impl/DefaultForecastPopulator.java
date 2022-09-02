@@ -1,48 +1,40 @@
 package pl.university.project.populators.impl;
 
-import org.springframework.stereotype.Component;
-import pl.university.project.models.ClientCampaign;
 import pl.university.project.models.Forecast;
+import pl.university.project.odata.ForecastData;
 import pl.university.project.populators.Populator;
 import pl.university.project.utils.PropertyUtil;
 
-import java.sql.Timestamp;
-import java.time.Instant;
-import java.util.Comparator;
+import java.text.DecimalFormat;
 
-@Component("forecastPopulator")
-public class DefaultForecastPopulator implements Populator<ClientCampaign, Forecast> {
+
+public class DefaultForecastPopulator implements Populator<Forecast, ForecastData> {
+
+    private static final DecimalFormat decimalFormat = new DecimalFormat("0.00%");
+
     @Override
-    public void populate(ClientCampaign source, Forecast target) {
-        if (target.getId() == null) {
-            target.setCreationTime(Timestamp.from(Instant.now()));
-        }
-        target.setContactType(source.getClient().getContactType());
-        target.setAge(source.getClient().getAge());
-        target.setJob(source.getClient().getJob());
-        target.setMartialStatus(source.getClient().getMartialStatus());
-        target.setEducationLevel(source.getClient().getEducationLevel());
-        target.setDefaultCreditStatus(source.getClient().getDefaultCreditStatus());
-        target.setHasMortgage(source.getClient().getHasMortgage());
-        target.setHasConsumerCredit(source.getClient().getHasConsumerCredit());
-        target.setBalance(source.getClient().getBalance());
-        target.setCallDurationInSeconds(source.getCallDurationInSeconds());
+    public void populate(Forecast source, ForecastData target) {
+        target.setId(source.getId());
+        target.setCreationTime(source.getCreationTime());
+        target.setContactType(source.getContactType());
+        target.setAge(source.getAge());
+        target.setJob(source.getJob());
+        target.setMartialStatus(source.getMartialStatus());
+        target.setEducationLevel(source.getEducationLevel());
+        target.setDefaultCreditStatus(source.getDefaultCreditStatus());
+        target.setHasMortgage(source.getHasMortgage());
+        target.setHasConsumerCredit(source.getHasConsumerCredit());
+        target.setBalance(source.getBalance());
+        target.setCallDurationInSeconds(PropertyUtil.getDurationStringFormat(source.getCallDurationInSeconds()));
         target.setNumberOfContactsDuringCampaign(source.getNumberOfContactsDuringCampaign());
-        ClientCampaign previousCampaign = source.getClient().getClientCampaigns().stream()
-                .filter(e -> PropertyUtil.validateOldCampaign(e.getCampaign(), source.getCampaign())).min(Comparator.comparing(clientCampaign -> clientCampaign.getCampaign()
-                        .getCampaignEndDate())).orElse(null);
+        target.setNumberOfContactsDuringPreviousCampaign(source.getNumberOfContactsDuringPreviousCampaign());
         target.setLastContactDate(source.getLastContactDate());
-        if(previousCampaign!=null){
-            target.setNumberOfContactsDuringPreviousCampaign(previousCampaign.getNumberOfContactsDuringCampaign());
-            target.setLastContactDateFromPreviousCampaign(previousCampaign.getLastContactDate());
-            if(previousCampaign.getCampaignOutcome()!=null)
-            {
-                target.setPreviousCampaignOutcome(previousCampaign.getCampaignOutcome());
-            }
-        }else{
-            target.setNumberOfContactsDuringPreviousCampaign(0L);
-            target.setLastContactDateFromPreviousCampaign(null);
-            target.setPreviousCampaignOutcome("Nie wiadomo");
-        }
+        target.setLastContactDateFromPreviousCampaign(source.getLastContactDateFromPreviousCampaign());
+        target.setPreviousCampaignOutcome(source.getPreviousCampaignOutcome());
+        target.setForecastOutcome(source.getForecastOutcome());
+        target.setForecastProbability(decimalFormat.format(source.getForecastProbability()));
+        target.setCampaignTitle(source.getClientCampaign().getCampaign().getTitle());
+        target.setClientFullName(source.getClientCampaign().getClient().getFirstName() + " " +
+                source.getClientCampaign().getClient().getLastName());
     }
 }

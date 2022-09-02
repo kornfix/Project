@@ -35,9 +35,9 @@
     </thead>
 <tr th:each="campaign: ${campaigns}">
     <td th:text="${campaign.title}">
-    <td th:text="${#dates.format(campaign.creationTime, 'dd-MM-yyyy HH:mm')}" >
-    <td th:text="${campaign.campaignStartDate}">
-    <td th:text="${campaign.campaignEndDate}">
+    <td th:text="${#dates.format(campaign.creationTime, 'HH:mm dd-MM-yyyy')}" >
+    <td th:text="${#dates.format(campaign.campaignStartDate, 'dd-MM-yyyy')}" >
+    <td th:text="${#dates.format(campaign.campaignEndDate, 'dd-MM-yyyy')}" >
     <td th:text="${campaign.description}">
     <td>
     <a th:href="@{|/campaigns/${campaign.id}|}"/>

@@ -1,18 +1,21 @@
 package pl.university.project.services.impl;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import pl.university.project.converters.impl.ClientCampaignConverter;
 import pl.university.project.converters.impl.ClientCampaignReversConverter;
-import pl.university.project.models.Client;
+import pl.university.project.converters.impl.ForecastConverter;
 import pl.university.project.models.ClientCampaign;
 import pl.university.project.models.ClientCampaignId;
 import pl.university.project.odata.ClientCampaignData;
-import pl.university.project.odata.ClientData;
+import pl.university.project.odata.ForecastData;
 import pl.university.project.repositories.ClientCampaignRepository;
 import pl.university.project.services.DefaultService;
 
 import javax.annotation.Resource;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service("clientCampaignService")
@@ -25,8 +28,10 @@ public class DefaultClientCampaignService implements DefaultService<ClientCampai
     private ClientCampaignConverter clientCampaignConverter;
 
     @Resource
-    private ClientCampaignRepository clientCampaignRepository;
+    private ForecastConverter forecastConverter;
 
+    @Resource
+    private ClientCampaignRepository clientCampaignRepository;
 
     @Resource
     private DefaultForecastService forecastService;
@@ -36,7 +41,7 @@ public class DefaultClientCampaignService implements DefaultService<ClientCampai
         return clientCampaignConverter.convertAll(clientCampaignRepository.findAll());
     }
 
-    public Collection<ClientCampaignData> getAllClientsCampaignsByCampaignID(Long campaignId){
+    public Collection<ClientCampaignData> getAllClientsCampaignsByCampaignID(Long campaignId) {
         return clientCampaignConverter.convertAll(clientCampaignRepository.findAll().stream().filter(clientCampaign ->
                 clientCampaign.getClientCampaignId().getCampaignId().equals(campaignId)).collect(Collectors.toList()));
     }
@@ -51,7 +56,7 @@ public class DefaultClientCampaignService implements DefaultService<ClientCampai
         if (clientCampaign == null) {
             return null;
         }
-        return clientCampaignConverter.convert(getClientCampaignById(id));
+        return clientCampaignConverter.convert(clientCampaign);
     }
 
     @Override
@@ -61,8 +66,16 @@ public class DefaultClientCampaignService implements DefaultService<ClientCampai
         }
         ClientCampaign clientCampaign = clientCampaignRepository.saveAndFlush(clientCampaignReversConverter.
                 convert(clientCampaignData));
-        forecastService.createNewPrediction(clientCampaign);
+        forecastService.createNewForecast(clientCampaign);
         return clientCampaign.getClientCampaignId();
+    }
+
+
+    public void createNewForecast(ClientCampaignId clientCampaignId) {
+        ClientCampaign clientCampaign = getClientCampaignById(clientCampaignId);
+        if (clientCampaign != null) {
+            forecastService.createNewForecast(clientCampaign);
+        }
     }
 
     @Override
@@ -71,10 +84,9 @@ public class DefaultClientCampaignService implements DefaultService<ClientCampai
         if (clientCampaign == null) {
             return null;
         }
-
         clientCampaignReversConverter.convert(clientCampaignData, clientCampaign);
         clientCampaignRepository.saveAndFlush(clientCampaign);
-        forecastService.createNewPrediction(clientCampaign);
+        forecastService.createNewForecast(clientCampaign);
         return clientCampaign.getClientCampaignId();
     }
 
@@ -88,20 +100,13 @@ public class DefaultClientCampaignService implements DefaultService<ClientCampai
         return clientCampaign.getClientCampaignId();
     }
 
-//    public Collection<Long> getClientsIDsInCampaignByClientCampaignId(ClientCampaign clientCampaign) {
-//        return getClientsIDsInCampaignByClientCampaignId(clientCampaign.getClientCampaignId());
-//    }
-//
-//    public Collection<Long> getClientsIDsInCampaignByClientCampaignId(ClientCampaignId clientCampaignId) {
-//        return getClientsIDsInCampaignByCampaignId(clientCampaignId.getCampaignId());
-//    }
-//
-//    public Collection<Long> getClientsIDsInCampaignByCampaignId(Long campaignId) {
-//        return getAllClientsCampaignsByCampaignID(campaignId).stream()
-//                .map(clientCampaign -> clientCampaign.getClientCampaignId().getClientId())
-//                .collect(Collectors.toList());
-//    }
-
+    public List<ForecastData> getAllForecasts(ClientCampaignId clientCampaignID) {
+        ClientCampaign clientCampaign = getClientCampaignById(clientCampaignID);
+        if (clientCampaign == null || CollectionUtils.isEmpty(clientCampaign.getForecasts())) {
+            return Collections.emptyList();
+        }
+        return (List<ForecastData>) forecastConverter.convertAll(clientCampaign.getForecasts());
+    }
 
     @Override
     public void deleteObject(ClientCampaignId id) {

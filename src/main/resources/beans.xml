@@ -125,4 +125,30 @@
         </property>
     </bean>
 
+    <alias name="defaultForecastPopulator" alias="forecastPopulator"/>
+    <bean id="defaultForecastPopulator" class="pl.university.project.populators.impl.DefaultForecastPopulator"/>
+
+    <alias name="defaultForecastConverter" alias="forecastConverter"/>
+    <bean id="defaultForecastConverter"
+          class="pl.university.project.converters.impl.ForecastConverter">
+        <property name="populators">
+            <list value-type="pl.university.project.populators.Populator">
+                <ref bean="forecastPopulator"/>
+            </list>
+        </property>
+    </bean>
+
+    <alias name="defaultForecastReversPopulator" alias="forecastReversPopulator"/>
+    <bean id="defaultForecastReversPopulator" class="pl.university.project.populators.impl.DefaultForecastReversPopulator"/>
+
+    <alias name="defaultForecastReversConverter" alias="forecastReversConverter"/>
+    <bean id="defaultForecastReversConverter"
+          class="pl.university.project.converters.impl.ForecastReversConverter">
+        <property name="populators">
+            <list value-type="pl.university.project.populators.Populator">
+                <ref bean="forecastReversPopulator"/>
+            </list>
+        </property>
+    </bean>
+
 </beans>

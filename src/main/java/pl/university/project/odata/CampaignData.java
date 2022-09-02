@@ -18,7 +18,7 @@ public class CampaignData {
     @NotNull(message = "Tytuł kamapanii nie może być pusty!")
     @NotBlank(message = "Tytuł kamapanii nie może być pusty!")
     @Size(max = 50, message = "Tytuł kamapanii może się składać tylko z 50 znaków!")
-    @Pattern(regexp = "[a-zA-Z0-9]+", message = "Tytuł kamapanii może składać się tylko z liter oraz cyfr!")
+    @Pattern(regexp = "[a-zA-Z0-9 ]+", message = "Tytuł kamapanii może składać się tylko z liter oraz cyfr!")
     private String title;
     @Size(max = 2000, message = "Opiz może się składać tylko z 2000 znaków!")
     private String description;

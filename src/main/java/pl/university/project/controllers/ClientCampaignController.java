@@ -8,6 +8,7 @@ import pl.university.project.models.ClientCampaignId;
 import pl.university.project.odata.CampaignData;
 import pl.university.project.odata.ClientCampaignData;
 import pl.university.project.odata.ClientData;
+import pl.university.project.odata.ForecastData;
 import pl.university.project.services.impl.DefaultCampaignService;
 import pl.university.project.services.impl.DefaultClientCampaignService;
 import pl.university.project.services.impl.DefaultClientService;
@@ -16,6 +17,8 @@ import pl.university.project.utils.PropertyUtil;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/campaigns/{campaignId}/participants")
@@ -47,7 +50,9 @@ public class ClientCampaignController {
         if (clientCampaignData == null || clientCampaignData.getClientCampaignId() == null) {
             return "notFound";
         }
-        model.addAttribute("clientCampaign", defaultClientCampaignService.getObjectById(clientCampaignId));
+        model.addAttribute("clientCampaign", clientCampaignData);
+        model.addAttribute("forecasts", defaultClientCampaignService.getAllForecasts(clientCampaignId)
+                .stream().sorted(Comparator.comparing(ForecastData::getCreationTime)).collect(Collectors.toList()));
         return "clientCampaign";
     }
 
@@ -96,7 +101,6 @@ public class ClientCampaignController {
     @GetMapping(value = "/{clientId}/update")
     public String updateClientCampaign(@PathVariable Long campaignId, @PathVariable Long clientId, Model model,
                                        @RequestHeader(value = "referer", required = false) final String referer) {
-        CampaignData thisCampaignData = defaultCampaignService.getObjectById(campaignId);
         model.addAttribute("outcomes", PropertyUtil.getOutcomesCategories());
         model.addAttribute("referer", referer);
         setCampaignClients(model, campaignId);
@@ -105,7 +109,7 @@ public class ClientCampaignController {
         if (clientCampaignData == null) {
             return "notFound";
         }
-        model.addAttribute("clientCampaign", defaultClientCampaignService.getObjectById(clientCampaignId));
+        model.addAttribute("clientCampaign", clientCampaignData);
         return "saveClientCampaign";
     }
 

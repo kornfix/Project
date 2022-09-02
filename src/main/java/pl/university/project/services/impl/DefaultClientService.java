@@ -43,7 +43,7 @@ public class DefaultClientService implements DefaultService<ClientData, Long> {
         if (client == null) {
             return null;
         }
-        return clientConverter.convert(getClientById(id));
+        return clientConverter.convert(client);
     }
 
     @Override

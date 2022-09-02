@@ -17,7 +17,7 @@ public class DefaultCampaignForecastPopulator implements Populator<ClientCampaig
     public void populate(ClientCampaign source, CampaignData target) {
         target.setId(source.getClientCampaignId().getCampaignId());
         if(CollectionUtils.isNotEmpty(source.getForecasts())) {
-            source.getForecasts().stream().min(Comparator.comparing(Forecast::getCreationTime)).
+            source.getForecasts().stream().max(Comparator.comparing(Forecast::getCreationTime)).
                     ifPresent(forecast -> target.setForecast(
                             decimalFormat.format(forecast.getForecastProbability())));
         }

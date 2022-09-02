@@ -54,6 +54,10 @@
         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
         <p>Data zakończenia nie może być pusta!</p>
     </div>
+    <div th:if="${#fields.hasErrors('global')}" class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <p  th:errors="*{global}"/>
+    </div>
     <p>Opis:</p>
     <br>
     <textarea th:field="*{description}" rows="4" cols="50"></textarea>
@@ -67,8 +71,8 @@
             <button  class="btn-logout" type="button">Anuluj</button>
         </a>
     </p>
-
 </form>
+
 </div>
 </div>
 <footer>

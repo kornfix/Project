@@ -36,7 +36,7 @@ public class ClientController {
             return "notFound";
         }
         model.addAttribute("campaigns", defaultClientService.getCampaignIdForClientId(clientId));
-        model.addAttribute("client", defaultClientService.getObjectById(clientId));
+        model.addAttribute("client", clientData);
         return "client";
     }
 
@@ -68,7 +68,7 @@ public class ClientController {
         if (clientData == null) {
             return "notFound";
         }
-        model.addAttribute("client", defaultClientService.getObjectById(clientId));
+        model.addAttribute("client", clientData);
         return "saveClient";
     }
 
