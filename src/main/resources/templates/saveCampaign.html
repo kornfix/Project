@@ -43,6 +43,7 @@
     <p>Data rozpoczęcia:</p>
     <br>
     <input type="date" th:field="*{campaignStartDate}" />
+    <br th:if="${#fields.hasErrors('campaignStartDate')}">
     <div th:if="${#fields.hasErrors('campaignStartDate')}" class="alert">
         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
         <p>Data rozpoczęcia nie może być pusta!</p>
@@ -50,10 +51,12 @@
     <p>Data zakończenia: </p>
     <br>
     <input type="date" th:field="*{campaignEndDate}" />
+    <br th:if="${#fields.hasErrors('campaignEndDate')}">
     <div th:if="${#fields.hasErrors('campaignEndDate')}" class="alert">
         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
         <p>Data zakończenia nie może być pusta!</p>
     </div>
+    <br th:if="${#fields.hasErrors('global')}">
     <div th:if="${#fields.hasErrors('global')}" class="alert">
         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
         <p  th:errors="*{global}"/>
@@ -61,6 +64,7 @@
     <p>Opis:</p>
     <br>
     <textarea th:field="*{description}" rows="4" cols="50"></textarea>
+    <br th:if="${#fields.hasErrors('description')}">
     <div th:if="${#fields.hasErrors('description')}" class="alert">
         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
         <p  th:errors="*{description}"/>

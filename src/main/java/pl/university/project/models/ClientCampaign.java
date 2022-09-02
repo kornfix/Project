@@ -17,7 +17,7 @@ import java.util.Set;
 public class ClientCampaign {
 
     @EmbeddedId
-    private ClientCampaignId clientCampaignId = new ClientCampaignId();
+    private ClientCampaignId clientCampaignId;
 
     @ManyToOne
     @MapsId("clientId")

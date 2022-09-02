@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User site</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>
+<div class="top-nav">
+    <a class="nav-left active" th:href="@{/campaigns}">Kampanie</a>
+    <a class="nav-left" th:href="@{/clients}">Klienci</a>
+    <div class="top-nav-right">
+        <span class="nav-left" th:inline="text">[[${#httpServletRequest.remoteUser}]]</span>
+        <form class="nav-left logout" th:action="@{/logout}" method="post">
+            <input class="btn-logout" type="submit" value="Wyloguj"/>
+        </form>
+    </div>
+</div>
+<div class="breadcrumbs">
+    <a class="breadcrumb" th:href="@{/campaigns}">Kampanie</a>   &#x2192
+    <a class="breadcrumb" th:if="${campaignId} != null"
+       th:href=" @{|/campaigns/${campaignId}|}"
+       th:text="|${forecast.campaignTitle}|"></a>   &#x2192
+    <a class="breadcrumb" th:if="${campaignId} != null"
+       th:href=" @{|/campaigns/${campaignId}/participants/${clientId}|}"
+       th:text="|${forecast.clientFullName}|"></a>   &#x2192
+    <span th:text="|Prognoza utworzona o ${#dates.format(forecast.creationTime, 'HH:mm dd-MM-yyyy')}|"></span>
+</div>
+<div class="content">
+<div class="form" th:object="${forecast}">
+    <div class="information">
+    <h1>Informacje o prognozie</h1>
+    <table class="bottom">
+        <tr>
+            <td class="left">Uczęstnik:</td>
+            <td class="left" th:text="*{clientFullName}"></td>
+        </tr>
+        <tr>
+            <td class="left">Kampania:</td>
+            <td class="left" th:text="*{campaignTitle}"></td>
+        </tr>
+        <tr>
+            <td class="left">Wiek</td>
+            <td class="left" th:text="|*{age} lat|"></td>
+        </tr>
+        <tr>
+            <td class="left">Rodzaj telefonu</td>
+            <td class="left" th:text="*{contactType}=='Nie wiadomo'? 'Nie podano':*{contactType}"></td>
+        </tr>
+        <tr>
+            <td class="left">Zawód:</td>
+            <td class="left" th:text="*{job}=='Nie wiadomo'? 'Nie podano':*{job}"></td>
+        </tr>
+        <tr>
+            <td class="left">Poziom wykształcenia:</td>
+            <td class="left" th:text="*{educationLevel}=='Nie wiadomo'? 'Nie podano':*{educationLevel}"></td>
+        </tr>
+        <tr>
+            <td class="left">Status cywilny:</td>
+            <td class="left" th:text="*{martialStatus}"></td>
+        </tr>
+        <tr>
+            <td class="left">Saldo:</td>
+            <td class="left" th:text="*{balance}"></td>
+        </tr>
+        <tr>
+            <td class="left">Zalega ze spłatami:</td>
+            <td class="left"><input type="checkbox"  disabled="true" th:checked="*{defaultCreditStatus}" /></td>
+        </tr>
+        <tr>
+            <td class="left">Posiada kredyt hipoteczny:</td>
+            <td class="left"><input type="checkbox"  disabled="true" th:checked="*{hasMortgage}" /></td>
+        </tr>
+        <tr>
+            <td class="left">Posiada kredyt konsumpcyjny:</td>
+            <td class="left"><input type="checkbox"  disabled="true" th:checked="*{hasConsumerCredit}" /></td>
+        </tr>
+        <tr>
+            <td class="left">Posiada kredyt konsumpcyjny:</td>
+            <td class="left"><input type="checkbox"  disabled="true" th:checked="*{hasConsumerCredit}" /></td>
+        </tr>
+        <tr>
+            <td class="left">Czas trwania ostatniego kontaktu</td>
+            <td class="left" th:text="*{callDurationInSeconds}"></td>
+        </tr>
+        <tr>
+            <td class="left">Liczba kontaktów:</td>
+            <td class="left" th:text="*{numberOfContactsDuringCampaign}"></td>
+        </tr>
+        <tr>
+            <td class="left">Data ostatniego kontaktu:</td>
+            <td class="left" th:text="*{#dates.format(lastContactDate, 'dd-MM-yyyy')}"></td>
+        </tr>
+        <tr>
+            <td class="left">Liczba kontaktów w poprzedniej kampanii:</td>
+            <td class="left" th:text="*{numberOfContactsDuringPreviousCampaign}"></td>
+        </tr>
+        <tr>
+            <td class="left">Data ostatniego kontaktu w poprzedniej kampanii:</td>
+            <td class="left" th:text="*{lastContactDateFromPreviousCampaign}==null? 'Brak danych' :
+            *{#dates.format(lastContactDateFromPreviousCampaign, 'dd-MM-yyyy')}"></td>
+        </tr>
+        <tr>
+            <td class="left">Prognoza:</td>
+            <td class="left" th:text="*{forecastOutcome}"></td>
+        </tr>
+        <tr>
+            <td class="left">Prawdopodobieństwo:</td>
+            <td class="left" th:text="*{forecastProbability}"></td>
+        </tr>
+        <tr th:if="*{previousCampaignOutcome}!=null">
+            <td class="left" >Wynik poprzedniej kampanii:</td>
+            <td class="left" th:text="*{previousCampaignOutcome}"></td>
+        </tr>
+    </table>
+    </div>
+</div>
+</div>
+<footer>
+    &copy;2022 Wszystkie prawa zastrzezone
+</footer>
+</body>
+</html>

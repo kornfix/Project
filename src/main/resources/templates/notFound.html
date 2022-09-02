@@ -1,15 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Strona błędu</title>
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
-<h1>Przepraszamy Powyższa stronie nie istnieje! </h1>
-<a href="/"/>
-<button class="btn-edit" type="button">Wróć do strony startowej</button>
-</a>
+<div class="content">
+    <div  class="login">
+        <h1>Przepraszamy Powyższa stronie nie istnieje!</h1>
+        <form class="error" th:action="@{/}" method="get">
+            <input class="btn-logout" type="submit" value="Wróć do strony startowej"/>
+        </form>
+    </div>
+</div>
 <footer>
     &copy;2022 Wszystkie prawa zastrzezone
 </footer>

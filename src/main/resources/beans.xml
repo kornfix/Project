@@ -13,7 +13,7 @@
     <alias name="defaultUserReversConverter" alias="userReversConverter"/>
     <bean id="defaultUserReversConverter"
           class="pl.university.project.converters.impl.UserReversConverter">
-        <property name="userPopulators">
+        <property name="populators">
             <list value-type="pl.university.project.populators.Populator">
                 <ref bean="userReversPopulator"/>
             </list>
@@ -26,7 +26,7 @@
     <alias name="defaultUserConverter" alias="userConverter"/>
     <bean id="defaultUserConverter"
           class="pl.university.project.converters.impl.UserConverter">
-        <property name="userPopulators">
+        <property name="populators">
             <list value-type="pl.university.project.populators.Populator">
                 <ref bean="userPopulator"/>
             </list>

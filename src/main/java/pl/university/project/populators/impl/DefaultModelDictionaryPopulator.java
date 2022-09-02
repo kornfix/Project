@@ -21,8 +21,8 @@ public class DefaultModelDictionaryPopulator implements Populator<Forecast, Hash
         if (source.getLastContactDateFromPreviousCampaign() != null) {
 
             target.put("log_pdays", Math.log(ChronoUnit.DAYS.between(
-                    source.getLastContactDateFromPreviousCampaign().toInstant(),
-                    source.getLastContactDate().toInstant())));
+                    source.getLastContactDateFromPreviousCampaign().toLocalDate(),
+                    source.getLastContactDate().toLocalDate())));
         } else {
             target.put("log_pdays", -1D);
         }
@@ -35,7 +35,12 @@ public class DefaultModelDictionaryPopulator implements Populator<Forecast, Hash
         target.put("housing_Tak", Boolean.TRUE.equals(source.getHasMortgage()) ? 1d : 0d);
         target.put("contact_Nie podano", source.getContactType().equals("Nie wiadomo") ? 1d : 0d);
         target.put("contact_Telefoniczny", source.getContactType().equals("Telefoniczny") ? 1d : 0d);
-        target.put("poutcome_Nie podano", source.getPreviousCampaignOutcome().equals("Nie wiadomo") ? 1d : 0d);
-        target.put("poutcome_Porażka", source.getPreviousCampaignOutcome().equals("Porażka") ? 1d : 0d);
+        if(source.getPreviousCampaignOutcome()!=null) {
+            target.put("poutcome_Nie podano", "Nie wiadomo".equals(source.getPreviousCampaignOutcome()) ? 1d : 0d);
+            target.put("poutcome_Porażka", "Porażka".equals(source.getPreviousCampaignOutcome()) ? 1d : 0d);
+        }else{
+            target.put("poutcome_Nie podano",1d);
+            target.put("poutcome_Porażka", 0d);
+        }
     }
 }
