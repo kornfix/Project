@@ -29,7 +29,6 @@
         <th class="header">Data utworzenia</th>
         <th class="header">Data rozpoczęcia</th>
         <th class="header">Data zakończenia</th>
-        <th class="header">Opis</th>
         <th colspan="3">Opcje</th>
     </tr>
     </thead>
@@ -38,7 +37,6 @@
     <td th:text="${#dates.format(campaign.creationTime, 'HH:mm dd-MM-yyyy')}" >
     <td th:text="${#dates.format(campaign.campaignStartDate, 'dd-MM-yyyy')}" >
     <td th:text="${#dates.format(campaign.campaignEndDate, 'dd-MM-yyyy')}" >
-    <td th:text="${campaign.description}">
     <td>
     <a th:href="@{|/campaigns/${campaign.id}|}"/>
     <button class="btn" type="button">Zobacz szczegóły</button>

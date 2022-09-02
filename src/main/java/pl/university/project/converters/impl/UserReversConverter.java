@@ -1,36 +1,55 @@
 package pl.university.project.converters.impl;
 
 import org.apache.commons.collections4.CollectionUtils;
+import pl.university.project.converters.Converter;
 import pl.university.project.models.User;
 import pl.university.project.odata.UserData;
 import pl.university.project.populators.Populator;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UserReversConverter  {
+public class UserReversConverter implements Converter<UserData, User> {
 
-    private List<Populator> userPopulators;
+    private List<Populator> populators;
 
-
+    @Override
     public User convert(UserData source) {
         User target = new User();
         if (source != null) {
-            userPopulators.forEach(populator -> populator.populate(source, target));
+            populators.forEach(populator -> populator.populate(source, target));
         }
         return target;
     }
 
-    public List<User> convertAll(List<UserData> sourceList) {
-        List<User> targetList = new ArrayList<>();
-        if (CollectionUtils.isNotEmpty(sourceList)) {
-            targetList.addAll(sourceList.stream().map(this::convert).collect(Collectors.toList()));
+    @Override
+    public User convert(UserData source, User target) {
+        if (source != null) {
+            populators.forEach(populator -> populator.populate(source, target));
+        }
+        return target;
+    }
+
+    @Override
+    public Collection<User> convertAll(Collection<UserData> source) {
+        Collection<User> targetList = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(source)) {
+            targetList.addAll(source.stream().map(this::convert).collect(Collectors.toList()));
         }
         return targetList;
     }
 
-    public void setUserPopulators(List<Populator> userPopulators) {
-        this.userPopulators = userPopulators;
+    @Override
+    public Collection<User> convertAll(Collection<UserData> source, Collection<User> target) {
+        if (CollectionUtils.isNotEmpty(source)) {
+            target.addAll(source.stream().map(this::convert).collect(Collectors.toList()));
+        }
+        return target;
+    }
+
+    public void setPopulators(List<Populator> populators) {
+        this.populators = populators;
     }
 }

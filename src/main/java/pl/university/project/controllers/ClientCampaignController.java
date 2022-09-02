@@ -52,7 +52,8 @@ public class ClientCampaignController {
         }
         model.addAttribute("clientCampaign", clientCampaignData);
         model.addAttribute("forecasts", defaultClientCampaignService.getAllForecasts(clientCampaignId)
-                .stream().sorted(Comparator.comparing(ForecastData::getCreationTime)).collect(Collectors.toList()));
+                .stream().sorted(Comparator.comparing(ForecastData::getCreationTime).reversed())
+                .collect(Collectors.toList()));
         return "clientCampaign";
     }
 

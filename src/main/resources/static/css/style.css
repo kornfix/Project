@@ -375,3 +375,11 @@ p.center {
 .bottom {
   margin-bottom: 50px;
 }
+
+form.error {
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  padding: 25px 50px;
+}

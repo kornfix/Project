@@ -32,7 +32,7 @@ public class Client {
     private Boolean hasConsumerCredit;
     private Double balance;
 
-    @OneToMany(mappedBy = "campaign", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private Set<ClientCampaign> clientCampaigns = new HashSet<>();
 
 

@@ -7,10 +7,14 @@
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
-    <h1>Ups. Coś poszło nie tak! </h1>
-    <a href="/"/>
-        <button type="button">Wróć do strony startowej</button>
-    </a>
+<div class="content">
+    <div  class="login">
+        <h1>Ups. Coś poszło nie tak!</h1>
+        <form class="error" th:action="@{/}" method="get">
+            <input class="btn-logout" type="submit" value="Wróć do strony startowej"/>
+        </form>
+    </div>
+</div>
     <footer>
         &copy;2022 Wszystkie prawa zastrzezone
     </footer>

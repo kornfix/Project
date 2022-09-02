@@ -35,7 +35,7 @@
             </div>
             <p>Hasło:</p>
             <br>
-            <input type="password" th:field="*{password}" />
+            <input type="text" th:field="*{password}" />
             <br th:if="${#fields.hasErrors('password')}">
             <div th:if="${#fields.hasErrors('password')}" class="alert">
                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -43,7 +43,7 @@
             </div>
             <p>Powtórz Hasło:</p>
             <br>
-            <input type="password" th:field="*{repeatPassword}" />
+            <input type="text" th:field="*{repeatPassword}" />
             <br th:if="${#fields.hasErrors('repeatPassword')}">
             <div th:if="${#fields.hasErrors('repeatPassword')}" class="alert">
                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -55,10 +55,10 @@
                 <p  th:errors="*{global}"/>
             </div>
             <br>
-            <p class="center">
-                <input  class="btn-save" type="submit" value="Zapisz" />
+            <p>
+                <input type="submit" value="Zapisz użytkownika" />
                 <a th:href="${referer}!=null? ${referer}:'/'"/>
-                <button  class="btn-logout" type="button">Anuluj</button>
+                <button type="button">Anuluj</button>
                 </a>
             </p>
         </form>
