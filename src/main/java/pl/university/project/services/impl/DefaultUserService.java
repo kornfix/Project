@@ -1,9 +1,12 @@
 package pl.university.project.services.impl;
 
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.university.project.converters.impl.UserConverter;
 import pl.university.project.converters.impl.UserReversConverter;
+import pl.university.project.details.MyUserDetails;
 import pl.university.project.models.User;
 import pl.university.project.odata.UserData;
 import pl.university.project.repositories.UserRepository;
@@ -23,6 +26,9 @@ public class DefaultUserService implements DefaultService<UserData, Long> {
 
     @Resource
     private UserRepository userRepository;
+
+    @Resource
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public Collection<UserData> getAllObjects() {
@@ -61,6 +67,34 @@ public class DefaultUserService implements DefaultService<UserData, Long> {
         userRepository.saveAndFlush(user);
         return user.getId();
     }
+
+    public void changeUsername(UserData userData) {
+        User user = getUserById(userData.getId());
+        if (user != null) {
+            user.setUsername(userData.getUsername());
+            userRepository.saveAndFlush(user);
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (principal instanceof MyUserDetails) {
+                MyUserDetails userDetails = (MyUserDetails) principal;
+                userDetails.setUser(user);
+            }
+        }
+    }
+
+
+    public void changePassword(UserData userData) {
+        User user = getUserById(userData.getId());
+        if (user != null) {
+            user.setPassword(bCryptPasswordEncoder.encode(userData.getPassword()));
+            userRepository.saveAndFlush(user);
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (principal instanceof MyUserDetails) {
+                MyUserDetails userDetails = (MyUserDetails) principal;
+                userDetails.setUser(user);
+            }
+        }
+    }
+
 
     @Override
     public void deleteObject(Long id) {

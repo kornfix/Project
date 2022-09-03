@@ -29,6 +29,7 @@ public class UserController {
     @GetMapping(value = "/add")
     public String addUser(Model model, @RequestHeader(value = "referer", required = false) final String referer) {
         model.addAttribute("referer", referer);
+        model.addAttribute("mod", "CREATE_NEW");
         model.addAttribute("user", new UserData());
         return "saveUser";
     }

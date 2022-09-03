@@ -17,6 +17,7 @@
         <form class="nav-left logout" th:action="@{|/admin/users/add|}" method="get">
             <input class="btn-logout" type="submit" value="Stwórz nowego użytkownika"/>
         </form>
+        <span class="nav-left" th:inline="text">[[${#httpServletRequest.remoteUser}]]</span>
         <form class="nav-left logout" th:action="@{/logout}" method="post">
             <input class="btn-logout" type="submit" value="Wyloguj"/>
         </form>
@@ -27,7 +28,7 @@
     <tr>
         <th class="header">Nazwa użytkownika</th>
         <th class="header">Rola</th>
-        <th colspan="2">Opcje</th>
+        <th colspan="3">Opcje</th>
     </tr>
     </thead>
     <tr th:each="user: ${users}">
@@ -35,7 +36,12 @@
         <td th:text="${user.role}">
         <td>
             <a th:href="@{|/admin/users/${user.id}/update|}"/>
-            <button class="btn" type="button">Edytuj</button>
+            <button class="btn" type="button">Zmień nazwę użytkownika</button>
+            </a>
+        </td>
+        <td>
+            <a th:href="@{|/admin/users/${user.id}/update|}"/>
+            <button class="btn" type="button">Zmień hasło</button>
             </a>
         </td>
         <td>

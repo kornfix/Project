@@ -25,6 +25,7 @@ public class CustomMvcConfig implements WebMvcConfigurer {
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/admin/users").setViewName("users");
         registry.addViewController("/clients").setViewName("clients");
+        registry.addViewController("/account").setViewName("user");
         registry.addViewController(ERROR_URL).setViewName("error");
         registry.addViewController(NOT_FOUND_URL).setViewName("notFound");
     }

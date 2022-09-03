@@ -14,7 +14,7 @@ public class UserData {
     @NotNull(message = "Nazwa użytkownika nie może być pusta!")
     @NotBlank(message = "Nazwa użytkownika nie może być pusta!")
     @Size(max = 50, message = "Nazwa użytkownika może się składać tylko z 50 znaków!")
-    @Pattern(regexp = "[a-zA-Z]+", message = "Nazwa użytkownika może składać się tylko z liter!")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "Nazwa użytkownika może składać się tylko z liter oraz cyfr!")
     private String username;
 
     @NotNull(message = "Hasło nie może być puste!")

@@ -7,12 +7,45 @@
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
-<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
-          <span th:text="${user.firstName}" />
-          <span th:text="${user.lastName}" />
+<div class="top-nav">
+    <a class="nav-left" th:href="@{/campaigns}">Kampanie</a>
+    <a class="nav-left" th:href="@{/clients}">Klienci</a>
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <a class="nav-left" th:href="@{/admin/users}">Użytkownicy</a>
+    </div>
+    <div class="top-nav-right">
+        <form class="nav-left logout" th:action="@{|/admin/users/add|}" method="get">
+            <input class="btn-logout" type="submit" value="Stwórz nowego użytkownika"/>
+        </form>
+        <span class="nav-left" th:inline="text">[[${#httpServletRequest.remoteUser}]]</span>
+        <form class="nav-left logout" th:action="@{/logout}" method="post">
+            <input class="btn-logout" type="submit" value="Wyloguj"/>
+        </form>
+    </div>
+</div>
+<div class="content">
+    <div class="form" th:object="${user}">
+        <div class="information">
+            <h4>Twój profil użytkownika</h4>
+            <table class="bottom">
+                <tr>
+                    <td class="left">Nazwa użytkownika</td>
+                </tr>
+                <tr>
+                    <td class="left" th:text="*{username}"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <form  class="nav-left logout"
+                               th:action="@{|/account/changeUsername|}" method="get">
+                            <input class="btn-logout" type="submit" value="Zmień nazwę użytkownika"/>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
 <footer>
     &copy;2022 Wszystkie prawa zastrzezone
 </footer>

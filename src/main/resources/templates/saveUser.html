@@ -23,36 +23,41 @@
 <div class="content">
     <div class="form">
         <form class="form" action="#"
-              th:object="${user}" th:action="${user.id} != null? @{|/admin/users/${user.id}/update|} : @{/admin/users/add}"
+              th:object="${user}" th:action="${user.id} != null? (${mod}=='CHANGE_USERNAME'? @{/account/changeUsername}
+              :@{/account/changePassword})
+              : @{/admin/users/add}"
               th:method="${user.id} != null? PUT : POST">
             <h2 th:text="${user.id} == null? |Dodawanie nowego| : |Edycja użytkownika|"></h2>
             <h2 th:text="${user.id} == null? |użytkownika| : |${user.username}|"></h2>
             <input type="hidden" th:value="${referer}" name="referer"/>
-            <p>Nazwa użytkownika:</p>
-            <br>
-            <input type="text" th:field="*{username}" />
-            <br th:if="${#fields.hasErrors('username')}">
-            <div th:if="${#fields.hasErrors('username')}" class="alert">
-                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                <p  th:errors="*{username}"/>
+            <div th:if="${mod}=='CHANGE_USERNAME' or ${mod}=='CREATE_NEW'">
+                <p>Nazwa użytkownika:</p>
+                <br>
+                <input type="text" th:field="*{username}" />
+                <br th:if="${#fields.hasErrors('username')}">
+                <div th:if="${#fields.hasErrors('username')}" class="alert">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <p  th:errors="*{username}"/>
+                </div>
             </div>
-            <p>Hasło:</p>
-            <br>
-            <input type="password" th:field="*{password}" />
-            <br th:if="${#fields.hasErrors('password')}">
-            <div th:if="${#fields.hasErrors('password')}" class="alert">
-                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                <p  th:errors="*{password}"/>
+            <div th:if="${mod}=='CHANGE_PASSWORD' or ${mod}=='CREATE_NEW'">
+                <p>Hasło:</p>
+                <br>
+                <input type="password" th:field="*{password}" />
+                <br th:if="${#fields.hasErrors('password')}">
+                <div th:if="${#fields.hasErrors('password')}" class="alert">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <p  th:errors="*{password}"/>
+                </div>
+                <p>Powtórz Hasło:</p>
+                <br>
+                <input type="password" th:field="*{repeatPassword}" />
+                <br th:if="${#fields.hasErrors('repeatPassword')}">
+                <div th:if="${#fields.hasErrors('repeatPassword')}" class="alert">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <p  th:errors="*{repeatPassword}"/>
+                </div>
             </div>
-            <p>Powtórz Hasło:</p>
-            <br>
-            <input type="password" th:field="*{repeatPassword}" />
-            <br th:if="${#fields.hasErrors('repeatPassword')}">
-            <div th:if="${#fields.hasErrors('repeatPassword')}" class="alert">
-                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                <p  th:errors="*{repeatPassword}"/>
-            </div>
-            <br th:if="${#fields.hasErrors('global')}">
             <div th:if="${#fields.hasErrors('global')}" class="alert">
                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
                 <p  th:errors="*{global}"/>

@@ -52,4 +52,12 @@ public class MyUserDetails implements UserDetails {
         return true;
     }
 
+    public Long getUserId() {
+        return user.getId();
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }
