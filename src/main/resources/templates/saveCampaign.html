@@ -36,7 +36,7 @@
     <h2 th:text="${campaign.id} == null? |Tworzenie nowej| : |Edycja kampanii|"></h2>
     <h2 th:text="${campaign.id} == null? |kampanii|"></h2>
     <input type="hidden" th:value="${referer}" name="referer"/>
-    <p>Imię: </p>
+    <p>Tytuł kampanii: </p>
     <br>
     <input type="text" th:field="*{title}" />
     <br th:if="${#fields.hasErrors('title')}">

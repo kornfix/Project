@@ -40,31 +40,31 @@
 <div class="content">
     <div class="form"th:object="${clientCampaign}">
         <div class="information">
-            <h1>Informacje o uczęstniku kampanii</h1>
+            <h1>Informacje o uczestniku kampanii</h1>
     <table>
         <tr>
-            <td>Imię</td>
-            <td th:text="*{client.firstName}"></td>
+            <td class="left">Imię:</td>
+            <td class="left" th:text="*{client.firstName}"></td>
         </tr>
         <tr>
-            <td>Nazwisko</td>
-            <td th:text="*{client.lastName}"></td>
+            <td class="left">Nazwisko:</td>
+            <td class="left" th:text="*{client.lastName}"></td>
         </tr>
         <tr>
-            <td>Nazwa kampanii</td>
-            <td th:text="*{campaign.title}"></td>
+            <td class="left">Nazwa kampanii:</td>
+            <td class="left" th:text="*{campaign.title}"></td>
         </tr>
         <tr>
-            <td>Czas trwania ostatniego kontaktu</td>
-            <td th:text="*{callDurationInSeconds}"></td>
+            <td class="left">Czas trwania ostatniego kontakt:</td>
+            <td class="left" th:text="*{callDurationInSeconds}"></td>
         </tr>
         <tr>
-            <td>Liczba kontaktów:</td>
-            <td th:text="*{numberOfContactsDuringCampaign}"></td>
+            <td class="left">Liczba kontaktów:</td>
+            <td class="left" th:text="*{numberOfContactsDuringCampaign}"></td>
         </tr>
         <tr>
-            <td>Data ostatniego kontaktu:</td>
-            <td th:text="*{#dates.format(lastContactDate, 'dd-MM-yyyy')}"></td>
+            <td class="left">Data ostatniego kontaktu:</td>
+            <td class="left" th:text="*{#dates.format(lastContactDate, 'dd-MM-yyyy')}"></td>
         </tr>
     </table>
             <div th:unless="${#lists.isEmpty(forecasts)}">
@@ -83,7 +83,6 @@
                     <tr th:each="forecast: ${forecasts}">
                         <td th:text="${#dates.format(forecast.creationTime, 'HH:mm dd-MM-yyyy')}" >
                         <td th:text="${forecast.forecastOutcome}">
-                        <td th:text="${forecast.forecastProbability}">
                         <td th:text="${forecast.forecastProbability}!=null? ${forecast.forecastProbability} : 'Brak danych'">
                         <td>
                             <a th:href="@{|/campaigns/${clientCampaign.campaign.id}/participants/${clientCampaign.client.id}/forecasts/${forecast.id}|}"/>

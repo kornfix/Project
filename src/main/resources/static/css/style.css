@@ -195,7 +195,7 @@ input[type="number"], input[type="date"], textarea, select {
 input[type=checkbox] {
             transform : scale(3);
             vertical-align: 13px;
-            margin-left: 50px;
+            margin-left: 19px;
 }
 
 input[type=password], select {
