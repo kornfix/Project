@@ -20,7 +20,7 @@ public class DefaultForecastReversPopulator implements Populator<ClientCampaign,
         target.setJob(source.getClient().getJob());
         target.setMartialStatus(source.getClient().getMartialStatus());
         target.setEducationLevel(source.getClient().getEducationLevel());
-        target.setDefaultCreditStatus(source.getClient().getDefaultCreditStatus());
+        target.setHasDefaultCredit(source.getClient().getHasDefaultCredit());
         target.setHasMortgage(source.getClient().getHasMortgage());
         target.setHasConsumerCredit(source.getClient().getHasConsumerCredit());
         target.setBalance(source.getClient().getBalance());

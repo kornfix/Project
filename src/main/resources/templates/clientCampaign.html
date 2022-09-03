@@ -24,7 +24,7 @@
               method="post">
             <input class="btn-logout" type="submit" value="Utwórz prognozę"/>
         </form>
-        <span class="nav-left" th:inline="text">[[${#httpServletRequest.remoteUser}]]</span>
+        <a class="nav-left" th:href="@{/account}">[[${#httpServletRequest.remoteUser}]]</a>
         <form class="nav-left logout" th:action="@{/logout}" method="post">
             <input class="btn-logout" type="submit" value="Wyloguj"/>
         </form>

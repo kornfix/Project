@@ -31,7 +31,7 @@ public class DefaultModelDictionaryPopulator implements Populator<Forecast, Hash
         target.put("job_Samozatrudniony", source.getJob().equals("Samozatrudniony") ? 1d : 0d);
         target.put("job_Student", source.getJob().equals("Student") ? 1d : 0d);
         target.put("education_Wykształcenie średnie", source.getEducationLevel().equals("Wykształcenie średnie") ? 1d : 0d);
-        target.put("default_Tak", Boolean.TRUE.equals(source.getDefaultCreditStatus()) ? 1d : 0d);
+        target.put("default_Tak", Boolean.TRUE.equals(source.getHasDefaultCredit()) ? 1d : 0d);
         target.put("housing_Tak", Boolean.TRUE.equals(source.getHasMortgage()) ? 1d : 0d);
         target.put("contact_Nie podano", source.getContactType().equals("Nie wiadomo") ? 1d : 0d);
         target.put("contact_Telefoniczny", source.getContactType().equals("Telefoniczny") ? 1d : 0d);

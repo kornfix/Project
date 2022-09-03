@@ -20,9 +20,9 @@
         </form>
         <span class="nav-left smaller-label" th:unless="${canAddClients}">Wszyscy klienci biorą udział w kampanii</span>
         <form class="nav-left logout" th:action="@{|/campaigns/${campaign.id}/update|}" method="get">
-            <input class="btn-logout" type="submit" value="Edytuj kampanię"/>
+            <input class="btn-logout" type="submit" value="Edytuj kampanie"/>
         </form>
-        <span class="nav-left" th:inline="text">[[${#httpServletRequest.remoteUser}]]</span>
+        <a class="nav-left" th:href="@{/account}">[[${#httpServletRequest.remoteUser}]]</a>
         <form class="nav-left logout" th:action="@{/logout}" method="post">
             <input class="btn-logout" type="submit" value="Wyloguj"/>
         </form>

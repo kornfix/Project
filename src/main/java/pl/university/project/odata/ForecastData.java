@@ -14,7 +14,7 @@ public class ForecastData {
     private String job;
     private String martialStatus;
     private String educationLevel;
-    private Boolean defaultCreditStatus;
+    private Boolean hasDefaultCredit;
     private Boolean hasMortgage;
     private Boolean hasConsumerCredit;
     private Double balance;

@@ -21,7 +21,7 @@ public class DefaultForecastPopulator implements Populator<Forecast, ForecastDat
         target.setJob(source.getJob());
         target.setMartialStatus(source.getMartialStatus());
         target.setEducationLevel(source.getEducationLevel());
-        target.setDefaultCreditStatus(source.getDefaultCreditStatus());
+        target.setHasDefaultCredit(source.getHasDefaultCredit());
         target.setHasMortgage(source.getHasMortgage());
         target.setHasConsumerCredit(source.getHasConsumerCredit());
         target.setBalance(source.getBalance());

@@ -20,10 +20,14 @@ public class Campaign {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String title;
     private String description;
+    @Column(nullable = false)
     private Timestamp creationTime;
+    @Column(nullable = false)
     private Date campaignStartDate;
+    @Column(nullable = false)
     private Date campaignEndDate;
 
 

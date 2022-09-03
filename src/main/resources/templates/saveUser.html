@@ -14,7 +14,7 @@
         <a class="nav-left active" th:href="@{/admin/users}">Użytkownicy</a>
     </div>
     <div class="top-nav-right">
-        <span class="nav-left" th:inline="text">[[${#httpServletRequest.remoteUser}]]</span>
+        <a class="nav-left" th:href="@{/account}">[[${#httpServletRequest.remoteUser}]]</a>
         <form class="nav-left logout" th:action="@{/logout}" method="post">
             <input class="btn-logout" type="submit" value="Wyloguj"/>
         </form>
@@ -27,17 +27,19 @@
               :@{/account/changePassword})
               : @{/admin/users/add}"
               th:method="${user.id} != null? PUT : POST">
-            <h2 th:text="${user.id} == null? |Dodawanie nowego| : |Edycja użytkownika|"></h2>
-            <h2 th:text="${user.id} == null? |użytkownika| : |${user.username}|"></h2>
             <input type="hidden" th:value="${referer}" name="referer"/>
+            <input type="hidden" th:field="*{username}"/>
+            <h3 th:text="${user.id} == null? |Dodawanie nowego| : (${mod}=='CHANGE_USERNAME'? |Zmianna nazwy|
+             : |Zmianna hasła|)"></h3>
+            <h3 th:text="${user.id} == null? |użytkownika| : (${mod}=='CHANGE_USERNAME'? |użytkownika ${user.username}|)"></h3>
             <div th:if="${mod}=='CHANGE_USERNAME' or ${mod}=='CREATE_NEW'">
                 <p>Nazwa użytkownika:</p>
                 <br>
-                <input type="text" th:field="*{username}" />
-                <br th:if="${#fields.hasErrors('username')}">
-                <div th:if="${#fields.hasErrors('username')}" class="alert">
+                <input type="text" th:field="*{newUsername}" />
+                <br th:if="${#fields.hasErrors('newUsername')}">
+                <div th:if="${#fields.hasErrors('newUsername')}" class="alert">
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                    <p  th:errors="*{username}"/>
+                    <p  th:errors="*{newUsername}"/>
                 </div>
             </div>
             <div th:if="${mod}=='CHANGE_PASSWORD' or ${mod}=='CREATE_NEW'">

@@ -49,7 +49,7 @@ public class ClientData {
     private String educationLevel;
 
     @NotNull(message = "Informacja o tym, czy zalega ze spłatami, nie może być pusta!")
-    private Boolean defaultCreditStatus;
+    private Boolean hasDefaultCredit;
     @NotNull(message = "Informacja o tym, czy posiada kredyt hipoteczny, nie może być pusta!")
     private Boolean hasMortgage;
     @NotNull(message = "Informacja o tym, czy posiada kredyt konsumpcyjny,  nie może być pusta!")

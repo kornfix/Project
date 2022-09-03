@@ -27,12 +27,12 @@ public class AccountController {
 
 
     @GetMapping
-    public String getUserById(Model model) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (!(principal instanceof MyUserDetails)) {
+    public String getUser(Model model) {
+        Long userId = getCurrentUserId();
+        if (userId == null) {
             return "error";
         }
-        UserData userData = userService.getObjectById(((MyUserDetails) principal).getUserId());
+        UserData userData = userService.getObjectById(userId);
         if (userData == null || userData.getId() == null) {
             return "notFound";
         }
@@ -45,11 +45,11 @@ public class AccountController {
     public String changeUsername(Model model,
                                  @RequestHeader(value = "referer", required = false) final String referer) {
         model.addAttribute("referer", referer);
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (!(principal instanceof MyUserDetails)) {
+        Long userId = getCurrentUserId();
+        if (userId == null) {
             return "error";
         }
-        UserData userData = userService.getObjectById(((MyUserDetails) principal).getUserId());
+        UserData userData = userService.getObjectById(userId);
         if (userData == null) {
             return "notFound";
         }
@@ -65,15 +65,16 @@ public class AccountController {
         List<ObjectError> errors = result.getAllErrors().stream().
                 filter(e -> !((FieldError) e).getField().toLowerCase(Locale.ROOT).contains("password"))
                 .collect(Collectors.toList());
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (!(principal instanceof MyUserDetails)) {
+        Long userId = getCurrentUserId();
+        if (userId == null) {
             return "error";
         }
-        userData.setId(((MyUserDetails) principal).getUserId());
+        userData.setId(userId);
         model.addAttribute("mod", "CHANGE_USERNAME");
-        if (CollectionUtils.isEmpty(errors) && userService.isUsernameUsed(userData.getUsername())) {
-            result.addError(new ObjectError("globalError", "Nazwa użytkownika już istnieje!"));
-            errors.add(new ObjectError("globalError", "Nazwa użytkownika już istnieje!"));
+        if (CollectionUtils.isEmpty(errors) && userService.isUsernameUsed(userData.getNewUsername())) {
+            ObjectError usernameError = new ObjectError("globalError", "Nazwa użytkownika już istnieje!");
+            result.addError(usernameError);
+            errors.add(usernameError);
         }
         if (CollectionUtils.isNotEmpty(errors)) {
             return "saveUser";
@@ -87,11 +88,11 @@ public class AccountController {
     public String changePassword(Model model,
                                  @RequestHeader(value = "referer", required = false) final String referer) {
         model.addAttribute("referer", referer);
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (!(principal instanceof MyUserDetails)) {
+        Long userId = getCurrentUserId();
+        if (userId == null) {
             return "error";
         }
-        UserData userData = userService.getObjectById(((MyUserDetails) principal).getUserId());
+        UserData userData = userService.getObjectById(userId);
         if (userData == null) {
             return "notFound";
         }
@@ -104,20 +105,21 @@ public class AccountController {
     @PutMapping("/changePassword")
     public String changePassword(@Valid @ModelAttribute("user") UserData userData, BindingResult result, Model model,
                                  @ModelAttribute("referer") String referer) {
-        result.getAllErrors().removeAll(
-                result.getAllErrors().stream().
-                        filter(e -> ((FieldError) e).getField().toLowerCase(Locale.ROOT).contains("username"))
-                        .collect(Collectors.toList()));
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (!(principal instanceof MyUserDetails)) {
+        List<ObjectError> errors = result.getAllErrors().stream().
+                filter(e -> !((FieldError) e).getField().toLowerCase(Locale.ROOT).contains("username"))
+                .collect(Collectors.toList());
+        Long userId = getCurrentUserId();
+        if (userId == null) {
             return "error";
         }
-        userData.setId(((MyUserDetails) principal).getUserId());
+        userData.setId(userId);
         model.addAttribute("mod", "CHANGE_PASSWORD");
-        if (!result.hasErrors() && !userData.getPassword().equals(userData.getRepeatPassword())) {
-            result.addError(new ObjectError("globalError", "Podane hasła muszą być takie same!"));
+        if (CollectionUtils.isEmpty(errors) && !userData.getPassword().equals(userData.getRepeatPassword())) {
+            ObjectError passwordError = new ObjectError("globalError", "Podane hasła muszą byc takie same!");
+            result.addError(passwordError);
+            errors.add(passwordError);
         }
-        if (result.hasErrors()) {
+        if (CollectionUtils.isNotEmpty(errors)) {
             return "saveUser";
         }
         userService.changePassword(userData);
@@ -128,5 +130,13 @@ public class AccountController {
     public String deleteUser(@PathVariable Long userId) {
         userService.deleteObject(userId);
         return "redirect:/admin/users";
+    }
+
+    private Long getCurrentUserId() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (!(principal instanceof MyUserDetails)) {
+            return null;
+        }
+        return ((MyUserDetails) principal).getUserId();
     }
 }

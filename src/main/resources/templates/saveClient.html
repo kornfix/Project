@@ -14,7 +14,7 @@
         <a class="nav-left" th:href="@{/admin/users}">Użytkownicy</a>
     </div>
     <div class="top-nav-right">
-        <span class="nav-left" th:inline="text">[[${#httpServletRequest.remoteUser}]]</span>
+        <a class="nav-left" th:href="@{/account}">[[${#httpServletRequest.remoteUser}]]</a>
         <form class="nav-left logout" th:action="@{/logout}" method="post">
             <input class="btn-logout" type="submit" value="Wyloguj"/>
         </form>
@@ -107,7 +107,7 @@
         <table class="table-left">
             <tr>
                 <td class="left"><p class="nowrap">Zalega ze spłatami:</p></td>
-                <td class="center"><input type="checkbox"  th:field="*{defaultCreditStatus}" th:checked="*{defaultCreditStatus}" /></td>
+                <td class="center"><input type="checkbox"  th:field="*{hasDefaultCredit}" th:checked="*{hasDefaultCredit}" /></td>
             </tr>
             <tr>
                 <td class="left"><p class="nowrap">Posiada kredyt hipoteczny:</p></td>

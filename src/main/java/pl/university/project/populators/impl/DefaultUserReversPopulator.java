@@ -15,7 +15,7 @@ public class DefaultUserReversPopulator implements Populator<UserData, User> {
     @Override
     public void populate(UserData source, User target) {
         target.setId(source.getId());
-        target.setUsername(source.getUsername());
+        target.setUsername(source.getNewUsername());
         target.setRole(source.getRole());
         target.setEnabled(source.isEnabled());
         if (source.getId() == null) {

@@ -16,9 +16,9 @@
     <div class="top-nav-right">
 
         <form class="nav-left logout" th:action="@{|/campaigns/add|}" method="get">
-            <input class="btn-logout" type="submit" value="Stwórz nową kamapanię"/>
+            <input class="btn-logout" type="submit" value="Stwórz nową kamapanie"/>
         </form>
-        <span class="nav-left" th:inline="text">[[${#httpServletRequest.remoteUser}]]</span>
+        <a class="nav-left" th:href="@{/account}">[[${#httpServletRequest.remoteUser}]]</a>
         <form class="nav-left logout" th:action="@{/logout}" method="post">
             <input class="btn-logout" type="submit" value="Wyloguj"/>
         </form>

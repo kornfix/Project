@@ -19,17 +19,29 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String firstName;
+    @Column(nullable = false)
     private String lastName;
+    @Column(nullable = false)
     private String phoneNumber;
+    @Column(nullable = false)
     private String contactType;
+    @Column(nullable = false)
     private Integer age;
+    @Column(nullable = false)
     private String job;
+    @Column(nullable = false)
     private String martialStatus;
+    @Column(nullable = false)
     private String educationLevel;
-    private Boolean defaultCreditStatus;
+    @Column(nullable = false)
+    private Boolean hasDefaultCredit;
+    @Column(nullable = false)
     private Boolean hasMortgage;
+    @Column(nullable = false)
     private Boolean hasConsumerCredit;
+    @Column(nullable = false)
     private Double balance;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)

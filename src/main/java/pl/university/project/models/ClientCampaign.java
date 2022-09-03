@@ -25,13 +25,12 @@ public class ClientCampaign {
     @ManyToOne
     @MapsId("campaignId")
     private Campaign campaign;
-
+    @Column(nullable = false)
     private Long callDurationInSeconds;
-
+    @Column(nullable = false)
     private Long numberOfContactsDuringCampaign;
-
+    @Column(nullable = false)
     private Date lastContactDate;
-
     private String campaignOutcome;
 
     @OneToMany(mappedBy = "clientCampaign", cascade=CascadeType.ALL)

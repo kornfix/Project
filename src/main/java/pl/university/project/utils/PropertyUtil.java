@@ -47,9 +47,9 @@ public final class PropertyUtil {
 
     public static List<String> getMartialStatusCategories() {
         List<String> martialStatuses = new ArrayList<>();
-        martialStatuses.add("Zamężny");
-        martialStatuses.add("Niezamężny");
-        martialStatuses.add("Rozwiedziony");
+        martialStatuses.add("Zamężna/Żonaty");
+        martialStatuses.add("Panna/Kawaler");
+        martialStatuses.add("Rozwiedziona/Rozwiedziony");
         return martialStatuses;
     }
 
