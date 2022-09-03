@@ -71,15 +71,15 @@ public class DefaultUserService implements DefaultService<UserData, Long> {
     public void changeUsername(UserData userData) {
         User user = getUserById(userData.getId());
         if (user != null) {
-            user.setUsername(userData.getUsername());
+            user.setUsername(userData.getNewUsername());
             userRepository.saveAndFlush(user);
             Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            if (principal instanceof MyUserDetails) {
-                MyUserDetails userDetails = (MyUserDetails) principal;
-                userDetails.setUser(user);
+            if (principal instanceof MyUserDetails && user.getId().equals(((MyUserDetails) principal).getUserId()) ) {
+                ((MyUserDetails) principal).getUser().setUsername(userData.getNewUsername());
             }
         }
     }
+
 
 
     public void changePassword(UserData userData) {
@@ -87,11 +87,6 @@ public class DefaultUserService implements DefaultService<UserData, Long> {
         if (user != null) {
             user.setPassword(bCryptPasswordEncoder.encode(userData.getPassword()));
             userRepository.saveAndFlush(user);
-            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            if (principal instanceof MyUserDetails) {
-                MyUserDetails userDetails = (MyUserDetails) principal;
-                userDetails.setUser(user);
-            }
         }
     }
 

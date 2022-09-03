@@ -56,8 +56,8 @@ public class MyUserDetails implements UserDetails {
         return user.getId();
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public User getUser() {
+        return user;
     }
 
 }

@@ -24,7 +24,9 @@
     <div class="form">
         <form class="form" action="#"
               th:object="${user}" th:action="${user.id} != null? (${mod}=='CHANGE_USERNAME'? @{/account/changeUsername}
-              :@{/account/changePassword})
+              :  (${mod}=='CHANGE_PASSWORD'?  @{/account/changePassword}
+              :  (${mod}=='ADMIN_CHANGE_USERNAME'? @{|/admin/users/${user.id}/changeUsername|}
+              :  @{|/admin/users/${user.id}/changePassword|})))
               : @{/admin/users/add}"
               th:method="${user.id} != null? PUT : POST">
             <input type="hidden" th:value="${referer}" name="referer"/>
@@ -32,7 +34,7 @@
             <h3 th:text="${user.id} == null? |Dodawanie nowego| : (${mod}=='CHANGE_USERNAME'? |Zmianna nazwy|
              : |Zmianna hasła|)"></h3>
             <h3 th:text="${user.id} == null? |użytkownika| : (${mod}=='CHANGE_USERNAME'? |użytkownika ${user.username}|)"></h3>
-            <div th:if="${mod}=='CHANGE_USERNAME' or ${mod}=='CREATE_NEW'">
+            <div th:if="${mod}=='CHANGE_USERNAME' or ${mod}=='CREATE_NEW' or ${mod}=='ADMIN_CHANGE_USERNAME'">
                 <p>Nazwa użytkownika:</p>
                 <br>
                 <input type="text" th:field="*{newUsername}" />
@@ -42,7 +44,7 @@
                     <p  th:errors="*{newUsername}"/>
                 </div>
             </div>
-            <div th:if="${mod}=='CHANGE_PASSWORD' or ${mod}=='CREATE_NEW'">
+            <div th:if="${mod}=='CHANGE_PASSWORD' or ${mod}=='CREATE_NEW' or ${mod}=='ADMIN_CHANGE_PASSWORD'">
                 <p>Hasło:</p>
                 <br>
                 <input type="password" th:field="*{password}" />
@@ -76,7 +78,7 @@
 </div>
 
 <footer>
-    &copy;2022 Wszystkie prawa zastrzezone
+    &copy;2022 Wszystkie prawa zastrzeżone
 </footer>
 </body>
 </html>

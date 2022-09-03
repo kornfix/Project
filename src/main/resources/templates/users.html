@@ -35,12 +35,12 @@
         <td th:text="${user.username}">
         <td th:text="${user.role}">
         <td>
-            <a th:href="@{|/admin/users/${user.id}/update|}"/>
+            <a th:href="@{|/admin/users/${user.id}/changeUsername|}"/>
             <button class="btn" type="button">Zmień nazwę użytkownika</button>
             </a>
         </td>
         <td>
-            <a th:href="@{|/admin/users/${user.id}/update|}"/>
+            <a th:href="@{|/admin/users/${user.id}/changePassword|}"/>
             <button class="btn" type="button">Zmień hasło</button>
             </a>
         </td>
@@ -54,7 +54,7 @@
     </tr>
 </table>
 <footer>
-    &copy;2022 Wszystkie prawa zastrzezone
+    &copy;2022 Wszystkie prawa zastrzeżone
 </footer>
 </body>
 </html>

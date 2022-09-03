@@ -29,22 +29,22 @@
             <h4>Twój profil użytkownika</h4>
             <table class="bottom">
                 <tr>
-                    <td class="left">Nazwa użytkownika</td>
+                    <td class="center">Nazwa użytkownika</td>
                 </tr>
                 <tr>
-                    <td class="left" th:text="*{username}"></td>
+                    <td class="center" th:text="*{username}"></td>
                 </tr>
                 <tr>
-                    <td>
-                        <form  class="nav-left logout"
+                    <td class="center">
+                        <form  class="nav-left user"
                                th:action="@{|/account/changeUsername|}" method="get">
                             <input class="btn-logout" type="submit" value="Zmień nazwę użytkownika"/>
                         </form>
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <form  class="nav-left logout"
+                    <td class="center">
+                        <form  class="nav-left user"
                                th:action="@{|/account/changePassword|}" method="get">
                             <input class="btn-logout" type="submit" value="Zmień hasło"/>
                         </form>
@@ -55,7 +55,7 @@
     </div>
 </div>
 <footer>
-    &copy;2022 Wszystkie prawa zastrzezone
+    &copy;2022 Wszystkie prawa zastrzeżone
 </footer>
 </body>
 </html>

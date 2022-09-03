@@ -386,3 +386,10 @@ form.error {
   font-size: 30px;
   margin-top: 15px;
 }
+
+
+form.user {
+  margin: 0;
+  padding: 0;
+  width: -moz-available;
+}
