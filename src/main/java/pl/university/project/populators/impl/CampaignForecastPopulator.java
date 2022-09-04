@@ -18,7 +18,7 @@ public class CampaignForecastPopulator implements Populator<ClientCampaign, Camp
         target.setId(source.getClientCampaignId().getCampaignId());
         if(CollectionUtils.isNotEmpty(source.getForecasts())) {
             source.getForecasts().stream().max(Comparator.comparing(Forecast::getCreationTime)).
-                    ifPresent(forecast -> target.setForecast(
+                    ifPresent(forecast -> target.setNewestForecastProbability(
                             decimalFormat.format(forecast.getForecastProbability())));
         }
         target.setTitle(source.getCampaign().getTitle());
