@@ -33,16 +33,6 @@ public class ClientCampaignController {
     @Resource
     private DefaultCampaignService defaultCampaignService;
 
-//    @GetMapping
-//    public String getAlClientCampaigns(@PathVariable Long campaignId, Model model) {
-//        model.addAttribute("canAddClients", defaultClientService.hasAnyAvailableClientsForCampaign(
-//               defaultCampaignService.getClientIsForCampaignId(campaignId)));
-//        model.addAttribute("campaign", defaultCampaignService.getObjectById(campaignId));
-//        model.addAttribute("clientCampaigns", defaultClientCampaignService
-//                .getAllClientsCampaignsByCampaignID(campaignId));
-//        return "clientCampaigns";
-//    }
-
     @GetMapping("/{clientId}")
     public String getClientCampaignById(@PathVariable Long campaignId, @PathVariable Long clientId, Model model) {
         ClientCampaignId clientCampaignId = new ClientCampaignId(campaignId, clientId);
@@ -129,13 +119,13 @@ public class ClientCampaignController {
                 "/participants/" + clientCampaignData.getClientCampaignId().getClientId();
     }
 
-    @PutMapping("/{clientId}/changeNumberOfContacts")
-    public String updateClientCampaign(@PathVariable Long campaignId, @PathVariable Long clientId, @RequestParam Long valueToAppend,
-                                       @ModelAttribute("referer") String referer) {
-        ClientCampaignId clientCampaignId = new ClientCampaignId(campaignId, clientId);
-        defaultClientCampaignService.changeNumberOfContactsDuringCampaign(clientCampaignId, valueToAppend);
-        return "redirect:" + referer;
-    }
+//    @PutMapping("/{clientId}/changeNumberOfContacts")
+//    public String updateClientCampaign(@PathVariable Long campaignId, @PathVariable Long clientId, @RequestParam Long valueToAppend,
+//                                       @ModelAttribute("referer") String referer) {
+//        ClientCampaignId clientCampaignId = new ClientCampaignId(campaignId, clientId);
+//        defaultClientCampaignService.changeNumberOfContactsDuringCampaign(clientCampaignId, valueToAppend);
+//        return "redirect:" + referer;
+//    }
 
     @DeleteMapping("/{clientId}/delete")
     public String deleteClientCampaign(@PathVariable Long campaignId, @PathVariable Long clientId) {

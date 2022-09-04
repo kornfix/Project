@@ -31,9 +31,10 @@
               th:method="${user.id} != null? PUT : POST">
             <input type="hidden" th:value="${referer}" name="referer"/>
             <input type="hidden" th:field="*{username}"/>
-            <h3 th:text="${user.id} == null? |Dodawanie nowego| : (${mod}=='CHANGE_USERNAME'? |Zmianna nazwy|
-             : |Zmianna hasła|)"></h3>
-            <h3 th:text="${user.id} == null? |użytkownika| : (${mod}=='CHANGE_USERNAME'? |użytkownika ${user.username}|)"></h3>
+            <h3 th:text="${user.id} == null? |Dodawanie nowego| : (${mod}=='CHANGE_USERNAME'? |Zmiana nazwy|
+             : |Zmiana hasła|)"></h3>
+            <h3 th:text="${user.id} == null? |użytkownika| : (${mod}=='ADMIN_CHANGE_USERNAME' or
+             ${mod}=='ADMIN_CHANGE_PASSWORD'? |użytkownika ${user.username}|)"></h3>
             <div th:if="${mod}=='CHANGE_USERNAME' or ${mod}=='CREATE_NEW' or ${mod}=='ADMIN_CHANGE_USERNAME'">
                 <p>Nazwa użytkownika:</p>
                 <br>
