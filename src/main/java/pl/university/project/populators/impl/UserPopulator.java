@@ -6,7 +6,7 @@ import pl.university.project.odata.UserData;
 import pl.university.project.populators.Populator;
 
 
-public class DefaultUserPopulator implements Populator<User, UserData> {
+public class UserPopulator implements Populator<User, UserData> {
 
 
     @Override

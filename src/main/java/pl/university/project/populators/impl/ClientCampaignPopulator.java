@@ -12,7 +12,7 @@ import javax.annotation.Resource;
 import java.text.DecimalFormat;
 import java.util.Comparator;
 
-public class DefaultClientCampaignPopulator implements Populator<ClientCampaign, ClientCampaignData> {
+public class ClientCampaignPopulator implements Populator<ClientCampaign, ClientCampaignData> {
 
     private static final DecimalFormat decimalFormat = new DecimalFormat("0.00%");
 

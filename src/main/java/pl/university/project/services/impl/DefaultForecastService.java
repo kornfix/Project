@@ -6,7 +6,7 @@ import pl.university.project.converters.impl.ForecastReversConverter;
 import pl.university.project.models.ClientCampaign;
 import pl.university.project.models.Forecast;
 import pl.university.project.odata.ForecastData;
-import pl.university.project.populators.impl.DefaultModelDictionaryPopulator;
+import pl.university.project.populators.impl.ModelPopulator;
 import pl.university.project.repositories.ForecastRepository;
 import pl.university.project.utils.ForecastUtil;
 
@@ -35,7 +35,7 @@ public class DefaultForecastService {
     }
 
     @Resource
-    private DefaultModelDictionaryPopulator modelValuesPopulator;
+    private ModelPopulator modelValuesPopulator;
     public void createNewForecast(ClientCampaign clientCampaign) {
         Forecast forecast = new Forecast();
         forecastReversConverter.convert(clientCampaign, forecast);

@@ -8,7 +8,7 @@ import pl.university.project.utils.PropertyUtil;
 import java.text.DecimalFormat;
 
 
-public class DefaultForecastPopulator implements Populator<Forecast, ForecastData> {
+public class ForecastPopulator implements Populator<Forecast, ForecastData> {
 
     private static final DecimalFormat decimalFormat = new DecimalFormat("0.00%");
 

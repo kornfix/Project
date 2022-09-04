@@ -7,7 +7,7 @@ import pl.university.project.populators.Populator;
 
 import javax.annotation.Resource;
 
-public class DefaultUserReversPopulator implements Populator<UserData, User> {
+public class UserReversPopulator implements Populator<UserData, User> {
 
     @Resource
     BCryptPasswordEncoder bCryptPasswordEncoder;

@@ -9,7 +9,7 @@ import pl.university.project.utils.PropertyUtil;
 
 import javax.annotation.Resource;
 
-public class DefaultClientCampaignReversPopulator implements Populator<ClientCampaignData, ClientCampaign> {
+public class ClientCampaignReversPopulator implements Populator<ClientCampaignData, ClientCampaign> {
 
     @Resource
     private ClientReversConverter clientReversConverter;

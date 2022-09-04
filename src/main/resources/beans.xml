@@ -8,7 +8,7 @@
                     http://www.springframework.org/schema/util/spring-util-2.5.xsd">
 
     <alias name="defaultUserReversPopulator" alias="userReversPopulator"/>
-    <bean id="defaultUserReversPopulator" class="pl.university.project.populators.impl.DefaultUserReversPopulator"/>
+    <bean id="defaultUserReversPopulator" class="pl.university.project.populators.impl.UserReversPopulator"/>
 
     <alias name="defaultUserReversConverter" alias="userReversConverter"/>
     <bean id="defaultUserReversConverter"
@@ -21,7 +21,7 @@
     </bean>
 
     <alias name="defaultUserPopulator" alias="userPopulator"/>
-    <bean id="defaultUserPopulator" class="pl.university.project.populators.impl.DefaultUserPopulator"/>
+    <bean id="defaultUserPopulator" class="pl.university.project.populators.impl.UserPopulator"/>
 
     <alias name="defaultUserConverter" alias="userConverter"/>
     <bean id="defaultUserConverter"
@@ -34,7 +34,7 @@
     </bean>
 
     <alias name="defaultClientPopulator" alias="clientPopulator"/>
-    <bean id="defaultClientPopulator" class="pl.university.project.populators.impl.DefaultClientPopulator"/>
+    <bean id="defaultClientPopulator" class="pl.university.project.populators.impl.ClientPopulator"/>
 
     <alias name="defaultClientConverter" alias="clientConverter"/>
     <bean id="defaultClientConverter"
@@ -47,7 +47,7 @@
     </bean>
 
     <alias name="defaultClientReversPopulator" alias="clientReversPopulator"/>
-    <bean id="defaultClientReversPopulator" class="pl.university.project.populators.impl.DefaultClientReversPopulator"/>
+    <bean id="defaultClientReversPopulator" class="pl.university.project.populators.impl.ClientReversPopulator"/>
 
     <alias name="defaultClientReversConverter" alias="clientReversConverter"/>
     <bean id="defaultClientReversConverter"
@@ -60,7 +60,7 @@
     </bean>
 
     <alias name="defaultCampaignPopulator" alias="campaignPopulator"/>
-    <bean id="defaultCampaignPopulator" class="pl.university.project.populators.impl.DefaultCampaignPopulator"/>
+    <bean id="defaultCampaignPopulator" class="pl.university.project.populators.impl.CampaignPopulator"/>
 
     <alias name="defaultCampaignConverter" alias="campaignConverter"/>
     <bean id="defaultCampaignConverter"
@@ -73,7 +73,7 @@
     </bean>
 
     <alias name="defaultCampaignReversPopulator" alias="campaignReversPopulator"/>
-    <bean id="defaultCampaignReversPopulator" class="pl.university.project.populators.impl.DefaultCampaignReversPopulator"/>
+    <bean id="defaultCampaignReversPopulator" class="pl.university.project.populators.impl.CampaignReversPopulator"/>
 
     <alias name="defaultCampaignReversConverter" alias="campaignReversConverter"/>
     <bean id="defaultCampaignReversConverter"
@@ -86,7 +86,7 @@
     </bean>
 
     <alias name="defaultClientCampaignPopulator" alias="clientCampaignPopulator"/>
-    <bean id="defaultClientCampaignPopulator" class="pl.university.project.populators.impl.DefaultClientCampaignPopulator"/>
+    <bean id="defaultClientCampaignPopulator" class="pl.university.project.populators.impl.ClientCampaignPopulator"/>
 
     <alias name="defaultClientCampaignConverter" alias="clientCampaignConverter"/>
     <bean id="defaultClientCampaignConverter"
@@ -99,7 +99,7 @@
     </bean>
 
     <alias name="defaultClientCampaignReversPopulator" alias="clientCampaignReversPopulator"/>
-    <bean id="defaultClientCampaignReversPopulator" class="pl.university.project.populators.impl.DefaultClientCampaignReversPopulator"/>
+    <bean id="defaultClientCampaignReversPopulator" class="pl.university.project.populators.impl.ClientCampaignReversPopulator"/>
 
     <alias name="defaultClientCampaignReversConverter" alias="clientCampaignReversConverter"/>
     <bean id="defaultClientCampaignReversConverter"
@@ -113,7 +113,7 @@
 
 
     <alias name="defaultCampaignForecastPopulator" alias="campaignForecastPopulator"/>
-    <bean id="defaultCampaignForecastPopulator" class="pl.university.project.populators.impl.DefaultCampaignForecastPopulator"/>
+    <bean id="defaultCampaignForecastPopulator" class="pl.university.project.populators.impl.CampaignForecastPopulator"/>
 
     <alias name="defaultCampaignForecastConverter" alias="campaignForecastConverter"/>
     <bean id="defaultCampaignForecastConverter"
@@ -126,7 +126,7 @@
     </bean>
 
     <alias name="defaultForecastPopulator" alias="forecastPopulator"/>
-    <bean id="defaultForecastPopulator" class="pl.university.project.populators.impl.DefaultForecastPopulator"/>
+    <bean id="defaultForecastPopulator" class="pl.university.project.populators.impl.ForecastPopulator"/>
 
     <alias name="defaultForecastConverter" alias="forecastConverter"/>
     <bean id="defaultForecastConverter"
@@ -139,7 +139,7 @@
     </bean>
 
     <alias name="defaultForecastReversPopulator" alias="forecastReversPopulator"/>
-    <bean id="defaultForecastReversPopulator" class="pl.university.project.populators.impl.DefaultForecastReversPopulator"/>
+    <bean id="defaultForecastReversPopulator" class="pl.university.project.populators.impl.ForecastReversPopulator"/>
 
     <alias name="defaultForecastReversConverter" alias="forecastReversConverter"/>
     <bean id="defaultForecastReversConverter"

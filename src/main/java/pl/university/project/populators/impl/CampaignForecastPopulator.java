@@ -9,7 +9,7 @@ import pl.university.project.populators.Populator;
 import java.text.DecimalFormat;
 import java.util.Comparator;
 
-public class DefaultCampaignForecastPopulator implements Populator<ClientCampaign, CampaignData> {
+public class CampaignForecastPopulator implements Populator<ClientCampaign, CampaignData> {
 
     private static final DecimalFormat decimalFormat = new DecimalFormat("0.00%");
 

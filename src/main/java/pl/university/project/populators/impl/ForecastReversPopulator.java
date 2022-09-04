@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Comparator;
 
-public class DefaultForecastReversPopulator implements Populator<ClientCampaign, Forecast> {
+public class ForecastReversPopulator implements Populator<ClientCampaign, Forecast> {
     @Override
     public void populate(ClientCampaign source, Forecast target) {
         if (target.getId() == null) {

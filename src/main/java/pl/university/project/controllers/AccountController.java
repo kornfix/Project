@@ -126,12 +126,6 @@ public class AccountController {
         return "redirect:/account";
     }
 
-    @DeleteMapping("/{userId}/delete")
-    public String deleteUser(@PathVariable Long userId) {
-        userService.deleteObject(userId);
-        return "redirect:/admin/users";
-    }
-
     private Long getCurrentUserId() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (!(principal instanceof MyUserDetails)) {

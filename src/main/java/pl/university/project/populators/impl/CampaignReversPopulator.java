@@ -7,7 +7,7 @@ import pl.university.project.populators.Populator;
 import java.sql.Timestamp;
 import java.time.Instant;
 
-public class DefaultCampaignReversPopulator implements Populator<CampaignData, Campaign> {
+public class CampaignReversPopulator implements Populator<CampaignData, Campaign> {
     @Override
     public void populate(CampaignData source, Campaign target) {
         target.setId(source.getId());

@@ -4,7 +4,7 @@ import pl.university.project.models.Client;
 import pl.university.project.odata.ClientData;
 import pl.university.project.populators.Populator;
 
-public class DefaultClientPopulator implements Populator<Client, ClientData> {
+public class ClientPopulator implements Populator<Client, ClientData> {
     @Override
     public void populate(Client source, ClientData target) {
         target.setId(source.getId());

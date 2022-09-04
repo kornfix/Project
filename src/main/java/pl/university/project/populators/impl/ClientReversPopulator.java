@@ -4,7 +4,7 @@ import pl.university.project.models.Client;
 import pl.university.project.odata.ClientData;
 import pl.university.project.populators.Populator;
 
-public class DefaultClientReversPopulator implements Populator<ClientData, Client> {
+public class ClientReversPopulator implements Populator<ClientData, Client> {
     @Override
     public void populate(ClientData source, Client target) {
         target.setId(source.getId());
