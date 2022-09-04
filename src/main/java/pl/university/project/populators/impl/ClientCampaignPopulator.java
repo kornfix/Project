@@ -38,7 +38,7 @@ public class ClientCampaignPopulator implements Populator<ClientCampaign, Client
         target.setLastContactDate(source.getLastContactDate());
         target.setNumberOfContactsDuringCampaign(source.getNumberOfContactsDuringCampaign());
         source.getForecasts()
-                    .stream().max(Comparator.comparing(Forecast::getCreationTime)).ifPresent(forecast -> target.setNewestForecast(
+                    .stream().max(Comparator.comparing(Forecast::getCreationTime)).ifPresent(forecast -> target.setNewestForecastProbability(
                     decimalFormat.format(forecast.getForecastProbability())));
         }
 }

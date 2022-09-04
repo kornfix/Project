@@ -78,7 +78,7 @@
             <td th:text="${clientCampaign.callDurationInSeconds}">
             <td th:text="${clientCampaign.numberOfContactsDuringCampaign}">
             <td th:text="${#dates.format(clientCampaign.lastContactDate, 'dd-MM-yyyy')}" >
-            <td th:text="${clientCampaign.newestForecast}!=null? ${clientCampaign.newestForecast} : 'Brak danych'">
+            <td th:text="${clientCampaign.newestForecastProbability}!=null? ${clientCampaign.newestForecastProbability} : 'Brak danych'">
             <td>
                 <a th:href="@{|/campaigns/${clientCampaign.campaign.id}/participants/${clientCampaign.client.id}|}"/>
                 <button class="btn" type="button">Zobacz szczegóły</button>

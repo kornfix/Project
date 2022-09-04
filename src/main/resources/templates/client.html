@@ -91,7 +91,7 @@
         </thead>
         <tr th:each="campaign: ${campaigns}">
             <td class="left" th:text="${campaign.title}">
-            <td class="center" th:text="${campaign.forecast}!=null? ${campaign.forecast} : 'Brak danych'">
+            <td class="center" th:text="${campaign.newestForecastProbability}!=null? ${campaign.newestForecastProbability} : 'Brak danych'">
             <td>
                 <a th:href="@{|/campaigns/${campaign.id}/participants/${client.id}|}"/>
                 <button class="btn" type="button">Zobacz szczegóły</button>

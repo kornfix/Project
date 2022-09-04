@@ -22,5 +22,5 @@ public class CampaignData {
     private Timestamp creationTime;
     private Date campaignStartDate;
     private Date campaignEndDate;
-    private String forecast;
+    private String newestForecastProbability;
 }

@@ -21,5 +21,5 @@ public class ClientCampaignData {
     @Min(value = 0)
     private Long numberOfContactsDuringCampaign;
     private Date lastContactDate;
-    private String newestForecast;
+    private String newestForecastProbability;
 }
