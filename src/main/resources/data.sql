@@ -1,6 +1,6 @@
--- password = codejava
+-- password = user
 INSERT INTO `users` (`username`,`password`,`role`,`enabled`)VALUES ('user',
-'$2a$10$XptfskLsT1l/bRTLRiiCgejHqOpgXFreUnNUa35gJdCr2v2QbVFzu','ROLE_USER', 1);
+'$2a$10$ewsBqXr37Zh6.HJqg6zqPe2R5Asm3WDgsD/OXNavTXJoWxOBTmHCG','ROLE_USER', 1);
 -- password nimda
 INSERT INTO `users` (`username`,`password`,`role`,`enabled`)
 VALUES ('admin','$2a$10$zxvEq8XzYEYtNjbkRsJEbukHeRx3XS6MDXHMu8cNuNsRfZJWwswDy','ROLE_ADMIN', 1);

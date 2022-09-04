@@ -8,13 +8,10 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 public class CampaignData {
     private Long id;
-
     @NotNull(message = "Tytuł kamapanii nie może być pusty!")
     @NotBlank(message = "Tytuł kamapanii nie może być pusty!")
     @Size(max = 50, message = "Tytuł kamapanii może się składać tylko z 50 znaków!")
@@ -26,6 +23,4 @@ public class CampaignData {
     private Date campaignStartDate;
     private Date campaignEndDate;
     private String forecast;
-
-    private Set<ClientCampaignData> campaigns = new HashSet<>();
 }

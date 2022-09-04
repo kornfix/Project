@@ -8,12 +8,10 @@ import java.sql.Date;
 
 @Data
 public class ClientCampaignData {
-
     private ClientCampaignId clientCampaignId;
     private ClientData client;
     private CampaignData campaign;
     private String campaignOutcome;
-
     @NotNull(message = "Czas trwania ostatniego kontaktu nie może być pusty!")
     @NotBlank(message = "Czas trwania ostatniego kontaktu nie może być pusty!")
     @Pattern(regexp = "[1-9]+[0-9]*[hmsHMS][^$]?([1-9]+[0-9]*[msMS][^$]?)?([1-9]+[0-9]*[s|S]?[^$])?",
@@ -24,5 +22,4 @@ public class ClientCampaignData {
     private Long numberOfContactsDuringCampaign;
     private Date lastContactDate;
     private String newestForecast;
-
 }
