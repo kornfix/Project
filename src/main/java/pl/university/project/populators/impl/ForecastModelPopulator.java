@@ -9,7 +9,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 @Component("modelValuesPopulator")
-public class ModelPopulator implements Populator<Forecast, HashMap<String, Double>> {
+public class ForecastModelPopulator implements Populator<Forecast, HashMap<String, Double>> {
     @Override
     public void populate(Forecast source, HashMap<String, Double> target) {
         target.put("age", Double.valueOf(source.getAge()));

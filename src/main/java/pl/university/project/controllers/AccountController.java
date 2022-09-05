@@ -115,7 +115,7 @@ public class AccountController {
         userData.setId(userId);
         model.addAttribute("mod", "CHANGE_PASSWORD");
         if (CollectionUtils.isEmpty(errors) && !userData.getPassword().equals(userData.getRepeatPassword())) {
-            ObjectError passwordError = new ObjectError("globalError", "Podane hasła muszą byc takie same!");
+            ObjectError passwordError = new ObjectError("globalError", "Podane hasła muszą być takie same!");
             result.addError(passwordError);
             errors.add(passwordError);
         }

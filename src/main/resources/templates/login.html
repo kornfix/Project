@@ -22,7 +22,7 @@
         <input class="btn-login" type="submit" value="Zaloguj"/>
         <div th:if="${param.error}" class="alert error">
             <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-            <p>Nieprawidłowa nazwa użytkownika lub hasło.</p>
+            <p>Nieprawidłowa nazwa użytkownika lub hasło!</p>
         </div>
         <div th:if="${param.logout}" class="alert info">
             <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>

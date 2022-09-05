@@ -6,7 +6,7 @@ import pl.university.project.converters.impl.ForecastReversConverter;
 import pl.university.project.models.ClientCampaign;
 import pl.university.project.models.Forecast;
 import pl.university.project.odata.ForecastData;
-import pl.university.project.populators.impl.ModelPopulator;
+import pl.university.project.populators.impl.ForecastModelPopulator;
 import pl.university.project.repositories.ForecastRepository;
 import pl.university.project.utils.ForecastUtil;
 
@@ -26,6 +26,10 @@ public class DefaultForecastService {
     private ForecastConverter forecastConverter;
 
 
+    @Resource
+    private ForecastModelPopulator forecastModelPopulator;
+
+
     public ForecastData getObjectById(Long id) {
         Forecast forecast = getForecastById(id);
         if (forecast == null) {
@@ -34,13 +38,12 @@ public class DefaultForecastService {
         return forecastConverter.convert(forecast);
     }
 
-    @Resource
-    private ModelPopulator modelValuesPopulator;
+
     public void createNewForecast(ClientCampaign clientCampaign) {
         Forecast forecast = new Forecast();
         forecastReversConverter.convert(clientCampaign, forecast);
         HashMap<String,Double> modelValues = new HashMap<>();
-        modelValuesPopulator.populate(forecast,modelValues);
+        forecastModelPopulator.populate(forecast,modelValues);
         forecast.setForecastProbability(ForecastUtil.getProbability(modelValues));
         forecast.setForecastOutcome(ForecastUtil.getPrediction(modelValues));
         forecast.setClientCampaign(clientCampaign);

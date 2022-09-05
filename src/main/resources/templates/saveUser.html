@@ -11,14 +11,22 @@
     <a class="nav-left" th:href="@{/campaigns}">Kampanie</a>
     <a class="nav-left" th:href="@{/clients}">Klienci</a>
     <div sec:authorize="hasRole('ROLE_ADMIN')">
-        <a class="nav-left active" th:href="@{/admin/users}">Użytkownicy</a>
+
+        <a th:class="${mod}=='ADMIN_CHANGE_USERNAME' or ${mod}=='ADMIN_CHANGE_PASSWORD' ? |nav-left active|:|nav-left|"
+           th:href="@{/admin/users}">Użytkownicy</a>
     </div>
     <div class="top-nav-right">
-        <a class="nav-left" th:href="@{/account}">[[${#httpServletRequest.remoteUser}]]</a>
+        <a th:class="${mod}=='CHANGE_USERNAME' or ${mod}=='CHANGE_PASSWORD' ? |nav-left active|:|nav-left|" th:href="@{/account}">[[${#httpServletRequest.remoteUser}]]</a>
         <form class="nav-left logout" th:action="@{/logout}" method="post">
             <input class="btn-logout" type="submit" value="Wyloguj"/>
         </form>
     </div>
+</div>
+<div th:if="${mod}=='ADMIN_CHANGE_USERNAME' or ${mod}=='ADMIN_CHANGE_PASSWORD'" class="breadcrumbs">
+    <a class="breadcrumb" th:href="@{/admin/users}">Użytkownicy</a>  &#x2192
+    <span th:if="${user.id} != null" th:text="${mod}=='ADMIN_CHANGE_USERNAME'?
+    |Zmiana nazwy użytkownika ${user.username}|:
+    |Zmiana hasła użytkownika ${user.username}|"></span>
 </div>
 <div class="content">
     <div class="form">

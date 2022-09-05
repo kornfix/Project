@@ -17,8 +17,9 @@ body{
 footer{
     margin-top: auto;
     background-color: #333;
-    padding: 25px;
+    padding: 20px;
     color: white;
+    font-size: 20px;
 }
 
 .top-nav {
@@ -83,7 +84,7 @@ table  {
 }
 
 th.header {
-  padding: 0px 25px;
+  padding: 10px 25px;
   text-align: center;
   background-color: #04AA6D;
   color: white;
@@ -257,6 +258,8 @@ form.form
     margin-right: auto;
     text-align: center;
     padding: 25px 50px;
+    border: solid;
+    border-radius: 25px;
 }
 
 form.logout{
