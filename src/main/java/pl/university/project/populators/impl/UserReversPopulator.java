@@ -20,7 +20,7 @@ public class UserReversPopulator implements Populator<UserData, User> {
         target.setEnabled(source.isEnabled());
         if (source.getId() == null) {
             target.setRole("ROLE_USER");
+            target.setPassword(bCryptPasswordEncoder.encode(source.getPassword()));
         }
-        target.setPassword(bCryptPasswordEncoder.encode(source.getPassword()));
     }
 }
