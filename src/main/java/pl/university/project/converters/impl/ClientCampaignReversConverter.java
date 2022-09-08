@@ -25,11 +25,10 @@ public class ClientCampaignReversConverter implements Converter<ClientCampaignDa
     }
 
     @Override
-    public ClientCampaign convert(ClientCampaignData source, ClientCampaign target) {
+    public void convert(ClientCampaignData source, ClientCampaign target) {
         if (source != null) {
             populators.forEach(populator -> populator.populate(source, target));
         }
-        return target;
     }
 
     @Override
@@ -39,14 +38,6 @@ public class ClientCampaignReversConverter implements Converter<ClientCampaignDa
             targetList.addAll(source.stream().map(this::convert).collect(Collectors.toList()));
         }
         return targetList;
-    }
-
-    @Override
-    public Collection<ClientCampaign> convertAll(Collection<ClientCampaignData> source, Collection<ClientCampaign> target) {
-        if (CollectionUtils.isNotEmpty(source)) {
-            target.addAll(source.stream().map(this::convert).collect(Collectors.toList()));
-        }
-        return target;
     }
 
     public void setPopulators(List<Populator> populators) {

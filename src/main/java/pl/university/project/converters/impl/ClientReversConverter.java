@@ -25,11 +25,10 @@ public class ClientReversConverter implements Converter<ClientData, Client> {
     }
 
     @Override
-    public Client convert(ClientData source, Client target) {
+    public void convert(ClientData source, Client target) {
         if (source != null) {
             populators.forEach(populator -> populator.populate(source, target));
         }
-        return target;
     }
 
     @Override
@@ -41,13 +40,6 @@ public class ClientReversConverter implements Converter<ClientData, Client> {
         return targetList;
     }
 
-    @Override
-    public Collection<Client> convertAll(Collection<ClientData> source, Collection<Client> target) {
-        if (CollectionUtils.isNotEmpty(source)) {
-            target.addAll(source.stream().map(this::convert).collect(Collectors.toList()));
-        }
-        return target;
-    }
 
     public void setPopulators(List<Populator> populators) {
         this.populators = populators;

@@ -25,11 +25,10 @@ public class UserConverter implements Converter<User, UserData> {
     }
 
     @Override
-    public UserData convert(User source, UserData target) {
+    public void convert(User source, UserData target) {
         if (source != null) {
             populators.forEach(populator -> populator.populate(source, target));
         }
-        return target;
     }
 
     @Override
@@ -39,14 +38,6 @@ public class UserConverter implements Converter<User, UserData> {
             targetList.addAll(source.stream().map(this::convert).collect(Collectors.toList()));
         }
         return targetList;
-    }
-
-    @Override
-    public Collection<UserData> convertAll(Collection<User> source, Collection<UserData> target) {
-        if (CollectionUtils.isNotEmpty(source)) {
-            target.addAll(source.stream().map(this::convert).collect(Collectors.toList()));
-        }
-        return target;
     }
 
     public void setPopulators(List<Populator> populators) {

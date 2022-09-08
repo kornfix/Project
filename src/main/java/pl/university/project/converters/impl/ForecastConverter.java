@@ -25,11 +25,10 @@ public class ForecastConverter implements Converter<Forecast, ForecastData> {
     }
 
     @Override
-    public ForecastData convert(Forecast source, ForecastData target) {
+    public void convert(Forecast source, ForecastData target) {
         if (source != null) {
             populators.forEach(populator -> populator.populate(source, target));
         }
-        return target;
     }
 
     @Override
@@ -39,14 +38,6 @@ public class ForecastConverter implements Converter<Forecast, ForecastData> {
             targetList.addAll(source.stream().map(this::convert).collect(Collectors.toList()));
         }
         return targetList;
-    }
-
-    @Override
-    public Collection<ForecastData> convertAll(Collection<Forecast> source, Collection<ForecastData> target) {
-        if (CollectionUtils.isNotEmpty(source)) {
-            target.addAll(source.stream().map(this::convert).collect(Collectors.toList()));
-        }
-        return target;
     }
 
     public void setPopulators(List<Populator> populators) {

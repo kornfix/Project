@@ -25,11 +25,10 @@ public class ForecastReversConverter implements Converter<ClientCampaign, Foreca
     }
 
     @Override
-    public Forecast convert(ClientCampaign source, Forecast target) {
+    public void convert(ClientCampaign source, Forecast target) {
         if (source != null) {
             populators.forEach(populator -> populator.populate(source, target));
         }
-        return target;
     }
 
     @Override
@@ -39,14 +38,6 @@ public class ForecastReversConverter implements Converter<ClientCampaign, Foreca
             targetList.addAll(source.stream().map(this::convert).collect(Collectors.toList()));
         }
         return targetList;
-    }
-
-    @Override
-    public Collection<Forecast> convertAll(Collection<ClientCampaign> source, Collection<Forecast> target) {
-        if (CollectionUtils.isNotEmpty(source)) {
-            target.addAll(source.stream().map(this::convert).collect(Collectors.toList()));
-        }
-        return target;
     }
 
     public void setPopulators(List<Populator> populators) {

@@ -25,11 +25,10 @@ public class CampaignForecastConverter implements Converter<ClientCampaign, Camp
     }
 
     @Override
-    public CampaignData convert(ClientCampaign source, CampaignData target) {
+    public void convert(ClientCampaign source, CampaignData target) {
         if (source != null) {
             populators.forEach(populator -> populator.populate(source, target));
         }
-        return target;
     }
 
     @Override
@@ -39,14 +38,6 @@ public class CampaignForecastConverter implements Converter<ClientCampaign, Camp
             targetList.addAll(source.stream().map(this::convert).collect(Collectors.toList()));
         }
         return targetList;
-    }
-
-    @Override
-    public Collection<CampaignData> convertAll(Collection<ClientCampaign> source, Collection<CampaignData> target) {
-        if (CollectionUtils.isNotEmpty(source)) {
-            target.addAll(source.stream().map(this::convert).collect(Collectors.toList()));
-        }
-        return target;
     }
 
     public void setPopulators(List<Populator> populators) {
