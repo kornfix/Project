@@ -28,7 +28,7 @@
     <a class="breadcrumb" th:if="${campaignId} != null"
        th:href=" @{|/campaigns/${campaignId}/participants/${clientId}|}"
        th:text="|${forecast.clientFullName}|"></a>   &#x2192
-    <span th:text="|Prognoza utworzona o ${#dates.format(forecast.creationTime, 'HH:mm dd-MM-yyyy')}|"></span>
+    <span th:text="|Prognoza utworzona o godzinie ${#dates.format(forecast.creationTime, 'HH:mm dd-MM-yyyy')}|"></span>
 </div>
 <div class="content">
 <div class="form" th:object="${forecast}">

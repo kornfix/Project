@@ -1,7 +1,6 @@
 package pl.university.project.services.impl;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.stereotype.Service;
 import pl.university.project.converters.impl.ClientCampaignConverter;
 import pl.university.project.converters.impl.ClientCampaignReversConverter;
 import pl.university.project.converters.impl.ForecastConverter;
@@ -10,7 +9,7 @@ import pl.university.project.models.ClientCampaignId;
 import pl.university.project.odata.ClientCampaignData;
 import pl.university.project.odata.ForecastData;
 import pl.university.project.repositories.ClientCampaignRepository;
-import pl.university.project.services.DefaultService;
+import pl.university.project.services.Service;
 
 import javax.annotation.Resource;
 import java.util.Collection;
@@ -18,8 +17,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service("clientCampaignService")
-public class DefaultClientCampaignService implements DefaultService<ClientCampaignData, ClientCampaignId> {
+@org.springframework.stereotype.Service("clientCampaignService")
+public class DefaultClientCampaignService implements Service<ClientCampaignData, ClientCampaignId> {
 
     @Resource
     private ClientCampaignReversConverter clientCampaignReversConverter;

@@ -2,7 +2,7 @@ package pl.university.project.services;
 
 import java.util.Collection;
 
-public interface DefaultService<T,S> {
+public interface Service<T,S> {
 
     Collection<T> getAllObjects();
 

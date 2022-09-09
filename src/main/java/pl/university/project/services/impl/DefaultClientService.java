@@ -1,6 +1,5 @@
 package pl.university.project.services.impl;
 
-import org.springframework.stereotype.Service;
 import pl.university.project.converters.impl.CampaignForecastConverter;
 import pl.university.project.converters.impl.ClientConverter;
 import pl.university.project.converters.impl.ClientReversConverter;
@@ -8,7 +7,7 @@ import pl.university.project.models.Client;
 import pl.university.project.odata.CampaignData;
 import pl.university.project.odata.ClientData;
 import pl.university.project.repositories.ClientRepository;
-import pl.university.project.services.DefaultService;
+import pl.university.project.services.Service;
 import pl.university.project.utils.PropertyUtil;
 
 import javax.annotation.Resource;
@@ -17,8 +16,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
-@Service("clientService")
-public class DefaultClientService implements DefaultService<ClientData, Long> {
+@org.springframework.stereotype.Service("clientService")
+public class DefaultClientService implements Service<ClientData, Long> {
 
     @Resource
     private ClientReversConverter clientReversConverter;

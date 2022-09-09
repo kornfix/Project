@@ -3,20 +3,19 @@ package pl.university.project.services.impl;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
 import pl.university.project.converters.impl.UserConverter;
 import pl.university.project.converters.impl.UserReversConverter;
 import pl.university.project.details.MyUserDetails;
 import pl.university.project.models.User;
 import pl.university.project.odata.UserData;
 import pl.university.project.repositories.UserRepository;
-import pl.university.project.services.DefaultService;
+import pl.university.project.services.Service;
 
 import javax.annotation.Resource;
 import java.util.Collection;
 
-@Service("userService")
-public class DefaultUserService implements DefaultService<UserData, Long> {
+@org.springframework.stereotype.Service("userService")
+public class DefaultUserService implements Service<UserData, Long> {
 
     @Resource
     private UserConverter userConverter;
