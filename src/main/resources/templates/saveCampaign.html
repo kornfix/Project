@@ -24,7 +24,7 @@
     <a class="breadcrumb" th:href="@{/campaigns}">Kampanie</a>  &#x2192
     <a th:if="${campaign.id} != null" class="breadcrumb" th:href=" @{|/campaigns/${campaign.id}|}"
        th:text="|${campaign.title}|"></a>
-    <span th:unless="${campaign.id} != null" th:text="|Dodawanie kampanii|"></span>
+    <span th:unless="${campaign.id} != null" th:text="|Tworzenie kampanii|"></span>
 </div>
 <div class="content">
 <div class="form">
@@ -44,7 +44,6 @@
     <p>Data rozpoczęcia:</p>
     <br>
     <input type="date" th:field="*{campaignStartDate}" />
-    <br th:if="${#fields.hasErrors('campaignStartDate')}">
     <div th:if="${#fields.hasErrors('campaignStartDate')}" class="alert">
         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
         <p>Data rozpoczęcia nie może być pusta!</p>
@@ -52,12 +51,10 @@
     <p>Data zakończenia: </p>
     <br>
     <input type="date" th:field="*{campaignEndDate}" />
-    <br th:if="${#fields.hasErrors('campaignEndDate')}">
     <div th:if="${#fields.hasErrors('campaignEndDate')}" class="alert">
         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
         <p>Data zakończenia nie może być pusta!</p>
     </div>
-    <br th:if="${#fields.hasErrors('global')}">
     <div th:if="${#fields.hasErrors('global')}" class="alert">
         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
         <p  th:errors="*{global}"/>

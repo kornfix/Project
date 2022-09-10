@@ -34,8 +34,10 @@
     <a class="breadcrumb" th:href="@{/campaigns}">Kampanie</a>   &#x2192
     <a class="breadcrumb" th:if="${clientCampaign.clientCampaignId.campaignId} != null"
         th:href=" @{|/campaigns/${clientCampaign.clientCampaignId.campaignId}|}"
-       th:text="|${clientCampaign.campaign.title}|"></a>   &#x2192
-    <span th:text="|${clientCampaign.client.firstName} ${clientCampaign.client.lastName}|"></span>
+       th:text="|${clientCampaign.campaign.title}|"></a>  &#x2192
+    <a th:if="${clientCampaign.clientCampaignId.clientId} != null" class="breadcrumb"
+       th:href="@{|/clients/${clientCampaign.clientCampaignId.clientId}|}"
+       th:text="|${clientCampaign.client.firstName} ${clientCampaign.client.lastName}|"></a>
 </div>
 <div class="content">
     <div class="form"th:object="${clientCampaign}">
