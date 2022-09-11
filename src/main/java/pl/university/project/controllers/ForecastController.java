@@ -56,7 +56,7 @@ public class ForecastController {
         return "forecast";
     }
 
-    @PostMapping(value = "/create")
+    @PostMapping(value = "/add")
     public String add(@PathVariable Long campaignId, @PathVariable Long clientId) {
         ClientCampaignId clientCampaignId = new ClientCampaignId();
         clientCampaignId.setCampaignId(campaignId);
