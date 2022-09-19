@@ -39,7 +39,7 @@
               th:method="${user.id} != null? PUT : POST">
             <input type="hidden" th:value="${referer}" name="referer"/>
             <input type="hidden" th:field="*{username}"/>
-            <h3 th:text="${user.id} == null? |Dodawanie nowego| : (${mod}=='CHANGE_USERNAME'? |Zmiana nazwy|
+            <h3 th:text="${user.id} == null? |Dodawanie nowego| : (${mod}=='CHANGE_USERNAME' or ${mod}=='ADMIN_CHANGE_USERNAME' ? |Zmiana nazwy|
              : |Zmiana hasła|)"></h3>
             <h3 th:text="${user.id} == null? |użytkownika| : (${mod}=='ADMIN_CHANGE_USERNAME' or
              ${mod}=='ADMIN_CHANGE_PASSWORD'? |użytkownika ${user.username}|)"></h3>

@@ -1,6 +1,7 @@
 package pl.university.project.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -76,8 +77,7 @@ public class ClientCampaignController {
         clientCampaignData.getClientCampaignId().setCampaignId(campaignId);
         clientCampaignData.setCampaign(defaultCampaignService.getObjectById(campaignId));
         setCampaignClients(model, campaignId);
-        ClientData clientData = defaultClientService.getObjectById(clientCampaignData.getClientCampaignId().getClientId());
-        clientCampaignData.setClient(clientData);
+        clientCampaignData.setClient(defaultClientService.getObjectById(clientCampaignData.getClientCampaignId().getClientId()));
         model.addAttribute("clientCampaign", clientCampaignData);
         if (result.hasErrors()) {
             model.addAttribute("outcomes", PropertyUtil.getOutcomesCategories());
@@ -105,11 +105,15 @@ public class ClientCampaignController {
     }
 
     @PutMapping("/{clientId}/update")
+    @Transactional
     public String updateClientCampaign(@PathVariable Long campaignId, @PathVariable Long clientId,
                                        @Valid @ModelAttribute("clientCampaign") ClientCampaignData clientCampaignData
             , BindingResult result, Model model, @ModelAttribute("referer") String referer) {
         setCampaignClients(model, campaignId);
+        clientCampaignData.setCampaign(defaultCampaignService.getObjectById(campaignId));
         clientCampaignData.setClientCampaignId(new ClientCampaignId(campaignId, clientId));
+        clientCampaignData.setClient(defaultClientService.getObjectById(clientCampaignData.getClientCampaignId().getClientId()));
+        model.addAttribute("clientCampaign", clientCampaignData);
         if (result.hasErrors()) {
             model.addAttribute("outcomes", PropertyUtil.getOutcomesCategories());
             return "saveClientCampaign";

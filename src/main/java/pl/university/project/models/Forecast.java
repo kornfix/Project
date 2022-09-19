@@ -51,6 +51,6 @@ public class Forecast {
     @Column(nullable = false)
     private Double forecastProbability;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     private ClientCampaign clientCampaign;
 }

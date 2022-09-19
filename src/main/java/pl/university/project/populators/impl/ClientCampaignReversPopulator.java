@@ -20,10 +20,14 @@ public class ClientCampaignReversPopulator implements Populator<ClientCampaignDa
     @Override
     public void populate(ClientCampaignData source, ClientCampaign target) {
         target.setClientCampaignId(source.getClientCampaignId());
-        if (source.getClient() != null) {
+        if (source.getClient() != null && target.getClient()!=null) {
+            clientReversConverter.convert(source.getClient(), target.getClient());
+        } else if (source.getClient() != null) {
             target.setClient(clientReversConverter.convert(source.getClient()));
         }
-        if (source.getCampaign() != null) {
+        if (source.getCampaign() != null && target.getCampaign() != null) {
+            campaignReversConverter.convert(source.getCampaign(), target.getCampaign());
+        } else if (source.getCampaign() != null) {
             target.setCampaign(campaignReversConverter.convert(source.getCampaign()));
         }
         if (source.getCampaignOutcome() != null) {

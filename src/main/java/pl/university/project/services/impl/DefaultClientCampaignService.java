@@ -12,6 +12,7 @@ import pl.university.project.repositories.ClientCampaignRepository;
 import pl.university.project.services.Service;
 
 import javax.annotation.Resource;
+import javax.persistence.EntityManager;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -34,6 +35,9 @@ public class DefaultClientCampaignService implements Service<ClientCampaignData,
 
     @Resource
     private DefaultForecastService forecastService;
+
+    @Resource
+    private EntityManager entityManager;
 
     @Override
     public Collection<ClientCampaignData> getAllObjects() {
@@ -79,7 +83,7 @@ public class DefaultClientCampaignService implements Service<ClientCampaignData,
 
     @Override
     public ClientCampaignId updateObject(ClientCampaignData clientCampaignData) {
-        ClientCampaign clientCampaign = getClientCampaignById(clientCampaignData.getClientCampaignId());
+        ClientCampaign clientCampaign = clientCampaignRepository.findById(clientCampaignData.getClientCampaignId()).orElse(null);
         if (clientCampaign == null) {
             return null;
         }

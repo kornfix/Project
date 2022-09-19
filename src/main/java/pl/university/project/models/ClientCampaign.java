@@ -19,10 +19,10 @@ public class ClientCampaign {
     @EmbeddedId
     private ClientCampaignId clientCampaignId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @MapsId("clientId")
     private Client client;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @MapsId("campaignId")
     private Campaign campaign;
     @Column(nullable = false)

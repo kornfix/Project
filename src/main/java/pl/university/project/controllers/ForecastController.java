@@ -28,21 +28,6 @@ public class ForecastController {
     @Resource
     private DefaultForecastService defaultForecastService;
 
-
-//    @GetMapping
-//    public String getAllForecasts(@PathVariable Long campaignId, @PathVariable Long clientId, Model model) {
-//        ClientCampaignId clientCampaignId = new ClientCampaignId(campaignId, clientId);
-//        ClientCampaignData clientCampaignData = defaultClientCampaignService.getObjectById(clientCampaignId);
-//        if (clientCampaignData == null || clientCampaignData.getClientCampaignId() == null) {
-//            return "notFound";
-//        }
-//        model.addAttribute("clientCampaign", defaultClientCampaignService.getObjectById(clientCampaignId));
-//        model.addAttribute("forecasts", defaultClientCampaignService.getAllForecasts(clientCampaignId)
-//                .stream().sorted(Comparator.comparing(ForecastData::getCreationTime)));
-//        return "forecasts";
-//    }
-
-
     @GetMapping("/{forecastId}")
     public String getForecast(@PathVariable Long campaignId, @PathVariable Long clientId,
                               @PathVariable Long forecastId, Model model) {
