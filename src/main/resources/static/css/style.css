@@ -12,6 +12,7 @@ body{
 
 .content{
     margin: 0px 20px 30px;
+    overflow-x: scroll;
 }
 
 footer{

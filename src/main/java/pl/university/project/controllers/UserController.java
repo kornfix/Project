@@ -44,13 +44,20 @@ public class UserController {
     @PostMapping(value = "/add")
     public String addClient(@Valid @ModelAttribute("user") UserData userData, BindingResult result, Model model,
                             @ModelAttribute("referer") String referer) {
-        if (!result.hasErrors() && !userData.getPassword().equals(userData.getRepeatPassword())) {
-            result.addError(new ObjectError("globalError", "Podane hasła muszą być takie same!"));
-        }
-        if (!result.hasErrors() && userService.isUsernameUsed(userData.getUsername())) {
+        Boolean hasErrors = result.hasErrors();
+        if (!hasErrors && userService.isUsernameUsed(userData.getNewUsername())) {
+            hasErrors = true;
             result.addError(new ObjectError("globalError", "Nazwa użytkownika już istnieje!"));
         }
-        if (result.hasErrors()) {
+        if (!hasErrors && !userData.getPassword().equals(userData.getRepeatPassword())) {
+            hasErrors = true;
+            result.addError(new ObjectError("globalError", "Podane hasła muszą być takie same!"));
+        }
+
+        if (hasErrors) {
+            model.addAttribute("referer", referer);
+            model.addAttribute("mod", "CREATE_NEW");
+            model.addAttribute("user", userData);
             return "saveUser";
         }
         userService.saveObject(userData);
